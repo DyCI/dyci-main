@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<toolSet name="Dynamic Code Injection">
+  <tool name="Recompile and inject" description="Recompiles current file (.h, .m). And puts it correctly" showInMainMenu="false" showInEditor="true" showInProject="false" showInSearchPopup="false" disabled="false" useConsole="true" synchronizeAfterRun="false">
+    <exec>
+      <option name="COMMAND" value="python" />
+      <option name="PARAMETERS" value="__RECOMPILE_SCRIPT__ &quot;$FilePath$&quot;" />
+      <option name="WORKING_DIRECTORY" value="__RECOMPILE_SCRIPT_DIRECTORY__" />
+    </exec>
+  </tool>
+</toolSet>
+
