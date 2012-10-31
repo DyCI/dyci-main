@@ -1,6 +1,6 @@
 //
 //  SFDynamicCodeInjection
-//  Nemlig-iPad
+//  Dynamic Code Injection
 //
 //  Created by Paul Taykalo on 10/7/12.
 //  Copyright (c) 2012 Stanfy LLC. All rights reserved.
@@ -9,18 +9,8 @@
 #import "SFDynamicCodeInjection.h"
 #include <dlfcn.h>
 #import "SFFileWatcher.h"
-#import "SFFileWatcherDelegate.h"
 #import "NSSet+ClassesList.h"
-
-void swizzle(Class c, SEL orig, SEL new) {
-   Method origMethod = class_getInstanceMethod(c, orig);
-   Method newMethod = class_getInstanceMethod(c, new);
-   if(class_addMethod(c, orig, method_getImplementation(newMethod), method_getTypeEncoding(newMethod)))
-      class_replaceMethod(c, new, method_getImplementation(origMethod), method_getTypeEncoding(origMethod));
-   else
-      method_exchangeImplementations(origMethod, newMethod);
-}
-
+#import "NSObject+DyCInjection.h"
 
 @interface SFDynamicCodeInjection () <SFFileWatcherDelegate>
 
@@ -57,7 +47,7 @@ void swizzle(Class c, SEL orig, SEL new) {
       [self sharedInstance]->_enabled = YES;
 
       // Swizzling init and dealloc methods
-      [self allowInjectionSubscriptionOnInitMethod];
+      [NSObject allowInjectionSubscriptionOnInitMethod];
 
       NSString * dciDirectoryPath = [self dciDirectoryPath];
 
@@ -127,9 +117,9 @@ void swizzle(Class c, SEL orig, SEL new) {
 - (void)performInjectionWithClass:(Class)injectedClass {
    // Parsing it's method
 
-   // This is really funny
+   // This is really fun
    // Even if we load two instances of classes with the same name :)
-   // NSClassFromString Will return FIRST(Original) Instance. And this is cool! // RLY?
+   // NSClassFromString Will return FIRST(Original) Instance. And this is cool!
    NSString * className = [NSString stringWithFormat:@"%s", class_getName(injectedClass)];
    Class originalClass = NSClassFromString(className);
 
@@ -138,7 +128,6 @@ void swizzle(Class c, SEL orig, SEL new) {
 
    // Additionally we need to update Class methods (not instance methods) implementations
    [self replaceMethodsOfClass:object_getClass(originalClass) withMethodsOfClass:object_getClass(injectedClass)];
-
 
    // Notifying about new classes logic
     NSLog(@"Class (%@) and their subclasses instances would be notified with", NSStringFromClass(originalClass));
@@ -160,21 +149,16 @@ void swizzle(Class c, SEL orig, SEL new) {
       int i = 0;
       unsigned int mc = 0;
 
-      NSMutableSet * injectedSelectors = [NSMutableSet set];
       Method * injectedMethodsList = class_copyMethodList(injectedClass, &mc);
       for (i = 0; i < mc; i++) {
-         NSString * selectorName = [NSString stringWithFormat:@"%s",
-                                                              sel_getName(method_getName(injectedMethodsList[i]))];
-         [injectedSelectors addObject:selectorName];
-
-         SEL injectedSelector = NSSelectorFromString(selectorName);
 
          Method m = injectedMethodsList[i];
+         SEL selector = method_getName(m);
          const char * types = method_getTypeEncoding(m);
-         SEL name = method_getName(m);
-         IMP imp = method_getImplementation(m);
+         IMP injectedImplementation = method_getImplementation(m);
 
-         class_replaceMethod(originalClass, injectedSelector, imp, types);
+         //  Replacing old implementation with new one
+         class_replaceMethod(originalClass, selector, injectedImplementation, types);
 
       }
 
@@ -182,12 +166,11 @@ void swizzle(Class c, SEL orig, SEL new) {
 }
 
 
-
 #pragma mark - Helpers
 
-+ (void)saveCurrentApplicationBundlePath:(NSString *)dciPath {
++ (void)saveCurrentApplicationBundlePath:(NSString *)dyciPath {
 
-   NSString * filePathWithBundleInformation = [dciPath stringByAppendingPathComponent:@"bundle"];
+   NSString * filePathWithBundleInformation = [dyciPath stringByAppendingPathComponent:@"bundle"];
 
    NSString * mainBundlePath = [[NSBundle mainBundle] resourcePath];
    [mainBundlePath writeToFile:filePathWithBundleInformation
@@ -261,7 +244,9 @@ void swizzle(Class c, SEL orig, SEL new) {
          [self performInjectionWithClassesInSet:currentClassesSet];
          
       } else {
+
          NSLog(@"Couldn't load file Error : %s", err);
+
       }
 
       NSLog(@" ");
@@ -271,12 +256,6 @@ void swizzle(Class c, SEL orig, SEL new) {
 }
 
 
-#pragma mark - Swizzling
-
-+ (void)allowInjectionSubscriptionOnInitMethod {
-   swizzle([NSObject class], @selector(init), @selector(_swizzledInit));
-   swizzle([NSObject class], NSSelectorFromString(@"dealloc"), @selector(_swizzledDealloc));
-}
 
 
 @end

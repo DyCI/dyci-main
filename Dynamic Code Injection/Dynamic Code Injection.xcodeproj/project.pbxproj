@@ -20,7 +20,7 @@
 		E43041EC16221BB4001C62CF /* DCIDynamicView.m in Sources */ = {isa = PBXBuildFile; fileRef = E43041EB16221BB4001C62CF /* DCIDynamicView.m */; };
 		E4AEF8131634810300773CF9 /* SFFileWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = E4AEF80B1634810300773CF9 /* SFFileWatcher.m */; };
 		E4AEF8151634810300773CF9 /* SFDynamicCodeInjection.m in Sources */ = {isa = PBXBuildFile; fileRef = E4AEF8121634810300773CF9 /* SFDynamicCodeInjection.m */; };
-		EEDBE1946B820D8C3626056A /* NSObject+DCInjection.m in Sources */ = {isa = PBXBuildFile; fileRef = EEDBE758AA03415740637219 /* NSObject+DCInjection.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		EEDBE1946B820D8C3626056A /* NSObject+DyCInjection.m in Sources */ = {isa = PBXBuildFile; fileRef = EEDBE758AA03415740637219 /* NSObject+DyCInjection.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		EEDBE4CB0525F5FB354145D1 /* UIView+SFAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = EEDBE6F509EF17F180837C4A /* UIView+SFAdditions.m */; };
 		EEDBEC48E44AF14B3446126C /* NSSet+ClassesList.m in Sources */ = {isa = PBXBuildFile; fileRef = EEDBE6A125BAE1FA7C24058C /* NSSet+ClassesList.m */; };
 		EEDBEE954E90DA6074761722 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEDBE94A9A334B0A86981B21 /* QuartzCore.framework */; };
@@ -53,9 +53,9 @@
 		EEDBE530D55E5C8A9ADB6742 /* NSSet+ClassesList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSSet+ClassesList.h"; sourceTree = "<group>"; };
 		EEDBE6A125BAE1FA7C24058C /* NSSet+ClassesList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSSet+ClassesList.m"; sourceTree = "<group>"; };
 		EEDBE6F509EF17F180837C4A /* UIView+SFAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+SFAdditions.m"; sourceTree = "<group>"; };
-		EEDBE758AA03415740637219 /* NSObject+DCInjection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+DCInjection.m"; sourceTree = "<group>"; };
+		EEDBE758AA03415740637219 /* NSObject+DyCInjection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+DyCInjection.m"; sourceTree = "<group>"; };
 		EEDBE94A9A334B0A86981B21 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		EEDBEDDC1B6BC4E4C66574FC /* NSObject+DCInjection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+DCInjection.h"; sourceTree = "<group>"; };
+		EEDBEDDC1B6BC4E4C66574FC /* NSObject+DyCInjection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+DyCInjection.h"; sourceTree = "<group>"; };
 		EEDBEF0066D1CE5D9DA72403 /* SFUIViewMacroses.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFUIViewMacroses.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -159,8 +159,8 @@
 		E4AEF80E1634810300773CF9 /* Injections */ = {
 			isa = PBXGroup;
 			children = (
-				EEDBE758AA03415740637219 /* NSObject+DCInjection.m */,
-				EEDBEDDC1B6BC4E4C66574FC /* NSObject+DCInjection.h */,
+				EEDBE758AA03415740637219 /* NSObject+DyCInjection.m */,
+				EEDBEDDC1B6BC4E4C66574FC /* NSObject+DyCInjection.h */,
 			);
 			path = Injections;
 			sourceTree = "<group>";
@@ -247,7 +247,7 @@
 				EEDBE4CB0525F5FB354145D1 /* UIView+SFAdditions.m in Sources */,
 				E4AEF8131634810300773CF9 /* SFFileWatcher.m in Sources */,
 				E4AEF8151634810300773CF9 /* SFDynamicCodeInjection.m in Sources */,
-				EEDBE1946B820D8C3626056A /* NSObject+DCInjection.m in Sources */,
+				EEDBE1946B820D8C3626056A /* NSObject+DyCInjection.m in Sources */,
 				EEDBEC48E44AF14B3446126C /* NSSet+ClassesList.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -1,5 +1,5 @@
 //
-//  NSObject(DCInjection)
+//  NSObject+DyCInjection(DCInjection)
 //  Dynamic Code Injection
 //
 //  Created by Paul Taykalo on 10/21/12.
@@ -8,12 +8,13 @@
 #import <Foundation/Foundation.h>
 
 
-
 /*
  Methods that will be called on object, that are waiting for injection
  */
-@interface NSObject (DCInjection)
+@interface NSObject (DyCInjection)
 
+
++ (void)allowInjectionSubscriptionOnInitMethod;
 
 /*
   This method will be called in order to determine,
@@ -23,6 +24,9 @@
     _
     NS
     CF
+    Web
+    UI
+
   are skipped
 
   This behaviour can be changed in next releases

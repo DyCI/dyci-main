@@ -14,15 +14,16 @@
 + (NSMutableSet *)currentClassesSet {
    NSMutableSet * classesSet = [NSMutableSet set];
 
-   int previousNumClasses = objc_getClassList(NULL, 0);
-   Class * previousClasses = NULL;
-   if (previousNumClasses > 0) {
-      previousClasses = (Class *) malloc(sizeof(Class) * previousNumClasses);
-      previousNumClasses = objc_getClassList(previousClasses, previousNumClasses);
-      for (int i = 0; i < previousNumClasses; ++i) {
-         [classesSet addObject:[NSValue value:&previousClasses[i] withObjCType:@encode(Class)]];
+   int classesCount = objc_getClassList(NULL, 0);
+   Class * classes = NULL;
+   if (classesCount > 0) {
+      classes = (Class *) malloc(sizeof(Class) * classesCount);
+      classesCount = objc_getClassList(classes, classesCount);
+      for (int i = 0; i < classesCount; ++i) {
+         NSValue * wrappedClass = [NSValue value:&classes[i] withObjCType:@encode(Class)];
+         [classesSet addObject:wrappedClass];
       }
-      free(previousClasses);
+      free(classes);
    }
    return classesSet;
 }

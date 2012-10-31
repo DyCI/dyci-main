@@ -10,8 +10,19 @@
 
 @implementation SFFileWatcher {
 
+   /*
+   Date on what last changes was loaded
+    */
    NSDate *_lastLoadDate;
+
+   /*
+   Dispatching queue in which file watching operations will be performed
+    */
    dispatch_queue_t _queue;
+
+   /*
+    Dispatch source of file changes notifications
+    */
    dispatch_source_t _source;
 }
 
@@ -39,7 +50,7 @@
 
 - (void)setupHandlerOnFileChange:(NSString *)filePath {
 
-   // Resolving file descriptior
+   // Resolving file descriptor
    uintptr_t fd = (uintptr_t) open([filePath cStringUsingEncoding:NSUTF8StringEncoding], O_EVTONLY);
 
    // Setting up queued and source of dispatch events
@@ -74,7 +85,9 @@
    for (NSString * file in files) {
       NSString * filePath = [_watchingPath stringByAppendingPathComponent:file];
       NSDictionary * fileAttributes = [[NSFileManager defaultManager] attributesOfItemAtPath:filePath error:nil];
-      NSDate * fileCreationDate = [fileAttributes fileCreationDate]; //or
+      NSDate * fileCreationDate = [fileAttributes fileCreationDate];
+
+      // If new file has bigger creation date, then, let's notify our delegate about it
       NSTimeInterval diff = [_lastLoadDate timeIntervalSinceDate:fileCreationDate];
       if (diff < 0) {
          [self.delegate newFileWasFoundAtPath:filePath];

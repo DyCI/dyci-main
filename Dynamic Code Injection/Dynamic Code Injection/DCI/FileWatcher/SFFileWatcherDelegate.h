@@ -9,10 +9,17 @@
 #import <Foundation/Foundation.h>
 
 
+/*
+ Object that get notified by SFFileWatcher, when some files are changed in the
+ some directory
+ */
 @protocol SFFileWatcherDelegate<NSObject>
 
 @optional
 
+/*
+ This method will be called each time, when something changes in watching directory
+ */
 - (void)newFileWasFoundAtPath:(NSString *)filePath;
 
 @end

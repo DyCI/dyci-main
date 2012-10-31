@@ -8,9 +8,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import "DCIViewController.h"
-#import "DCIDynamicView.h"
 #import "UIView+SFAdditions.h"
-#import "SFDynamicCodeInjection.h"
 
 @interface DCIViewController ()<UIWebViewDelegate>
 
@@ -48,8 +46,11 @@
 
    _textLabel = [UILabel new];
    _textLabel.numberOfLines = 0;
-   _textLabel.text = @"COOLEST PART EVER:)";
-   [_textLabel setBackgroundColor:[UIColor magentaColor]];
+   _textLabel.text = @"Итиить колотить\n\n\n:)";
+   [_textLabel setBackgroundColor:[UIColor blueColor]];
+
+
+
 
    [self updateTextLabel:_textLabel];
    _textLabel.textAlignment = UITextAlignmentCenter;
@@ -93,6 +94,24 @@
 //   [webView loadRequest:[NSURLRequest requestWithURL:[[NSURL alloc] initWithString:@"http://stanfy.com.ua"]]];
 //   [[self view] addSubview:webView];
 
+//   UIButton * button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+//   [button setTitle:@"COOL" forState:UIControlStateNormal];
+//   button.width = 200;
+//   button.height = 100;
+//   [button addTarget:self action:@selector(cool) forControlEvents:UIControlEventTouchUpInside];
+//   [[self view] addSubview:button];
+
+
+}
+
+
+- (void)cool {
+  UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"COOL?"
+                                                       message:@"COOL!"
+                                                      delegate:nil
+                                             cancelButtonTitle:@"Cancel"
+                                             otherButtonTitles:nil];
+   [alertView show];
 }
 
 

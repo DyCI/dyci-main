@@ -10,7 +10,7 @@
 @interface NSSet (ClassesList)
 
 /*
-  Returns set of currentl registered classes, wrapped with NSValue
+  Returns set of currently registered classes, wrapped with NSValue
  */
 + (NSMutableSet *)currentClassesSet;
 

@@ -15,7 +15,6 @@
  */
 @interface SFFileWatcher : NSObject
 
-
 /*
  Path on which current watcher is watching
  */
