@@ -27,9 +27,9 @@ DIR="$( cd -P "$( dirname "$0" )" && pwd )"
 cd "${DIR}"
 
 echo "== Installing Dynamic framework"
-cd ../Real\ framework/Real\ Framework/
-sudo chmod +x ./install-dynamic.sh
-sudo ./install-dynamic.sh
+cd ../Dynamic\ Framework/
+sudo chmod +x ./install.sh
+sudo ./install.sh
 
 CLANG_USR_BIN=`xcode-select -print-path`/Toolchains/XcodeDefault.xctoolchain/usr/bin/
 CLANG_LOCATION=`xcode-select -print-path`/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang
@@ -56,7 +56,7 @@ echo -n "== Faking up clang : "
 log "sudo cp ${CLANG_BACKUP_LOCATION} ${CLANG_REAL_LOCATION}"
 sudo cp "${CLANG_BACKUP_LOCATION}" "${CLANG_REAL_LOCATION}"
 
-cd ../..
+cd ..
 
 #DCI-CLANG RIGHTS
 sudo chmod +x Scripts/dci-clang.py
