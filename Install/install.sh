@@ -25,11 +25,7 @@ function log () {
 DIR="$( cd -P "$( dirname "$0" )" && pwd )"
 # going to that directory
 cd "${DIR}"
-
-echo "== Installing Dynamic framework"
-cd ../Dynamic\ Framework/
-sudo chmod +x ./install.sh
-sudo ./install.sh
+cd ..
 
 CLANG_USR_BIN=`xcode-select -print-path`/Toolchains/XcodeDefault.xctoolchain/usr/bin/
 CLANG_LOCATION=`xcode-select -print-path`/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang
@@ -55,8 +51,6 @@ echo -n "== Faking up clang : "
 
 log "sudo cp ${CLANG_BACKUP_LOCATION} ${CLANG_REAL_LOCATION}"
 sudo cp "${CLANG_BACKUP_LOCATION}" "${CLANG_REAL_LOCATION}"
-
-cd ..
 
 #DCI-CLANG RIGHTS
 sudo chmod +x Scripts/dci-clang.py
