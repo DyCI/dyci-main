@@ -69,73 +69,73 @@
 
 
 
-   //Level #1
-   _textLabel.text =
-    @"If all went right\n"
-     "Then you were able to see small green dot\n"
-     "And this means that you can see this text\n"
-     "In your Iphone Simulator!\n"
-     "If not.. than make sure that you\n"
-     "Correctly installed DYCI\n"
-     "\n"
-     "Move to level #2";
-   [_textLabel sizeToFit];
-   _textLabel.width = textLabelWidth;
-   _textLabel.center = self.view.center;
+//   //Level #1
+//   _textLabel.text =
+//    @"If all went right\n"
+//     "Then you were able to see small green dot\n"
+//     "And this means that you can see this text\n"
+//     "In your Iphone Simulator!\n"
+//     "If not.. than make sure that you\n"
+//     "Correctly installed DYCI\n"
+//     "\n"
+//     "Move to level #2";
+//   [_textLabel sizeToFit];
+//   _textLabel.width = textLabelWidth;
+//   _textLabel.center = self.view.center;
 
 
+//   // Level #2
+//   _textLabel.text =
+//    @"Level #2\n"
+//     "You can add any code you want\n"
+//     "All methods will be updated immediately\n"
+//     "If you didn't uncommented webview delegate methods\n"
+//     "Uncomment them and Inject your code again\n"
+//     "\n"
+//     "Move to level #3";
+//   [_textLabel sizeToFit];
+//   _textLabel.width = textLabelWidth;
+//   _textLabel.center = self.view.center;
+//
+//   UIWebView * webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 200)];
+//   webView.delegate = self;
+//   webView.alpha = 0.5;
+//   [webView loadRequest:[NSURLRequest requestWithURL:[[NSURL alloc] initWithString:@"http://dyci.github.com/dyci-main/"]]];
+//   webView.scalesPageToFit = YES;
+//   [[self view] addSubview:webView];
 
-   // Level #2
-   _textLabel.text =
-    @"Level #2\n"
-     "You can add any code you want\n"
-     "All methods will be updated immediately\n"
-     "If you didn't uncommented webview delegate methods\n"
-     "Uncomment them and Inject your code again\n"
-     "\n"
-     "Move to level #3";
-   [_textLabel sizeToFit];
-   _textLabel.width = textLabelWidth;
-   _textLabel.center = self.view.center;
 
-   UIWebView * webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 200)];
-   webView.delegate = self;
-   webView.alpha = 0.5;
-   [webView loadRequest:[NSURLRequest requestWithURL:[[NSURL alloc] initWithString:@"http://dyci.github.com/dyci-main/"]]];
-   webView.scalesPageToFit = YES;
-   [[self view] addSubview:webView];
+//   // Level #3
+//   _textLabel.text =
+//    @"Level #3\n"
+//     "There's one thing you need to know\n"
+//     "You can add any code, and any methods\n"
+//     "And all will be fine\n"
+//     "Even debugger will understand that you're using new code\n"
+//     "But there's a little problem with methods removing\n"
+//     "Try to remove UIWebView delegate methods\n"
+//     "\n"
+//     "Move to level #4";
+//   [_textLabel sizeToFit];
+//   _textLabel.width = textLabelWidth;
+//   _textLabel.center = self.view.center;
 
 
-   // Level #3
-   _textLabel.text =
-    @"Level #3\n"
-     "There's one thing you need to know\n"
-     "You can add any code, and any methods\n"
-     "And all will be fine\n"
-     "Even debugger will understand that you're using new code\n"
-     "But there's a little problem with methods removing\n"
-     "Try to remove UIWebView delegate methods\n"
-     "\n"
-     "Move to level #4";
-   [_textLabel sizeToFit];
-   _textLabel.width = textLabelWidth;
-   _textLabel.center = self.view.center;
-
-   // Level #4
-   _textLabel.text =
-    @"Level #4\n"
-     "As you can see (hopefully)\n"
-     "Delegate methode are still being called\n"
-     "It's because of\n"
-     "One does not simply remove methods in Objective-C 2.0\n"
-     "If you know how to do it:)\n"
-     "You can find us on Github\n"
-     "In the \"worst\" case.. Just start your app again:)"
-     "\n"
-     "That's all folks! Have fun with dyci:)!";
-   [_textLabel sizeToFit];
-   _textLabel.width = textLabelWidth;
-   _textLabel.center = self.view.center;
+//   // Level #4
+//   _textLabel.text =
+//    @"Level #4\n"
+//     "As you can see (hopefully)\n"
+//     "Delegate methode are still being called\n"
+//     "It's because of\n"
+//     "One does not simply remove methods in Objective-C 2.0\n"
+//     "If you know how to do it:)\n"
+//     "You can find us on Github\n"
+//     "In the \"worst\" case.. Just start your app again:)"
+//     "\n"
+//     "That's all folks! Have fun with dyci:)!";
+//   [_textLabel sizeToFit];
+//   _textLabel.width = textLabelWidth;
+//   _textLabel.center = self.view.center;
 
 
    UIView * textLabelMessageBackground = [UIView new];
