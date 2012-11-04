@@ -181,7 +181,7 @@
 
 - (void)flushUIImageCache {
 #warning Fix this
-   [UIImage performSelector:@selector(_flushSharedImageCache)];
+   [NSClassFromString(@"UIImage") performSelector:@selector(_flushSharedImageCache)];
 
 }
 

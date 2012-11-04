@@ -1,8 +1,8 @@
 //
 //  main.m
-//  Dynamic Code Injection
+//  dyci-example
 //
-//  Created by Paul Taykalo on 10/7/12.
+//  Created by Paul Taykalo on 11/4/12.
 //  Copyright (c) 2012 Stanfy. All rights reserved.
 //
 
