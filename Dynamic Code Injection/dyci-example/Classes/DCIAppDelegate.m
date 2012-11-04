@@ -10,7 +10,6 @@
 #import "DCIAppDelegate.h"
 
 #import "DCIViewController.h"
-#import "SFDynamicCodeInjection.h"
 
 
 
@@ -18,8 +17,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
-   [SFDynamicCodeInjection enable];
-
+   // Don't want any import ever :)
+   Class DYCIClass = NSClassFromString(@"SFDynamicCodeInjection");
+   [DYCIClass performSelector:NSSelectorFromString(@"enable")];
+   
    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.viewController = [[DCIViewController alloc] initWithNibName:nil bundle:nil];
