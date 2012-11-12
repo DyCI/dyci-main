@@ -7,13 +7,13 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleExecutable</key>
-	<string>SFDCIHelper</string>
+	<string>SFDYCIPlugin</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.stanfy.SFDCIHelper</string>
+	<string>com.stanfy.SFDYCIPlugin</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>SFDCIHelper</string>
+	<string>SFDYCIPlugin</string>
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
@@ -35,7 +35,7 @@
 	<key>DTXcodeBuild</key>
 	<string>4G1004</string>
 	<key>NSPrincipalClass</key>
-	<string>SFDCIHelper</string>
+	<string>SFDYCIHelper</string>
 	<key>XC4Compatible</key>
 	<true/>
 	<key>XCGCReady</key>

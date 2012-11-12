@@ -1,5 +1,5 @@
 //
-//  DCIViewController.m
+//  DYCIViewController.m
 //  Dynamic Code Injection
 //
 //  Created by Paul Taykalo on 10/7/12.
@@ -7,15 +7,15 @@
 //
 
 #import <QuartzCore/QuartzCore.h>
-#import "DCIViewController.h"
+#import "DYCIViewController.h"
 #import "UIView+SFAdditions.h"
 
-@interface DCIViewController ()<UIWebViewDelegate>
+@interface DYCIViewController ()<UIWebViewDelegate>
 
 @end
 
 
-@implementation DCIViewController {
+@implementation DYCIViewController {
 
    UILabel * _textLabel;
    UILabel * _topLabel;
@@ -54,7 +54,7 @@
    [_textLabel setBackgroundColor:[UIColor clearColor]];
    _textLabel.text =
     @"Hi there!\n"
-     "Seems you've been able to run DICY project!\n"
+     "Seems you've been able to run DYCI project!\n"
      "Congratulations\n"
      "The most hard work is already done.\n"
      "First, make sure you're installed DYCI\n"
@@ -179,7 +179,7 @@ These methods
 - (void)updateOnClassInjection
 - (void)updateOnResourceInjection:(NSString *)resourcePath
 
-Will be called on EACH instance of this class (DCIViewController) when new class logic will be available
+Will be called on EACH instance of this class (DYCIViewController) when new class logic will be available
 Actually in case, if you can each time recreate new object, you don't need these two methods
 But, it case, if you need to update objects that are ALREADY in memory, you should use the,
 

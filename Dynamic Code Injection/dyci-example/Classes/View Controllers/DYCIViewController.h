@@ -1,5 +1,5 @@
 //
-//  DCIViewController.h
+//  DYCIViewController.h
 //  Dynamic Code Injection
 //
 //  Created by Paul Taykalo on 10/7/12.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DCIViewController : UIViewController
+@interface DYCIViewController : UIViewController
 
 @end

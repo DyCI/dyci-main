@@ -1,5 +1,5 @@
 //
-//  DCIAppDelegate.h
+//  DYCIAppDelegate.h
 //  Dynamic Code Injection
 //
 //  Created by Paul Taykalo on 10/7/12.
@@ -8,12 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@class DCIViewController;
+@class DYCIViewController;
 
-@interface DCIAppDelegate : UIResponder <UIApplicationDelegate>
+@interface DYCIAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
-@property (strong, nonatomic) DCIViewController *viewController;
+@property (strong, nonatomic) DYCIViewController *viewController;
 
 @end

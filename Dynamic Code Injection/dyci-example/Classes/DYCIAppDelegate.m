@@ -1,5 +1,5 @@
 //
-//  DCIAppDelegate.m
+//  DYCIAppDelegate.m
 //  Dynamic Code Injection
 //
 //  Created by Paul Taykalo on 10/7/12.
@@ -7,13 +7,13 @@
 //
 
 #import <objc/runtime.h>
-#import "DCIAppDelegate.h"
+#import "DYCIAppDelegate.h"
 
-#import "DCIViewController.h"
+#import "DYCIViewController.h"
 
 
 
-@implementation DCIAppDelegate
+@implementation DYCIAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
@@ -23,7 +23,7 @@
    
    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-    self.viewController = [[DCIViewController alloc] initWithNibName:nil bundle:nil];
+    self.viewController = [[DYCIViewController alloc] initWithNibName:nil bundle:nil];
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
 

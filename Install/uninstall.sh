@@ -29,8 +29,8 @@ cd "${DIR}"
 USER_HOME=$(eval echo ~${SUDO_USER})
 log "USER_HOME = ${USER_HOME}"
 
-DCI_ROOT_DIR="${USER_HOME}/.dci"
-log "DCI_ROOT_DIR='${USER_HOME}/.dci'" 
+DYCI_ROOT_DIR="${USER_HOME}/.dyci"
+log "DYCI_ROOT_DIR='${USER_HOME}/.dyci'" 
 
 CLANG_USR_BIN=`xcode-select -print-path`/Toolchains/XcodeDefault.xctoolchain/usr/bin/
 CLANG_LOCATION=`xcode-select -print-path`/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang
@@ -38,10 +38,10 @@ CLANG_BACKUP_LOCATION=$CLANG_LOCATION.backup
 CLANG_REAL_LOCATION=$CLANG_LOCATION-real
 
 echo
-echo "======== Revertin clang from backup ======="
+echo "======== Reverting clang from backup ======="
 
 if [[ ! -f ${CLANG_BACKUP_LOCATION} ]]; then
-	echo "== Hm... no clang backup. Was DCI really installed?"
+	echo "== Hm... no clang backup. Was DYCI really installed?"
 	echo 
 else
     echo -n '== Restoring clang from backup : ' 
@@ -62,12 +62,25 @@ else
 	    echo "Done."
 
 	    echo -n "== Removing indexes : "
-	    log "sudo rm -r ${DCI_ROOT_DIR}"
-	    sudo rm -r "${DCI_ROOT_DIR}"
+	    log "sudo rm -r ${DYCI_ROOT_DIR}"
+	    sudo rm -r "${DYCI_ROOT_DIR}"
 	    echo "Done."
 
-	    echo "== DCI was successfully uninstalled."
+	    echo "== DYCI was successfully uninstalled."
 	    echo
 	fi
 fi
+
+echo
+echo "======== Removing DYCI Xcode plugin ======="
+DYCI_XCODE_PLUGIN_DIR="${USER_HOME}/Library/Application Support/Developer/Shared/Xcode/Plug-ins/SFDYCIPlugin.xcplugin"
+if [[ -d  "${DYCI_XCODE_PLUGIN_DIR}" ]]; then
+    log "sudo rm -r ${DYCI_XCODE_PLUGIN_DIR}"
+    sudo rm -r "${DYCI_XCODE_PLUGIN_DIR}"
+else
+	echo "== Hm... no DYCI plugin found. Was DYCI really installed?"
+	echo 
+fi
+
+
 

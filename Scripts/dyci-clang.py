@@ -11,7 +11,7 @@ from sys import stdout, stderr
 #print('Input args is [' + ' '.join(sys.argv[1:]) + ']')
 
 #loading old params
-indexFileLocation = os.path.expanduser('~/.dci/index/')
+indexFileLocation = os.path.expanduser('~/.dyci/index/')
 clangParams = parseClangCompileParams(sys.argv[1:])
 className = clangParams['class']
 

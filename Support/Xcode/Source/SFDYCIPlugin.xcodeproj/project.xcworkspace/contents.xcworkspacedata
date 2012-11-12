@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:SFDCIHelper.xcodeproj">
+      location = "self:SFDYCIPlugin.xcodeproj">
    </FileRef>
 </Workspace>

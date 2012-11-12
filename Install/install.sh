@@ -43,7 +43,7 @@ if [[ ! -f ${CLANG_BACKUP_LOCATION} ]]; then
   echo "Done."
 else
   echo "Skipped."
-  echo "   Seems dci-clang has already been installed"
+  echo "   Seems dyci-clang has already been installed"
   log "Backup is at : ${CLANG_BACKUP_LOCATION}"
 fi
 
@@ -52,14 +52,14 @@ echo -n "== Faking up clang : "
 log "sudo cp ${CLANG_BACKUP_LOCATION} ${CLANG_REAL_LOCATION}"
 sudo cp "${CLANG_BACKUP_LOCATION}" "${CLANG_REAL_LOCATION}"
 
-#DCI-CLANG RIGHTS
-sudo chmod +x Scripts/dci-clang.py
-sudo chmod +x Scripts/dci-recompile.py
+#DYCI-CLANG RIGHTS
+sudo chmod +x Scripts/dyci-clang.py
+sudo chmod +x Scripts/dyci-recompile.py
 
-log "sudo cp Scripts/dci-clang.py ${CLANG_LOCATION}"
+log "sudo cp Scripts/dyci-clang.py ${CLANG_LOCATION}"
 log "sudo cp Scripts/clangParams.py ${CLANG_USR_BIN}"
 
-sudo cp Scripts/dci-clang.py "${CLANG_LOCATION}"
+sudo cp Scripts/dyci-clang.py "${CLANG_LOCATION}"
 sudo cp Scripts/clangParams.py "${CLANG_USR_BIN}"
 
 echo "Done."
@@ -67,20 +67,20 @@ echo "Done."
 USER_HOME=$(eval echo ~${SUDO_USER})
 log "USER_HOME = ${USER_HOME}"
 
-DCI_ROOT_DIR="${USER_HOME}/.dci"
-log "DCI_ROOT_DIR='${USER_HOME}/.dci'" 
+DYCI_ROOT_DIR="${USER_HOME}/.dyci"
+log "DYCI_ROOT_DIR='${USER_HOME}/.dyci'" 
 
-echo -n "== Preparing dci-recompile : "
-log "if [[ ! -d ${DCI_ROOT_DIR}/index ]]; then"
-if [[ ! -d "${DCI_ROOT_DIR}/index" ]]; then
+echo -n "== Preparing dyci-recompile : "
+log "if [[ ! -d ${DYCI_ROOT_DIR}/index ]]; then"
+if [[ ! -d "${DYCI_ROOT_DIR}/index" ]]; then
 
-  sudo mkdir -p "${DCI_ROOT_DIR}/index"
-  sudo mkdir -p "${DCI_ROOT_DIR}/scripts"
+  sudo mkdir -p "${DYCI_ROOT_DIR}/index"
+  sudo mkdir -p "${DYCI_ROOT_DIR}/scripts"
 
   # not sure about this really
-  sudo chmod 777 "${DCI_ROOT_DIR}"
-  sudo chmod 777 "${DCI_ROOT_DIR}/index"
-  sudo chmod 777 "${DCI_ROOT_DIR}/scripts"
+  sudo chmod 777 "${DYCI_ROOT_DIR}"
+  sudo chmod 777 "${DYCI_ROOT_DIR}/index"
+  sudo chmod 777 "${DYCI_ROOT_DIR}/scripts"
   echo "Done."
 else
   echo "Skipped. (Already prepared)."  
@@ -89,14 +89,14 @@ fi
 #Copying scripts
 echo -n "== Copying scripts : "
 
-sudo cp Scripts/dci-recompile.py "${DCI_ROOT_DIR}/scripts/"
-sudo cp Scripts/clangParams.py "${DCI_ROOT_DIR}/scripts/"
+sudo cp Scripts/dyci-recompile.py "${DYCI_ROOT_DIR}/scripts/"
+sudo cp Scripts/clangParams.py "${DYCI_ROOT_DIR}/scripts/"
 
 echo "Done."
 
 
 if [[ -d "${USER_HOME}/Library/Preferences/appCode10" ]]; then
-  echo -n "== AppCode found. Installing DCI as AppCode external tool : "
+  echo -n "== AppCode found. Installing DYCI as AppCode external tool : "
 
   if [[ ! -d "${USER_HOME}/Library/Preferences/appCode10/tools" ]]; then
      mkdir -p "${USER_HOME}/Library/Preferences/appCode10/tools"
@@ -105,9 +105,9 @@ if [[ -d "${USER_HOME}/Library/Preferences/appCode10" ]]; then
   log "sudo cp Support/AppCode/Dynamic Code Injection.xml ${USER_HOME}/Library/Preferences/appCode10/tools/"
   sudo cp Support/AppCode/Dynamic\ Code\ Injection.xml "${USER_HOME}/Library/Preferences/appCode10/tools/"
 
-  DCITOOL="${USER_HOME}/Library/Preferences/appCode10/tools/Dynamic Code Injection.xml"
-  _scriptsDir="${DCI_ROOT_DIR}/scripts"
-  _script=${_scriptsDir}/dci-recompile.py
+  DYCITOOL="${USER_HOME}/Library/Preferences/appCode10/tools/Dynamic Code Injection.xml"
+  _scriptsDir="${DYCI_ROOT_DIR}/scripts"
+  _script=${_scriptsDir}/dyci-recompile.py
 
  
   ## Escape path for sed using bash find and replace 
@@ -116,25 +116,25 @@ if [[ -d "${USER_HOME}/Library/Preferences/appCode10" ]]; then
 
  
   # replace __RECOMPILE_SCRIPT_DIRECTORY__ in XML
-  sudo sed -e "s/__RECOMPILE_SCRIPT_DIRECTORY__/${_scriptsDir}/" "${DCITOOL}" > "${DCITOOL}_TMP" && mv "${DCITOOL}_TMP" "${DCITOOL}"
-  sudo sed -e "s/__RECOMPILE_SCRIPT__/${_script}/" "${DCITOOL}"               > "${DCITOOL}_TMP" && mv "${DCITOOL}_TMP" "${DCITOOL}"
+  sudo sed -e "s/__RECOMPILE_SCRIPT_DIRECTORY__/${_scriptsDir}/" "${DYCITOOL}" > "${DYCITOOL}_TMP" && mv "${DYCITOOL}_TMP" "${DYCITOOL}"
+  sudo sed -e "s/__RECOMPILE_SCRIPT__/${_script}/" "${DYCITOOL}"               > "${DYCITOOL}_TMP" && mv "${DYCITOOL}_TMP" "${DYCITOOL}"
 
   echo "Done."
 
 fi
 
-echo -n "== Installing Xcode DCI plugin : "
+echo -n "== Installing Xcode DYCI plugin : "
 if [[ ! -d "${USER_HOME}/Library/Application Support/Developer/Shared/Xcode/Plug-ins" ]]; then
     mkdir -p "${USER_HOME}/Library/Application Support/Developer/Shared/Xcode/Plug-ins"
 fi
 
 cp -R Support/Xcode/Binary/*.* "${USER_HOME}/Library/Application Support/Developer/Shared/Xcode/Plug-ins/"
 echo Done. 
-echo "  Now you can use DCI from the Xcode :P (^X)"
+echo "  Now you can use DYCI from the Xcode :P (^X)"
 
 
 echo
-echo "DCI was successfully installed!"
+echo "DYCI was successfully installed!"
 echo
 
 

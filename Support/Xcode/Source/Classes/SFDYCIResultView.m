@@ -1,26 +1,16 @@
 //
-//  SFDCIResultView.m
-//  SFDCIHelper
+//  SFDYCIResultView.m
+//  SFDYCIHelper
 //
 //  Created by Paul Taykalo on 10/14/12.
 //
 //
 
-#import "SFDCIResultView.h"
+#import "SFDYCIResultView.h"
 
-@implementation SFDCIResultView
+@implementation SFDYCIResultView
 
 @synthesize success = _success;
-
-- (id)initWithFrame:(NSRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code here.
-    }
-    
-    return self;
-}
 
 - (void)drawRect:(NSRect)dirtyRect
 {
@@ -38,17 +28,13 @@
    [shadow setShadowOffset: NSMakeSize(0, 0)];
    [shadow setShadowBlurRadius: 5];
    
-   
    //// Oval Drawing
    NSBezierPath* ovalPath = [NSBezierPath bezierPathWithOvalInRect: NSMakeRect(0, 0, 50, 50)];
    [gradient drawInBezierPath: ovalPath angle: -90];
    
-   
-   
    //// Oval 2 Drawing
    NSBezierPath* oval2Path = [NSBezierPath bezierPathWithOvalInRect: NSMakeRect(6, 6, 37, 37)];
    [gradient2 drawInBezierPath: oval2Path angle: -90];
-   
    
    
    //// Oval 3 Drawing

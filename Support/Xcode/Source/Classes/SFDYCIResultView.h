@@ -1,6 +1,6 @@
 //
-//  SFDCIResultView.h
-//  SFDCIHelper
+//  SFDYCIResultView.h
+//  SFDYCIHelper
 //
 //  Created by Paul Taykalo on 10/14/12.
 //
@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface SFDCIResultView : NSView {
+@interface SFDYCIResultView : NSView {
    
    BOOL _success;
    

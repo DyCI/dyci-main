@@ -1,6 +1,6 @@
 //
-//  SFDCIHelper.h
-//  SFDCIHelper
+//  SFDYCIHelper.h
+//  SFDYCIHelper
 //
 //  Created by Paul Taykalo on 09/07/12.
 //
@@ -10,7 +10,7 @@
 #import <AppKit/AppKit.h>
 
 
-@interface SFDCIHelper : NSObject {
+@interface SFDYCIHelper : NSObject {
 	
 }
 

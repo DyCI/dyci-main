@@ -1,16 +1,16 @@
 //
-//  SFDCIHelper.m
-//  SFDCIHelper
+//  SFDYCIHelper.m
+//  SFDYCIHelper
 //
 //  Created by Paul Taykalo on 09/07/12.
 //
 //
 
-#import "SFDCIHelper.h"
-#import "SFDCIResultView.h"
+#import "SFDYCIHelper.h"
+#import "SFDYCIResultView.h"
 
 
-@implementation SFDCIHelper
+@implementation SFDYCIHelper
 
 #pragma mark - Plugin Initialization
 
@@ -25,10 +25,13 @@
 
 - (id)init {
    if (self = [super init]) {
-      [[NSNotificationCenter defaultCenter] addObserver:self
-                                               selector:@selector(applicationDidFinishLaunching:)
-                                                   name:NSApplicationDidFinishLaunchingNotification
-                                                 object:nil];
+      NSNotificationCenter * notificationCenter = [NSNotificationCenter defaultCenter];
+
+      // Waiting for application start
+      [notificationCenter addObserver:self
+                             selector:@selector(applicationDidFinishLaunching:)
+                                 name:NSApplicationDidFinishLaunchingNotification
+                               object:nil];
    }
    return self;
 }
@@ -39,10 +42,10 @@
    NSMenuItem * runMenuItem = [[NSApp mainMenu] itemWithTitle:@"Product"];
    if (runMenuItem) {
       
-      NSMenu * submenu = [runMenuItem submenu];
+      NSMenu * subMenu = [runMenuItem submenu];
       
       // Adding separator
-      [submenu addItem:[NSMenuItem separatorItem]];
+      [subMenu addItem:[NSMenuItem separatorItem]];
       
       // Adding inject item
       NSMenuItem * recompileAndInjectMenuItem =
@@ -51,7 +54,7 @@
                            keyEquivalent:@"x"] autorelease];
       [recompileAndInjectMenuItem setKeyEquivalentModifierMask:NSControlKeyMask];
       [recompileAndInjectMenuItem setTarget:self];
-      [submenu addItem:recompileAndInjectMenuItem];
+      [subMenu addItem:recompileAndInjectMenuItem];
       
    }
    
@@ -60,6 +63,7 @@
 #pragma mark - Preferences
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem {
+   // TODO : We need correct checks, when we can use Ibject, and where we cannot
    // Validate when we need to be called
    //   if ([menuItem action] == @selector(recompileAndInject:)) {
    //      NSResponder * firstResponder = [[NSApp keyWindow] firstResponder];
@@ -79,36 +83,47 @@
    NSLog(@"Yupee :)");
    NSResponder * firstResponder = [[NSApp keyWindow] firstResponder];
    NSLog(@"firstResponder = %@", firstResponder);
-   
+
+
+   // Searching our IDEEditorContext
+   // This class has information about URL of file that being edited
+
    while (firstResponder) {
       firstResponder = [firstResponder nextResponder];
+
       if ([firstResponder isKindOfClass:NSClassFromString(@"IDEEditorContext")]) {
-         
-         NSURL * fileUrl = [firstResponder valueForKeyPath:@"editor.document.fileURL"];
-         
-         
+
+         // Resolving currently opened file
+         NSURL * openedFileURL = [firstResponder valueForKeyPath:@"editor.document.fileURL"];
+
+
+         // Setting up task, that we are going to call
+
+
+         // TODO : run task in another thread, and check if one is currenlty being running
          NSTask * task = [[NSTask alloc] init];
-         
          [task setLaunchPath:@"/usr/bin/python"];
-         NSString * dciDirectoryPath = [@"~" stringByExpandingTildeInPath];
-         dciDirectoryPath = [dciDirectoryPath stringByAppendingPathComponent:@".dci"];
-         dciDirectoryPath = [dciDirectoryPath stringByAppendingPathComponent:@"scripts"];
-         
-         [task setCurrentDirectoryPath:dciDirectoryPath];
-         
-         NSString * dciRecompile = [dciDirectoryPath stringByAppendingPathComponent:@"dci-recompile.py"];
-         
-         NSArray * arguments = [NSArray arrayWithObjects:dciRecompile, [fileUrl path], nil];
+         NSString * dyciDirectoryPath = [@"~" stringByExpandingTildeInPath];
+         dyciDirectoryPath = [dyciDirectoryPath stringByAppendingPathComponent:@".dyci"];
+         dyciDirectoryPath = [dyciDirectoryPath stringByAppendingPathComponent:@"scripts"];
+
+         [task setCurrentDirectoryPath:dyciDirectoryPath];
+
+         NSString * dyciRecompile = [dyciDirectoryPath stringByAppendingPathComponent:@"dyci-recompile.py"];
+
+         NSArray * arguments = [NSArray arrayWithObjects:dyciRecompile, [openedFileURL path], nil];
          [task setArguments:arguments];
-         
+
+
+         // Setting up pipes for standart and error outputs
          NSPipe * outputPipe = [NSPipe pipe];
-         [task setStandardOutput:outputPipe];
-         NSPipe * errorPipe = [NSPipe pipe];
-         [task setStandardError:errorPipe];
-         
          NSFileHandle * outputFile = [outputPipe fileHandleForReading];
+         [task setStandardOutput:outputPipe];
+
+         NSPipe * errorPipe = [NSPipe pipe];
          NSFileHandle * errorFile = [errorPipe fileHandleForReading];
-         
+         [task setStandardError:errorPipe];
+
          [task launch];
          
          NSData * outputData = [outputFile readDataToEndOfFile];
@@ -120,8 +135,9 @@
          NSString * errorString = [[[NSString alloc] initWithData:errorData encoding:NSUTF8StringEncoding] autorelease];
          NSLog(@"script returned ERROR:\n%@", errorString);
 
-         SFDCIResultView * resultView = [[[SFDCIResultView alloc] initWithFrame:NSMakeRect(0, 0, 100, 100)] autorelease];
+         SFDYCIResultView * resultView = [[[SFDYCIResultView alloc] initWithFrame:NSMakeRect(0, 0, 100, 100)] autorelease];
 
+         // TODO : Need to add correct notifaction if something went wrong
          if (task.terminationStatus != 0) {
             NSAlert * alert = [[[NSAlert alloc] init] autorelease];
             [alert addButtonWithTitle:@"OK"];
@@ -141,11 +157,14 @@
          [[[NSApp keyWindow] contentView] addSubview:resultView];
          resultView.alphaValue = 0.0;
          
-         
+
          [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
+
             context.duration = 1;
             [[resultView animator] setAlphaValue:1.0];
+
          } completionHandler:^{
+
             [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
                context.duration = 1;
                [[resultView animator] setAlphaValue:0.0];
@@ -154,6 +173,7 @@
             }];
             
          }];
+
          [task release];
          
       }
@@ -162,7 +182,7 @@
 }
 
 
-#pragma mark -
+#pragma mark - Dealloc
 
 - (void)dealloc {
    [[NSNotificationCenter defaultCenter] removeObserver:self];

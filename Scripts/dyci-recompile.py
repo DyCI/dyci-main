@@ -27,11 +27,11 @@ def removeDynamicLibsFromDirectory(dir):
             else:
                 os.unlink(path)
 #----------------------------------------------------------------------------------
-def copyResource(source, dci):
+def copyResource(source, dyci):
     try:
-       fileHandle = open( dci + '/bundle', 'r' )
+       fileHandle = open( dyci + '/bundle', 'r' )
     except IOError as e:
-       stderr.write("Error when tried to copy resource :( Cannot find file at " + dci + '/bundle')
+       stderr.write("Error when tried to copy resource :( Cannot find file at " + dyci + '/bundle')
        exit(1)
 
     bundlePath = fileHandle.read()
@@ -41,10 +41,10 @@ def copyResource(source, dci):
     stdout.write("File " + source + " was successfully copied to application")
 
     try:
-       fileHandle = open( dci + '/resource', 'w' )
+       fileHandle = open( dyci + '/resource', 'w' )
        fileHandle.write(source)
     except IOError as e:
-       stderr.write("Error when tried to write to file " + dci + '/resource')
+       stderr.write("Error when tried to write to file " + dyci + '/resource')
        exit(1)
 
     fileHandle.close()
@@ -54,7 +54,7 @@ def copyResource(source, dci):
 #----------------------------------------------------------------------------------
 
 
-DCI_ROOT_DIR = os.path.expanduser('~/.dci')
+DYCI_ROOT_DIR = os.path.expanduser('~/.dyci')
 
 args = sys.argv
 
@@ -66,14 +66,14 @@ except:
     exit(1)
 
 # In case of resources..
-if filename[-4:] == ".png" or filename[-4:] == ".jpg" or filename[-5:] == ".jpeg": copyResource(filename, DCI_ROOT_DIR)
+if filename[-4:] == ".png" or filename[-4:] == ".jpg" or filename[-5:] == ".jpeg": copyResource(filename, DYCI_ROOT_DIR)
 
 # In case of header files
 # In some cases you need be able to recompile M file, when you are in header
 if filename[-2:] == ".h": filename = os.path.splitext(filename)[0] + ".m"
 
 # loading it's params from the file
-indexFileLocation = DCI_ROOT_DIR + '/index/' + hashlib.md5(filename).hexdigest()
+indexFileLocation = DYCI_ROOT_DIR + '/index/' + hashlib.md5(filename).hexdigest()
 
 
 params = []
@@ -123,10 +123,10 @@ if process.returncode != 0:
 clangParams = parseClangCompileParams(params)
 
 #removing old library
-removeDynamicLibsFromDirectory(DCI_ROOT_DIR)
+removeDynamicLibsFromDirectory(DYCI_ROOT_DIR)
 
 #creating new random name wor the dynamic library
-libraryName = "dci%s.dylib" % random.randint(0, 10000000)
+libraryName = "dyci%s.dylib" % random.randint(0, 10000000)
 
 # {'class':className,
 #        'object':objectCompilation,
@@ -165,7 +165,7 @@ linkArgs = \
 + ["-current_version"]\
 + ["5"]\
 + ["-o"]\
-+ [DCI_ROOT_DIR + "/" + libraryName]
++ [DYCI_ROOT_DIR + "/" + libraryName]
 #       + ['-v']
 
 #print "Linker arks \n%s" % ' '.join(linkArgs)

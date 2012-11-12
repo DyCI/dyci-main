@@ -15,10 +15,10 @@
 		E408682C16469A410002D2ED /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = E408682416469A410002D2ED /* Default.png */; };
 		E408682D16469A410002D2ED /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E408682516469A410002D2ED /* Default@2x.png */; };
 		E408682E16469A410002D2ED /* dyci-example-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E408682716469A410002D2ED /* dyci-example-Info.plist */; };
-		E408683816469AC10002D2ED /* DCIAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E408683016469AC10002D2ED /* DCIAppDelegate.m */; };
-		E408683A16469AC10002D2ED /* DCIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E408683416469AC10002D2ED /* DCIViewController.m */; };
+		E408683816469AC10002D2ED /* DYCIAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E408683016469AC10002D2ED /* DYCIAppDelegate.m */; };
+		E408683A16469AC10002D2ED /* DYCIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E408683416469AC10002D2ED /* DYCIViewController.m */; };
 		E408683B16469AC10002D2ED /* UIView+SFAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = E408683716469AC10002D2ED /* UIView+SFAdditions.m */; };
-		E408683D16469B2D0002D2ED /* libdyci.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E408683C16469B2D0002D2ED /* libdyci.a */; };
+		E40921021650323600C08202 /* libdyci.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E40921011650323600C08202 /* libdyci.a */; };
 		EEDBEBBA039CA0E6F59A51E2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEDBE397C533FEA0A9DCB8E7 /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
@@ -33,14 +33,14 @@
 		E408682516469A410002D2ED /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		E408682716469A410002D2ED /* dyci-example-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "dyci-example-Info.plist"; sourceTree = "<group>"; };
 		E408682816469A410002D2ED /* dyci-example-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "dyci-example-Prefix.pch"; sourceTree = "<group>"; };
-		E408682F16469AC10002D2ED /* DCIAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCIAppDelegate.h; sourceTree = "<group>"; };
-		E408683016469AC10002D2ED /* DCIAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCIAppDelegate.m; sourceTree = "<group>"; };
-		E408683316469AC10002D2ED /* DCIViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCIViewController.h; sourceTree = "<group>"; };
-		E408683416469AC10002D2ED /* DCIViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCIViewController.m; sourceTree = "<group>"; };
+		E408682F16469AC10002D2ED /* DYCIAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DYCIAppDelegate.h; sourceTree = "<group>"; };
+		E408683016469AC10002D2ED /* DYCIAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DYCIAppDelegate.m; sourceTree = "<group>"; };
+		E408683316469AC10002D2ED /* DYCIViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DYCIViewController.h; sourceTree = "<group>"; };
+		E408683416469AC10002D2ED /* DYCIViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DYCIViewController.m; sourceTree = "<group>"; };
 		E408683516469AC10002D2ED /* SFUIViewMacroses.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFUIViewMacroses.h; sourceTree = "<group>"; };
 		E408683616469AC10002D2ED /* UIView+SFAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+SFAdditions.h"; sourceTree = "<group>"; };
 		E408683716469AC10002D2ED /* UIView+SFAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+SFAdditions.m"; sourceTree = "<group>"; };
-		E408683C16469B2D0002D2ED /* libdyci.a */ = {isa = PBXFileReference; lastKnownFileType = file; name = libdyci.a; path = "../dyci/build/Release-iphoneos/libdyci.a"; sourceTree = "<group>"; };
+		E40921011650323600C08202 /* libdyci.a */ = {isa = PBXFileReference; lastKnownFileType = file; name = libdyci.a; path = "../dyci/build/Release-iphoneos/libdyci.a"; sourceTree = "<group>"; };
 		EEDBE397C533FEA0A9DCB8E7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -49,7 +49,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E408683D16469B2D0002D2ED /* libdyci.a in Frameworks */,
+				E40921021650323600C08202 /* libdyci.a in Frameworks */,
 				E4086802164699E30002D2ED /* UIKit.framework in Frameworks */,
 				E4086804164699E30002D2ED /* Foundation.framework in Frameworks */,
 				E4086806164699E30002D2ED /* CoreGraphics.framework in Frameworks */,
@@ -82,7 +82,7 @@
 		E4086800164699E30002D2ED /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				E408683C16469B2D0002D2ED /* libdyci.a */,
+				E40921011650323600C08202 /* libdyci.a */,
 				E4086801164699E30002D2ED /* UIKit.framework */,
 				E4086803164699E30002D2ED /* Foundation.framework */,
 				E4086805164699E30002D2ED /* CoreGraphics.framework */,
@@ -94,8 +94,8 @@
 		E408681E16469A410002D2ED /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				E408682F16469AC10002D2ED /* DCIAppDelegate.h */,
-				E408683016469AC10002D2ED /* DCIAppDelegate.m */,
+				E408682F16469AC10002D2ED /* DYCIAppDelegate.h */,
+				E408683016469AC10002D2ED /* DYCIAppDelegate.m */,
 				E408682116469A410002D2ED /* main.m */,
 				EEDBE436C8CD6F8F56F9D54C /* Utils and Helpers */,
 				EEDBECDCC72DB82717DEB32E /* View Controllers */,
@@ -135,8 +135,8 @@
 		EEDBECDCC72DB82717DEB32E /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				E408683316469AC10002D2ED /* DCIViewController.h */,
-				E408683416469AC10002D2ED /* DCIViewController.m */,
+				E408683316469AC10002D2ED /* DYCIViewController.h */,
+				E408683416469AC10002D2ED /* DYCIViewController.m */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -208,8 +208,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				E408682A16469A410002D2ED /* main.m in Sources */,
-				E408683816469AC10002D2ED /* DCIAppDelegate.m in Sources */,
-				E408683A16469AC10002D2ED /* DCIViewController.m in Sources */,
+				E408683816469AC10002D2ED /* DYCIAppDelegate.m in Sources */,
+				E408683A16469AC10002D2ED /* DYCIViewController.m in Sources */,
 				E408683B16469AC10002D2ED /* UIView+SFAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -316,6 +316,7 @@
 				E408681D164699E30002D2ED /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -82,7 +82,7 @@
    NSString * dciDirectoryPath = [@"~" stringByExpandingTildeInPath];
    NSRange r = [dciDirectoryPath rangeOfString:@"/Library/Application Support"];
    dciDirectoryPath = [dciDirectoryPath substringToIndex:r.location];
-   dciDirectoryPath = [dciDirectoryPath stringByAppendingPathComponent:@".dci"];
+   dciDirectoryPath = [dciDirectoryPath stringByAppendingPathComponent:@".dyci"];
    dciDirectoryPath = [dciDirectoryPath stringByAppendingString:@"/"];
    return dciDirectoryPath;
 }
