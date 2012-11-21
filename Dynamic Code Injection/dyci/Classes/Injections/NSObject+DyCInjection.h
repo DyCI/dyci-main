@@ -37,7 +37,7 @@
 
 /*
   Will be called, when some class (X) will be injected in application runtime
-  On All instances of class X, and instances of subclasses of X, this method will be callled
+  On All instances of class X, and instances of subclasses of X, this method will be called
 */
 - (void)updateOnClassInjection;
 
