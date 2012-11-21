@@ -21,7 +21,7 @@ If we should inject update methods, we are adding self as observer for
 
 SFDynamicRuntimeResourceUpdatedNotification
     This notification will be posted, each time, when new resource will be available in
-    bundle. With the main reason to not increase complexity, we aren't specifiying, which resource
+    bundle. With the main reason to not increase complexity, we aren't specifying, which resource
     was added
 */
 @interface SFDynamicCodeInjection : NSObject
