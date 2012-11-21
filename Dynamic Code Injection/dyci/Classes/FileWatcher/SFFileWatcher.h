@@ -21,7 +21,7 @@
 @property(nonatomic, readonly) NSString * watchingPath;
 
 /*
-Delegate that will be notified each time, as something changed
+ Delegate that will be notified each time, as something changed
  */
 @property(nonatomic, assign) id<SFFileWatcherDelegate> delegate;
 
