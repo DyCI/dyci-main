@@ -11,7 +11,7 @@ def parseClangCompileParams(args):
     idx = 0
     for arg in args:
     #    print('arg is %s' % arg)
-        if (re.match('.*\w+\.m$', arg)):
+        if (re.match('.*\w+\.mm?$', arg)):
             className = arg
             #        print('Found class name : ' + className)
         if (re.match('.*\w+\.o$', arg)):

@@ -42,3 +42,7 @@ output, err = process.communicate()
 # emulating output / err
 stdout.write(output)
 stderr.write(err)
+
+# if process returned error code, returning it
+if process.returncode != 0:
+    exit(process.returncode)

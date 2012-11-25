@@ -9,7 +9,22 @@ from subprocess import Popen
 import subprocess
 from sys import stderr, stdout
 from clangParams import parseClangCompileParams
+from os.path import normpath, basename, dirname
 import sys
+
+# Running process
+def runAndFailOnError(stringToRun):
+    process = Popen(stringToRun,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE)
+    output, err = process.communicate()
+
+    # emulating output / err
+    stdout.write(output)
+    stderr.write(err)
+
+    if process.returncode != 0:
+        exit(process.returncode)
 
 #----------------------------------------------------------------------------------
 def removeDynamicLibsFromDirectory(dir):
@@ -37,8 +52,14 @@ def copyResource(source, dyci):
     bundlePath = fileHandle.read()
     fileHandle.close()
 
-    shutil.copy(source, bundlePath)
-    stdout.write("File " + source + " was successfully copied to application")
+    # Searching, if it is localizable resource or not
+    resource_directory = basename(dirname(source))
+    if (resource_directory[-5:] == "lproj"):
+        shutil.copy(source, bundlePath + "/" + resource_directory)
+        stdout.write("File " + source + " was successfully copied to application -> " + bundlePath + "/" + resource_directory)
+    else:    
+        shutil.copy(source, bundlePath)
+        stdout.write("File " + source + " was successfully copied to application -> " + bundlePath)
 
     try:
        fileHandle = open( dyci + '/resource', 'w' )
@@ -56,13 +77,16 @@ def copyResource(source, dyci):
 
 DYCI_ROOT_DIR = os.path.expanduser('~/.dyci')
 
+#removing old library and resources
+removeDynamicLibsFromDirectory(DYCI_ROOT_DIR)
+
 args = sys.argv
 
 filename = ''
 try:
     filename = args[1]
 except:
-    stderr.write("Incorrect usage. Path to .m file should be used as the parameter")
+    stderr.write("Incorrect usage. Path to .m,.h file or resource should be used as the parameter")
     exit(1)
 
 # In case of resources..
@@ -107,23 +131,10 @@ compileString = [xcodeLocation + '/Toolchains/XcodeDefault.xctoolchain/usr/bin/c
                 + params
 
 #Compiling file again
-process = Popen(compileString,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE)
-output, err = process.communicate()
-
-# emulating output / err
-stdout.write(output)
-stderr.write(err)
-
-if process.returncode != 0:
-    exit(process.returncode)
+runAndFailOnError(compileString)
 
 #Compilation was successful... performing linking
 clangParams = parseClangCompileParams(params)
-
-#removing old library
-removeDynamicLibsFromDirectory(DYCI_ROOT_DIR)
 
 #creating new random name wor the dynamic library
 libraryName = "dyci%s.dylib" % random.randint(0, 10000000)
@@ -169,18 +180,4 @@ linkArgs = \
 #       + ['-v']
 
 #print "Linker arks \n%s" % ' '.join(linkArgs)
-
-linkerProcess = Popen(linkArgs,
-                      stdout=subprocess.PIPE,
-                      stderr=subprocess.PIPE)
-output, err = linkerProcess.communicate()
-
-# emulating output / err
-stdout.write(output)
-stderr.write(err)
-
-exit(linkerProcess.returncode)
-
-
-
-
+runAndFailOnError(linkArgs)
