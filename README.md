@@ -1,5 +1,5 @@
 # WARNING
-Please, Read this.  
+**Please, Read this.**  
 Uninstall dyci before updating Xcode.  
 In other case, you'll need to reinstall it :(
 We're currenlty working on this issue...
