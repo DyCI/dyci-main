@@ -2,7 +2,7 @@
 **Please, Read this.**  
 Uninstall dyci before updating Xcode.  
 In other case, you'll need to reinstall it :(
-We're currenlty working on [this issue](https://github.com/DyCI/dyci-main/issues/8)... 
+We're currenlty working on [this issue](https://github.com/DyCI/dyci-main/issues/8)...   
 If you've already expirienced this issue - remove and reinstall Xcode.
 
 # dyci
