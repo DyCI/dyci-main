@@ -103,7 +103,7 @@ void swizzle(Class c, SEL orig, SEL new) {
 
          // On class update/inject
          [notificationCenter addObserver:self selector:@selector(onClassUpdateNotification:) name:SFDynamicRuntimeClassUpdatedNotification object:nil];
-         [notificationCenter addObserver:self selector:@selector(onResourceUpdateNotification:) name:SFDynamicRuntimeClassUpdatedNotification object:nil];
+         [notificationCenter addObserver:self selector:@selector(onResourceUpdateNotification:) name:SFDynamicRuntimeResourceUpdatedNotification object:nil];
 
       }
 

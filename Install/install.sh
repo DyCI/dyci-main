@@ -70,7 +70,7 @@ log "USER_HOME = ${USER_HOME}"
 DYCI_ROOT_DIR="${USER_HOME}/.dyci"
 log "DYCI_ROOT_DIR='${USER_HOME}/.dyci'" 
 
-echo -n "== Preparing dyci-recompile : "
+echo -n "== Preparing dyci-recompile directories: "
 log "if [[ ! -d ${DYCI_ROOT_DIR}/index ]]; then"
 if [[ ! -d "${DYCI_ROOT_DIR}/index" ]]; then
 
