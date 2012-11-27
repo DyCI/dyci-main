@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		E4CA13FD166548A700080374 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4CA13FC166548A700080374 /* Foundation.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		E4CA1403166548A700080374 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E4CA1401166548A700080374 /* InfoPlist.strings */; };
 		E4CA142D1665491800080374 /* NSSet+ClassesList.h in Headers */ = {isa = PBXBuildFile; fileRef = E4CA14221665491800080374 /* NSSet+ClassesList.h */; };
 		E4CA142E1665491800080374 /* NSSet+ClassesList.m in Sources */ = {isa = PBXBuildFile; fileRef = E4CA14231665491800080374 /* NSSet+ClassesList.m */; };
 		E4CA142F1665491800080374 /* SFFileWatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = E4CA14251665491800080374 /* SFFileWatcher.h */; };
@@ -21,10 +20,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		E4CA13F9166548A700080374 /* dyci-framework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework.static; includeInIndex = 0; path = "dyci-framework.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E4CA13F9166548A700080374 /* dyci.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework.static; includeInIndex = 0; path = dyci.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4CA13FC166548A700080374 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		E4CA1400166548A700080374 /* dyci-framework-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "dyci-framework-Info.plist"; sourceTree = "<group>"; };
-		E4CA1402166548A700080374 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E4CA1404166548A700080374 /* dyci-framework-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "dyci-framework-Prefix.pch"; sourceTree = "<group>"; };
 		E4CA14221665491800080374 /* NSSet+ClassesList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSSet+ClassesList.h"; sourceTree = "<group>"; };
 		E4CA14231665491800080374 /* NSSet+ClassesList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSSet+ClassesList.m"; sourceTree = "<group>"; };
@@ -61,7 +59,7 @@
 		E4CA13FA166548A700080374 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E4CA13F9166548A700080374 /* dyci-framework.framework */,
+				E4CA13F9166548A700080374 /* dyci.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -87,7 +85,6 @@
 			isa = PBXGroup;
 			children = (
 				E4CA1400166548A700080374 /* dyci-framework-Info.plist */,
-				E4CA1401166548A700080374 /* InfoPlist.strings */,
 				E4CA1404166548A700080374 /* dyci-framework-Prefix.pch */,
 			);
 			name = "Supporting Files";
@@ -152,9 +149,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		E4CA13F8166548A700080374 /* dyci-framework */ = {
+		E4CA13F8166548A700080374 /* dyci */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E4CA1407166548A700080374 /* Build configuration list for PBXNativeTarget "dyci-framework" */;
+			buildConfigurationList = E4CA1407166548A700080374 /* Build configuration list for PBXNativeTarget "dyci" */;
 			buildPhases = (
 				E4CA13F1166548A700080374 /* ShellScript */,
 				E4CA13F2166548A700080374 /* Sources */,
@@ -168,9 +165,9 @@
 			);
 			dependencies = (
 			);
-			name = "dyci-framework";
+			name = dyci;
 			productName = "dyci-framework";
-			productReference = E4CA13F9166548A700080374 /* dyci-framework.framework */;
+			productReference = E4CA13F9166548A700080374 /* dyci.framework */;
 			productType = "com.apple.product-type.framework.static";
 		};
 /* End PBXNativeTarget section */
@@ -194,7 +191,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				E4CA13F8166548A700080374 /* dyci-framework */,
+				E4CA13F8166548A700080374 /* dyci */,
 			);
 		};
 /* End PBXProject section */
@@ -204,7 +201,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E4CA1403166548A700080374 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -235,7 +231,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "INLINED_PYHON_SCRIPT=\"import sys; import os.path; headerPathFromFind = sys.argv[2]; srcRoot = sys.argv[1]; headerPathFromFindWithoutFilename = os.path.dirname( headerPathFromFind ); relatedPathForDirectory = os.path.relpath( headerPathFromFindWithoutFilename, srcRoot ); print( relatedPathForDirectory );\"\n\nHEADERS_ROOT=$SRCROOT/$PRODUCT_NAME\nFRAMEWORK_HEADERS_DIR=\"$BUILT_PRODUCTS_DIR/$WRAPPER_NAME/Headers\"\n\n## only header files expected at this point\nPUBLIC_HEADERS=$( ls -1 \"$FRAMEWORK_HEADERS_DIR\" )\n\n\nfor PUBLIC_HEADER in $PUBLIC_HEADERS; do\n\n   FIND_RESULT=$( find \"$HEADERS_ROOT\" -name \"$PUBLIC_HEADER\" )\n   RELATIVE_PATH=$( python -c \"$INLINED_PYHON_SCRIPT\" \"$HEADERS_ROOT\" \"$FIND_RESULT\" )\n\n   mkdir -p \"$FRAMEWORK_HEADERS_DIR/$RELATIVE_PATH\"\n   mv \"$FRAMEWORK_HEADERS_DIR/$PUBLIC_HEADER\" \"$FRAMEWORK_HEADERS_DIR/$RELATIVE_PATH/$PUBLIC_HEADER\"\ndone\n";
+			shellScript = "INLINED_PYHON_SCRIPT=\"import sys; import os.path; headerPathFromFind = sys.argv[2]; srcRoot = sys.argv[1]; headerPathFromFindWithoutFilename = os.path.dirname( headerPathFromFind ); relatedPathForDirectory = os.path.relpath( headerPathFromFindWithoutFilename, srcRoot ); print( relatedPathForDirectory );\"\n\nHEADERS_ROOT=$SRCROOT/$PROJECT\nFRAMEWORK_HEADERS_DIR=\"$BUILT_PRODUCTS_DIR/$WRAPPER_NAME/Headers\"\n\n## only header files expected at this point\nPUBLIC_HEADERS=$( ls -1 \"$FRAMEWORK_HEADERS_DIR\" )\n\n\nfor PUBLIC_HEADER in $PUBLIC_HEADERS; do\n   \n   FIND_RESULT=$( find \"$HEADERS_ROOT\" -name \"$PUBLIC_HEADER\" )\n   RELATIVE_PATH=$( python -c \"$INLINED_PYHON_SCRIPT\" \"$HEADERS_ROOT\" \"$FIND_RESULT\" )\n\n   mkdir -p \"$FRAMEWORK_HEADERS_DIR/$RELATIVE_PATH\"\n   mv \"$FRAMEWORK_HEADERS_DIR/$PUBLIC_HEADER\" \"$FRAMEWORK_HEADERS_DIR/$RELATIVE_PATH/$PUBLIC_HEADER\"\ndone\n";
 		};
 		E4CA13F7166548A700080374 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -265,17 +261,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		E4CA1401166548A700080374 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E4CA1402166548A700080374 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		E4CA1405166548A700080374 /* Debug */ = {
@@ -338,7 +323,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "dyci-framework/dyci-framework-Prefix.pch";
 				INFOPLIST_FILE = "dyci-framework/dyci-framework-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = dyci;
 				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = framework;
 			};
@@ -357,7 +342,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "dyci-framework/dyci-framework-Prefix.pch";
 				INFOPLIST_FILE = "dyci-framework/dyci-framework-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = dyci;
 				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = framework;
 			};
@@ -375,13 +360,14 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E4CA1407166548A700080374 /* Build configuration list for PBXNativeTarget "dyci-framework" */ = {
+		E4CA1407166548A700080374 /* Build configuration list for PBXNativeTarget "dyci" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E4CA1408166548A700080374 /* Debug */,
 				E4CA1409166548A700080374 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
