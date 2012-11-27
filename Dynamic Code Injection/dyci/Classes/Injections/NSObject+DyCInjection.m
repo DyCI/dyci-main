@@ -5,6 +5,9 @@
 //  Created by Paul Taykalo on 10/21/12.
 //  Copyright (c) 2012 Stanfy LLC. All rights reserved.
 //
+
+#if TARGET_IPHONE_SIMULATOR
+
 #import <objc/runtime.h>
 #import "NSObject+DyCInjection.h"
 #import "SFDynamicCodeInjection.h"
@@ -139,3 +142,5 @@ void swizzle(Class c, SEL orig, SEL new) {
 
 
 @end
+
+#endif

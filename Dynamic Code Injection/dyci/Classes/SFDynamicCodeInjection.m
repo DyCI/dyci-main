@@ -26,6 +26,22 @@
 
 }
 
+#if TARGET_IPHONE_SIMULATOR
+
++ (void)load {
+   [self enable];
+
+   NSLog(@"============================================");
+   NSLog(@"DYCI : Dynamic Code Injection was started...");
+   NSLog(@"To disable it, paste next line in your application:didFinishLaunching: method : \n\n"
+         "[NSClassFromString(@\"SFDynamicCodeInjection\") performSelector:@selector(disable)];\n\n");
+   NSLog(@"     or");
+   NSLog(@"Simply remove dyci from dependencies");
+   NSLog(@"============================================");
+   
+
+}
+
 + (SFDynamicCodeInjection *)sharedInstance {
    static SFDynamicCodeInjection * _instance = nil;
 
@@ -38,9 +54,7 @@
    return _instance;
 }
 
-
 + (void)enable {
-#if TARGET_IPHONE_SIMULATOR
 
    if (![self sharedInstance]->_enabled) {
       
@@ -55,16 +69,11 @@
       // Resources, xibs, etc
       [self saveCurrentApplicationBundlePath:dciDirectoryPath];
 
-
       // Setting up watcher, to get in touch with director contents
       [self sharedInstance]->_dciDirectoryFileWatcher =
        [SFFileWatcher fileWatcherWithPath:dciDirectoryPath
                                  delegate:[self sharedInstance]];
    }
-#else
-
-  // Nothing to do .. for now on the device :)
-#endif
 
 }
 
@@ -72,6 +81,17 @@
 + (void)disable {
    if ([self sharedInstance]->_enabled) {
       [self sharedInstance]->_enabled = NO;
+      
+      // Re-swizzling init and dealloc methods
+      [NSObject allowInjectionSubscriptionOnInitMethod];
+      
+      // Removing file watcher
+      [self sharedInstance]->_dciDirectoryFileWatcher.delegate = nil;
+      [self sharedInstance]->_dciDirectoryFileWatcher = nil;
+      NSLog(@"============================================");
+      NSLog(@"DYCI : Dynamic Code Injection was stopped   ");
+      NSLog(@"============================================");
+
    }
 }
 
@@ -255,6 +275,19 @@
    }
 }
 
+
+#else // End of Target == simulator
+
++ (void)enable {
+   NSLog(@"DYCI: Sorry, Dynamic Code Ibjection is not available on devices");
+}
+
++ (void)disable {
+   NSLog(@"DYCI: Sorry, Dynamic Code Ibjection is not available on devices");
+}
+
+
+#endif
 
 
 

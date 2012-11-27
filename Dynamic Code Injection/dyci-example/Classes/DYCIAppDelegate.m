@@ -17,9 +17,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
-   // Don't want any import ever :)
-   Class DYCIClass = NSClassFromString(@"SFDynamicCodeInjection");
-   [DYCIClass performSelector:NSSelectorFromString(@"enable")];
+   // Uncomment this to DISABLE dyci
+   // [NSClassFromString(@"SFDynamicCodeInjection") performSelector:@selector(disable)];
    
    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.

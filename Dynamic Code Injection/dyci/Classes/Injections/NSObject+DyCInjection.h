@@ -7,6 +7,7 @@
 //
 #import <Foundation/Foundation.h>
 
+#if TARGET_IPHONE_SIMULATOR
 
 /*
  Methods that will be called on object, that are waiting for injection
@@ -51,3 +52,5 @@
 
 
 @end
+
+#endif
