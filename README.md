@@ -10,7 +10,15 @@ Dynamic code injection tool.
 Allows you to inject your code into running iOS application, whithout restarting it.
 
 ## Installation
-If you already know, what this library is about, you can move to [Installation page](https://github.com/DyCI/dyci-main/wiki/Installation)
+If you already know, what this tool is about, you can move to [Installation page](https://github.com/DyCI/dyci-main/wiki/Installation)
+
+## Adding to your project
+After installation, you need to add dyci library to your project  
+If you are using [CocoaPods](https://github.com/CocoaPods/CocoaPods), then, just add this line to your PodFile  
+
+`pod 'dyci', :git => 'https://github.com/DyCI/dyci-main.git'` 
+
+If not, then, you can add dyci in [other ways](https://github.com/DyCI/dyci-main/wiki/Using-dyci)
 
 ## Reasons, why do you need this tool 
 * It's good for applying small logic changes 
@@ -40,3 +48,6 @@ There's video about Tic-Tac-Toe game creation without project restart
 
 ##WARNING
 Please, do not use this tool in your real applications, that you about to publish in App Store. Dyci won't work on devices by default. It was made for purpose. Dynamic code injection is good for development, but it will leave huge security hole if you put it in your application. Please, do not :) I warned you.
+
+#FAQ
+If you have some questions, before asking them , make sure that they aren't listed [here](https://github.com/DyCI/dyci-main/wiki/FAQ)
