@@ -19,7 +19,7 @@ filename = indexFileLocation + hashlib.md5(className).hexdigest()
 
 try:
     with open(filename, "w") as text_file:
-    	workingDirectory = os.getcwd()
+        workingDirectory = os.getcwd()
         text_file.write('\n'.join(sys.argv[1:] + [workingDirectory]))
         text_file.close()
 except:
@@ -29,7 +29,21 @@ except:
 #faking compile string...
 #... Since we are clang...
 #... There's somewere clang-real near us..
-clangReal = os.path.dirname(os.path.realpath(__file__)) + os.sep + 'clang-real'
+clangReal   = os.path.dirname(os.path.realpath(__file__)) + os.sep + 'clang-real'
+clangBackup = os.path.dirname(os.path.realpath(__file__)) + os.sep + 'clang.backup'
+
+
+# We should check, if clangReal is still near us...
+# In some cases, if user have updated Xcode, it can be really bad..
+if (not os.path.exists(clangReal)) and (not os.path.exists(clangBackup)):
+   stderr.write("Cannot locate original clang and it's backup.\n")
+   stderr.write("This can be because of Xcode update without dyci uninstallation.\n")
+   stderr.write("In case, if you see this, clang is little broken now, and you need to update it manually\n")
+   stderr.write("By running next command in your terminal : \n")
+   stderr.write("echo \"" + clangReal +"\" \"" + clangBackup + "\" | xargs -n 1 sudo cp /usr/bin/clang\n")
+   exit(1)
+
+
 compileString = [clangReal] \
                 + sys.argv[1:]
 
