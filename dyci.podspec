@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
 
   s.author       = { "Paul Taykalo" => "tt.kilew@gmail.com" }
 
-  s.source       = { :git => "https://github.com/DyCI/dyci-main.git", :tag => 'v0.1.1-dev' }
+  s.source       = { :git => "https://github.com/DyCI/dyci-main.git", :tag => 'v0.1.2' }
 
   s.platform     = :ios, '4.3'
 
