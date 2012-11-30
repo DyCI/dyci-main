@@ -12,6 +12,7 @@
 		E40867EC164695F70002D2ED /* SFFileWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = E40867E4164695F70002D2ED /* SFFileWatcher.m */; };
 		E40867ED164695F70002D2ED /* NSObject+DyCInjection.m in Sources */ = {isa = PBXBuildFile; fileRef = E40867E8164695F70002D2ED /* NSObject+DyCInjection.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E40867EE164695F70002D2ED /* SFDynamicCodeInjection.m in Sources */ = {isa = PBXBuildFile; fileRef = E40867EA164695F70002D2ED /* SFDynamicCodeInjection.m */; };
+		E4D6E5211668D217007A50A4 /* UIViewController+XIBSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = E4D6E5201668D217007A50A4 /* UIViewController+XIBSupport.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -39,6 +40,8 @@
 		E40867E8164695F70002D2ED /* NSObject+DyCInjection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+DyCInjection.m"; sourceTree = "<group>"; };
 		E40867E9164695F70002D2ED /* SFDynamicCodeInjection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFDynamicCodeInjection.h; sourceTree = "<group>"; };
 		E40867EA164695F70002D2ED /* SFDynamicCodeInjection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFDynamicCodeInjection.m; sourceTree = "<group>"; };
+		E4D6E51F1668D217007A50A4 /* UIViewController+XIBSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+XIBSupport.h"; sourceTree = "<group>"; };
+		E4D6E5201668D217007A50A4 /* UIViewController+XIBSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+XIBSupport.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +124,8 @@
 		E40867E6164695F70002D2ED /* Injections */ = {
 			isa = PBXGroup;
 			children = (
+				E4D6E51F1668D217007A50A4 /* UIViewController+XIBSupport.h */,
+				E4D6E5201668D217007A50A4 /* UIViewController+XIBSupport.m */,
 				E40867E7164695F70002D2ED /* NSObject+DyCInjection.h */,
 				E40867E8164695F70002D2ED /* NSObject+DyCInjection.m */,
 			);
@@ -182,6 +187,7 @@
 				E40867EC164695F70002D2ED /* SFFileWatcher.m in Sources */,
 				E40867ED164695F70002D2ED /* NSObject+DyCInjection.m in Sources */,
 				E40867EE164695F70002D2ED /* SFDynamicCodeInjection.m in Sources */,
+				E4D6E5211668D217007A50A4 /* UIViewController+XIBSupport.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
