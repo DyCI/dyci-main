@@ -47,7 +47,7 @@ def copyResource(source, dyci):
        fileHandle = open( dyci + '/bundle', 'r' )
     except IOError as e:
        stderr.write("Error when tried to copy resource :( Cannot find file at " + dyci + '/bundle')
-       exit(1)
+       return 1
 
     bundlePath = fileHandle.read()
     fileHandle.close()
@@ -66,11 +66,11 @@ def copyResource(source, dyci):
        fileHandle.write(source)
     except IOError as e:
        stderr.write("Error when tried to write to file " + dyci + '/resource')
-       exit(1)
+       return 1
 
     fileHandle.close()
 
-    exit(0);    
+    return 0    
 
 #----------------------------------------------------------------------------------
 
@@ -90,7 +90,17 @@ except:
     exit(1)
 
 # In case of resources..
-if filename[-4:] == ".png" or filename[-4:] == ".jpg" or filename[-5:] == ".jpeg": copyResource(filename, DYCI_ROOT_DIR)
+if filename[-4:] == ".png" or filename[-4:] == ".jpg" or filename[-5:] == ".jpeg": 
+    resultCode = copyResource(filename, DYCI_ROOT_DIR)
+    exit(resultCode)
+
+#In case of xibs
+if filename[-4:] == ".xib": 
+    xibFilename = os.path.splitext(filename)[0] + ".nib"
+    runAndFailOnError(["ibtool", "--compile", xibFilename, filename])
+    resultCode = copyResource(xibFilename, DYCI_ROOT_DIR)
+    os.unlink(xibFilename)
+    exit(resultCode)
 
 # In case of header files
 # In some cases you need be able to recompile M file, when you are in header

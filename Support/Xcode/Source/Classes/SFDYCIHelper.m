@@ -99,8 +99,6 @@
 
          // Setting up task, that we are going to call
 
-
-         // TODO : run task in another thread, and check if one is currenlty being running
          NSTask * task = [[NSTask alloc] init];
          [task setLaunchPath:@"/usr/bin/python"];
          NSString * dyciDirectoryPath = [@"~" stringByExpandingTildeInPath];
@@ -123,64 +121,85 @@
          NSPipe * errorPipe = [NSPipe pipe];
          NSFileHandle * errorFile = [errorPipe fileHandleForReading];
          [task setStandardError:errorPipe];
-
-         [task launch];
          
-         NSData * outputData = [outputFile readDataToEndOfFile];
-         NSString * outputString = [[[NSString alloc] initWithData:outputData
-                                                          encoding:NSUTF8StringEncoding] autorelease];
-         NSLog(@"script returned OK:\n%@", outputString);
-         
-         NSData * errorData = [errorFile readDataToEndOfFile];
-         NSString * errorString = [[[NSString alloc] initWithData:errorData encoding:NSUTF8StringEncoding] autorelease];
-         NSLog(@"script returned ERROR:\n%@", errorString);
-
-         SFDYCIResultView * resultView = [[[SFDYCIResultView alloc] initWithFrame:NSMakeRect(0, 0, 100, 100)] autorelease];
-
-         // TODO : Need to add correct notifaction if something went wrong
-         if (task.terminationStatus != 0) {
-            NSAlert * alert = [[[NSAlert alloc] init] autorelease];
-            [alert addButtonWithTitle:@"OK"];
-            [alert setMessageText:@"Failed to inject code"];
-            [alert setInformativeText:errorString];
-            [alert setAlertStyle:NSCriticalAlertStyle];
-            [alert runModal];
-            [alert release];
-            resultView.success = NO;
-
-         }  else {
-
-            resultView.success = YES;
-
-         }
-
-         [[[NSApp keyWindow] contentView] addSubview:resultView];
-         resultView.alphaValue = 0.0;
-         
-
-         [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
-
-            context.duration = 1;
-            [[resultView animator] setAlphaValue:1.0];
-
-         } completionHandler:^{
-
-            [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
-               context.duration = 1;
-               [[resultView animator] setAlphaValue:0.0];
-            } completionHandler:^{
-               [resultView removeFromSuperview];
-            }];
+         // Setting up termination handler
+         [task setTerminationHandler:^(NSTask * tsk) {
             
+            NSData * outputData = [outputFile readDataToEndOfFile];
+            NSString * outputString = [[[NSString alloc] initWithData:outputData
+                                                             encoding:NSUTF8StringEncoding] autorelease];
+            if (outputString && [outputString length]) {
+              NSLog(@"script returned OK:\n%@", outputString);
+            }
+            
+            NSData * errorData = [errorFile readDataToEndOfFile];
+            NSString * errorString = [[[NSString alloc] initWithData:errorData encoding:NSUTF8StringEncoding] autorelease];
+            if (errorString && [errorString length]) {
+               NSLog(@"script returned ERROR:\n%@", errorString);
+            }
+
+            // TODO : Need to add correct notification if something went wrong
+            if (task.terminationStatus != 0) {
+               NSAlert * alert = [[[NSAlert alloc] init] autorelease];
+               [alert addButtonWithTitle:@"OK"];
+               [alert setMessageText:@"Failed to inject code"];
+               [alert setInformativeText:errorString];
+               [alert setAlertStyle:NSCriticalAlertStyle];
+               [alert runModal];
+               [alert release];
+               [self showResultViewWithSuccess:NO];
+
+            }  else {
+
+               [self showResultViewWithSuccess:YES];
+
+            }
+
+            tsk.terminationHandler = nil;
+
+            [tsk release];
+
          }];
 
-         [task release];
-         
+
+         // Starting task
+         [task launch];
+
+         return;
       }
    }
    
 }
 
+
+- (void)showResultViewWithSuccess:(BOOL)success {
+   SFDYCIResultView * resultView = [[[SFDYCIResultView alloc] initWithFrame:NSMakeRect(0, 0, 100, 100)] autorelease];
+   resultView.success = success;
+
+   // Adding result view on window
+   [[[NSApp keyWindow] contentView] addSubview:resultView];
+
+
+   // Performing animations
+   resultView.alphaValue = 0.0;
+
+   [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
+
+      context.duration = 1;
+      [[resultView animator] setAlphaValue:1.0];
+
+   } completionHandler:^{
+
+      [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
+         context.duration = 1;
+         [[resultView animator] setAlphaValue:0.0];
+      } completionHandler:^{
+         [resultView removeFromSuperview];
+      }];
+
+   }];
+
+}
 
 #pragma mark - Dealloc
 
