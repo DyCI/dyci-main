@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "dyci"
-  s.version      = "0.0.4.10232012"
+  s.version      = "0.1.3.20121201"
   s.summary      = "Dynamic code injection tool. Allows to inject code at runtime."
 
   s.homepage     = "https://github.com/DyCI/dyci-main"
@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
 
   s.author       = { "Paul Taykalo" => "tt.kilew@gmail.com" }
 
-  s.source       = { :git => "https://github.com/DyCI/dyci-main.git", :tag => 'v0.1.2' }
+  s.source       = { :git => "https://github.com/DyCI/dyci-main.git", :tag => 'v0.1.3' }
 
   s.platform     = :ios, '4.3'
 
