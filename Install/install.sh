@@ -31,6 +31,7 @@ CLANG_USR_BIN=`xcode-select -print-path`/Toolchains/XcodeDefault.xctoolchain/usr
 CLANG_LOCATION=`xcode-select -print-path`/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang
 CLANG_BACKUP_LOCATION=$CLANG_LOCATION.backup
 CLANG_REAL_LOCATION=$CLANG_LOCATION-real
+CLANG_REAL_LOCATION_PP="$CLANG_LOCATION-real++"
 
 
 echo
@@ -52,6 +53,9 @@ echo -n "== Faking up clang : "
 
 log "sudo cp ${CLANG_BACKUP_LOCATION} ${CLANG_REAL_LOCATION}"
 sudo cp "${CLANG_BACKUP_LOCATION}" "${CLANG_REAL_LOCATION}"
+
+log "sudo cp ${CLANG_BACKUP_LOCATION} ${CLANG_REAL_LOCATION_PP}"
+sudo cp "${CLANG_BACKUP_LOCATION}" "${CLANG_REAL_LOCATION_PP}"
 
 #DYCI-CLANG RIGHTS
 sudo chmod +x Scripts/dyci-clang.py

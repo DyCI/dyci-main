@@ -36,6 +36,8 @@ CLANG_USR_BIN=`xcode-select -print-path`/Toolchains/XcodeDefault.xctoolchain/usr
 CLANG_LOCATION=`xcode-select -print-path`/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang
 CLANG_BACKUP_LOCATION=$CLANG_LOCATION.backup
 CLANG_REAL_LOCATION=$CLANG_LOCATION-real
+CLANG_REAL_LOCATION_PP="$CLANG_LOCATION-real++"
+
 
 echo
 echo "======== Reverting clang from backup ======="
@@ -57,6 +59,10 @@ else
 	    echo -n "== Removing backup : "
 	    log "sudo rm ${CLANG_REAL_LOCATION}"
 	  	sudo rm "${CLANG_REAL_LOCATION}"
+
+	    log "sudo rm ${CLANG_REAL_LOCATION_PP}"
+	  	sudo rm "${CLANG_REAL_LOCATION_PP}"
+
 	  	log "sudo rm ${CLANG_BACKUP_LOCATION}"
 	    sudo rm "${CLANG_BACKUP_LOCATION}"
 	    echo "Done."

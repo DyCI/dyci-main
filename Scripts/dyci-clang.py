@@ -29,7 +29,10 @@ except:
 #faking compile string...
 #... Since we are clang...
 #... There's somewere clang-real near us..
-clangReal   = os.path.dirname(os.path.realpath(__file__)) + os.sep + 'clang-real'
+addition = ''
+if (sys.argv[0][-2:] == '++'):
+  addition = '++' 
+clangReal   = os.path.dirname(os.path.realpath(__file__)) + os.sep + 'clang-real' + addition
 clangBackup = os.path.dirname(os.path.realpath(__file__)) + os.sep + 'clang.backup'
 
 
