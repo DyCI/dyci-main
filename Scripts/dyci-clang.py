@@ -1,4 +1,7 @@
 #!/usr/bin/env python
+# This is just clang proxy. Actual clang is in clang.backup
+# == CLANG_PROXY ==
+
 import hashlib
 
 import subprocess

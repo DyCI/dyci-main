@@ -27,17 +27,29 @@ DIR="$( cd -P "$( dirname "$0" )" && pwd )"
 cd "${DIR}"
 cd ..
 
-CLANG_USR_BIN=`xcode-select -print-path`/Toolchains/XcodeDefault.xctoolchain/usr/bin/
-CLANG_LOCATION=`xcode-select -print-path`/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang
+CLANG_LOCATION=`xcrun -find clang`
+CLANG_USR_BIN=`dirname "${CLANG_LOCATION}"`
 CLANG_BACKUP_LOCATION=$CLANG_LOCATION.backup
 CLANG_REAL_LOCATION=$CLANG_LOCATION-real
 CLANG_REAL_LOCATION_PP="$CLANG_LOCATION-real++"
-
 
 echo
 echo -n "== Backing up clang : "
 
 if [[ ! -f ${CLANG_BACKUP_LOCATION} ]]; then
+  # Checking, if it isn't our script laying in clang
+  echo grep -Fq "== CLANG_PROXY ==" "$CLANG_LOCATION"
+  if grep -Fq "== CLANG_PROXY ==" "$CLANG_LOCATION"  
+    then
+    # code if found
+    # This is bad....
+   echo "Original clang compiler was already proxied via dyci and no backup can be found."
+   echo "This can be because of Xcode update without dyci uninstallation."
+   echo "In case, if you see this, clang is little broken now, and you need to update it manually."
+   echo "By running next command in your terminal : "
+   echo "echo ""${CLANG_LOCATION}"" ""${CLANG_BACKUP_LOCATION}"" | xargs -n 1 sudo cp /usr/bin/clang"
+   exit 1
+  fi
 # We should backup clang ONLY if it is an binary file only
   log "sudo cp ${CLANG_LOCATION} ${CLANG_BACKUP_LOCATION}"
   sudo cp "${CLANG_LOCATION}" "${CLANG_BACKUP_LOCATION}"
