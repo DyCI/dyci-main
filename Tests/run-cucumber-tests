@@ -1,1 +1,1 @@
-sudo cucumber -r step_definitions/installation_steps.rb features/installation.feature
+sudo cucumber -r step_definitions/

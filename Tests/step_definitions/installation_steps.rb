@@ -10,8 +10,8 @@ end
 
 When /^User installs dyci$/ do
   check_directory_presence "dyci_installation_dir", true
-
 end
+
 When /^I r?e?install dyci$/ do
   run "../../../Install/install.sh -v"
 
