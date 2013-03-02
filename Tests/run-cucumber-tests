@@ -1,1 +1,1 @@
-sudo cucumber -r step_definitions/
+cucumber -r step_definitions/ -n inject

@@ -99,11 +99,13 @@
 #pragma mark - Checking for Library
 
 + (NSString *)dciDirectoryPath {
-   NSString * dciDirectoryPath = [@"~" stringByExpandingTildeInPath];
-   NSRange r = [dciDirectoryPath rangeOfString:@"/Library/Application Support"];
-   dciDirectoryPath = [dciDirectoryPath substringToIndex:r.location];
-   dciDirectoryPath = [dciDirectoryPath stringByAppendingPathComponent:@".dyci"];
-   dciDirectoryPath = [dciDirectoryPath stringByAppendingString:@"/"];
+   NSString * dciDirectoryPath = [NSString stringWithFormat:@"/Users/%s/.dyci/", getenv("USER")];
+   NSLog(@"DYCI directory path is : %@", dciDirectoryPath);
+//   NSString * dciDirectoryPath = [@"~" stringByExpandingTildeInPath];
+//   NSRange r = [dciDirectoryPath rangeOfString:@"/Library/Application Support"];
+//   dciDirectoryPath = [dciDirectoryPath substringToIndex:r.location];
+//   dciDirectoryPath = [dciDirectoryPath stringByAppendingPathComponent:@".dyci"];
+//   dciDirectoryPath = [dciDirectoryPath stringByAppendingString:@"/"];
    return dciDirectoryPath;
 }
 
