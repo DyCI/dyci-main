@@ -22,9 +22,8 @@ def runAndFailOnError(stringToRun):
     # emulating output / err
     stdout.write(output)
     stderr.write(err)
-
     if process.returncode != 0:
-        exit(process.returncode)
+        sys.exit(1)
 
 #----------------------------------------------------------------------------------
 def removeDynamicLibsFromDirectory(dir):
@@ -90,7 +89,7 @@ except:
     exit(1)
 
 # In case of resources..
-if filename[-4:] == ".png" or filename[-4:] == ".jpg" or filename[-5:] == ".jpeg": 
+if filename[-4:] == ".png" or filename[-4:] == ".jpg" or filename[-5:] == ".jpeg" or filename[-8:] == ".strings": 
     resultCode = copyResource(filename, DYCI_ROOT_DIR)
     exit(resultCode)
 
