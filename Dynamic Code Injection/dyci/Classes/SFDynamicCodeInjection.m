@@ -201,10 +201,30 @@
                          error:nil];
 }
 
+#pragma mark - Privat API's
+
+/*
+ This one was found by searching on Github private headers
+ */
 - (void)flushUIImageCache {
 #warning Fix this
    [NSClassFromString(@"UIImage") performSelector:@selector(_flushSharedImageCache)];
 
+}
+
+/*
+ And this one was found Here
+ http://michelf.ca/blog/2010/killer-private-eraser/
+ Thanks to Michel
+ */
+extern void _CFBundleFlushBundleCaches(CFBundleRef bundle) __attribute__((weak_import));
+
+- (void)flushBundleCache {
+//   NSLog(@"%d _CFBundleFlushBundleCaches available", _CFBundleFlushBundleCaches);
+//   NSLog(@"Main bundle : %@", [NSBundle mainBundle]);
+   if (_CFBundleFlushBundleCaches != NULL) {
+      _CFBundleFlushBundleCaches(CFBundleGetMainBundle());
+   }
 }
 
 
@@ -214,21 +234,24 @@
 
    if ([[filePath lastPathComponent] isEqualToString:@"resource"]) {
 
-      // Flushing UIImage cache
-      [self flushUIImageCache];
-
       NSLog(@" ");
       NSLog(@" ================================================= ");
       NSLog(@"New resource was injected");
       NSLog(@"All classes will be notified with");
       NSLog(@" - (void)updateOnResourceInjection:(NSString *)path ");
       NSLog(@" ");
-
-
+      
       NSString * injectedResourcePath =
-       [NSString stringWithContentsOfFile:filePath
-                                 encoding:NSUTF8StringEncoding
-                                    error:nil];
+      [NSString stringWithContentsOfFile:filePath
+                                encoding:NSUTF8StringEncoding
+                                   error:nil];
+
+      // Flushing UIImage cache
+      [self flushUIImageCache];
+
+      if ([[injectedResourcePath pathExtension] isEqualToString:@"strings"]) {
+         [self flushBundleCache];
+      }
 
       [[NSNotificationCenter defaultCenter] postNotificationName:SFDynamicRuntimeResourceUpdatedNotification
                                                           object:injectedResourcePath];

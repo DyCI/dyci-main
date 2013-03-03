@@ -20,6 +20,7 @@
 		E4B1F1DA16DA33A800ACDD2E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4B1F1D916DA33A800ACDD2E /* UIKit.framework */; };
 		E4B1F1DC16DA33A800ACDD2E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4B1F1DB16DA33A800ACDD2E /* Foundation.framework */; };
 		E4B1F1DE16DA33A800ACDD2E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4B1F1DD16DA33A800ACDD2E /* CoreGraphics.framework */; };
+		E4E3FE3416E300C000902DB7 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4E3FE3316E300C000902DB7 /* CoreFoundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +44,7 @@
 		E4B1F1D916DA33A800ACDD2E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		E4B1F1DB16DA33A800ACDD2E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		E4B1F1DD16DA33A800ACDD2E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		E4E3FE3316E300C000902DB7 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,6 +52,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E4E3FE3416E300C000902DB7 /* CoreFoundation.framework in Frameworks */,
 				E4B1F1DA16DA33A800ACDD2E /* UIKit.framework in Frameworks */,
 				E4B1F1DC16DA33A800ACDD2E /* Foundation.framework in Frameworks */,
 				E4B1F1DE16DA33A800ACDD2E /* CoreGraphics.framework in Frameworks */,
@@ -100,6 +103,7 @@
 		E4B1F1CD16DA33A800ACDD2E = {
 			isa = PBXGroup;
 			children = (
+				E4E3FE3316E300C000902DB7 /* CoreFoundation.framework */,
 				E48048FB16E2E765009FFF35 /* Resources */,
 				E49EB1CA16E27CD5009CE6EB /* InjectionExample */,
 				E49EB1B616E005F3009CE6EB /* Classes */,

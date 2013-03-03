@@ -11,6 +11,10 @@
 @implementation IEBase
 
 - (void)updateOnClassInjection {
+   NSLog(@"Localizable String Test File Injected");
+}
+
+- (void)updateOnResourceInjection:(NSString *)path {
    NSLog(NSLocalizedString(@"Key", @"Key that will be re-injected"));
 }
 

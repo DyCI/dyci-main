@@ -112,6 +112,9 @@ end
 
 def run_project(app_name)
   #puts "Project started to run"
+  d_puts "Killing previous running instance"
+  %x[kill -9 #{app_name} > /dev/null 2>&1]
+  sleep(0.5)
   env_vars = {
       "DYLD_ROOT_PATH" => @config.sdk_dir,
       "IPHONE_SIMULATOR_ROOT" => @config.sdk_dir,
@@ -128,6 +131,7 @@ def run_project(app_name)
 
   @project_pid = fork do
     with_env_vars(env_vars) do
+
       stdin, stdout, stderr = Open3.popen3("#{run_project_command}")
 
       File.open('/tmp/ruby-output', 'w') { |f| f.puts "#{Time.now} : Injection started" }
@@ -194,7 +198,7 @@ When /^Inject inject new version of "([^"]*)" with "([^"]*)" as test string$/ do
   d_puts "#{Time.now} : Starting injection"
 
   verbose_recompile = ""
-  verbose_recompile = "2> /dev/null" if @debug_mode == false
+  verbose_recompile = "> /dev/null 2>&1" if @debug_mode == false
   system("~/.dyci/scripts/dyci-recompile.py #{file} #{verbose_recompile}")
   result_code = $?.exitstatus
   unless result_code == 0
