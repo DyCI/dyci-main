@@ -193,7 +193,9 @@ When /^Inject inject new version of "([^"]*)" with "([^"]*)" as test string$/ do
 
   d_puts "#{Time.now} : Starting injection"
 
-  system("~/.dyci/scripts/dyci-recompile.py #{file}")
+  verbose_recompile = ""
+  verbose_recompile = "2> /dev/null" if @debug_mode == false
+  system("~/.dyci/scripts/dyci-recompile.py #{file} #{verbose_recompile}")
   result_code = $?.exitstatus
   unless result_code == 0
     fail("Unable to inject source python file failed")
