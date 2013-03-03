@@ -11,5 +11,14 @@
 
 @implementation IEBase
 
++ (void)classMethod {
+   NSLog(@"XXX:######");
+}
+
+
+- (void)updateOnClassInjection {
+  [[self class] classMethod];
+}
+
 @end
 
