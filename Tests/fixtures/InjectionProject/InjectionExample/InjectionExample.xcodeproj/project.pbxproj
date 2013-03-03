@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E48048FD16E2E7CB009FFF35 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E48048FC16E2E7CB009FFF35 /* Localizable.strings */; };
 		E49EB1C216E2763D009CE6EB /* dyci.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E49EB1C116E2763D009CE6EB /* dyci.framework */; };
 		E49EB1C716E27BAA009CE6EB /* IEBase.m in Sources */ = {isa = PBXBuildFile; fileRef = E49EB1C416E27BAA009CE6EB /* IEBase.m */; };
 		E49EB1D516E27CD5009CE6EB /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E49EB1CB16E27CD5009CE6EB /* Default-568h@2x.png */; };
@@ -22,6 +23,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E48048FC16E2E7CB009FFF35 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		E48048FF16E2E919009FFF35 /* IEBaseLocalizableStringInjection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IEBaseLocalizableStringInjection.m; sourceTree = "<group>"; };
 		E49EB1C116E2763D009CE6EB /* dyci.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = dyci.framework; path = Frameworks/dyci.framework; sourceTree = "<group>"; };
 		E49EB1C316E27BAA009CE6EB /* IEBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IEBase.h; sourceTree = "<group>"; };
 		E49EB1C416E27BAA009CE6EB /* IEBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IEBase.m; sourceTree = "<group>"; };
@@ -57,6 +60,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E48048FB16E2E765009FFF35 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				E48048FC16E2E7CB009FFF35 /* Localizable.strings */,
+			);
+			name = Resources;
+			path = InjectionExample/Resources;
+			sourceTree = "<group>";
+		};
 		E49EB1B616E005F3009CE6EB /* Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -64,6 +76,7 @@
 				E49EB1C416E27BAA009CE6EB /* IEBase.m */,
 				E49EB1C516E27BAA009CE6EB /* IEBaseClassMethodInjection.m */,
 				E49EB1C616E27BAA009CE6EB /* IEBaseUpdateOnClassInjection.m */,
+				E48048FF16E2E919009FFF35 /* IEBaseLocalizableStringInjection.m */,
 			);
 			path = Classes;
 			sourceTree = SOURCE_ROOT;
@@ -87,6 +100,7 @@
 		E4B1F1CD16DA33A800ACDD2E = {
 			isa = PBXGroup;
 			children = (
+				E48048FB16E2E765009FFF35 /* Resources */,
 				E49EB1CA16E27CD5009CE6EB /* InjectionExample */,
 				E49EB1B616E005F3009CE6EB /* Classes */,
 				E4B1F1D816DA33A800ACDD2E /* Frameworks */,
@@ -170,6 +184,7 @@
 				E49EB1D716E27CD5009CE6EB /* Default@2x.png in Resources */,
 				E49EB1D816E27CD5009CE6EB /* InfoPlist.strings in Resources */,
 				E49EB1DA16E27CD5009CE6EB /* InjectionExample-Info.plist in Resources */,
+				E48048FD16E2E7CB009FFF35 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -16,4 +16,6 @@
 
 - (void)instanceMethod;
 
+- (void)printLocalizableString;
+
 @end

@@ -11,9 +11,5 @@
 
 @implementation IEBase
 
-- (void)updateOnClassInjection {
-   NSLog(@"XXX:######");
-}
-
 
 @end

@@ -193,10 +193,10 @@ When /^Inject inject new version of "([^"]*)" with "([^"]*)" as test string$/ do
 
   d_puts "#{Time.now} : Starting injection"
 
-  system("~/.dyci/scripts/dyci-recompile.py #{file} 2>/dev/null")
+  system("~/.dyci/scripts/dyci-recompile.py #{file}")
   result_code = $?.exitstatus
   unless result_code == 0
-    fail("Unable to inject source")
+    fail("Unable to inject source python file failed")
   end
 
   d_puts "Injection result code is #{result_code}"
@@ -206,7 +206,7 @@ end
 Then /^I should see "([^"]*)" in running project output$/ do |arg|
   d_puts "Checking project output"
   begin
-    Timeout.timeout(10) do
+    Timeout.timeout(3) do
       expect_string_found = false
       until expect_string_found do
         sleep 0.5
