@@ -1,1 +1,0 @@
-cucumber -r step_definitions/ -n inject
