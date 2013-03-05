@@ -96,7 +96,7 @@
          // Resolving currently opened file
          NSURL * openedFileURL = [firstResponder valueForKeyPath:@"editor.document.fileURL"];
 
-
+         NSLog(@"Opened file url is : %@", openedFileURL);
          // Setting up task, that we are going to call
 
          NSTask * task = [[NSTask alloc] init];
@@ -140,6 +140,8 @@
 
             // TODO : Need to add correct notification if something went wrong
             if (task.terminationStatus != 0) {
+               dispatch_async(dispatch_get_main_queue(), ^{
+
                NSAlert * alert = [[[NSAlert alloc] init] autorelease];
                [alert addButtonWithTitle:@"OK"];
                [alert setMessageText:@"Failed to inject code"];
@@ -147,12 +149,15 @@
                [alert setAlertStyle:NSCriticalAlertStyle];
                [alert runModal];
                [alert release];
-               [self showResultViewWithSuccess:NO];
+               });
+               dispatch_async(dispatch_get_main_queue(), ^{
+                  [self showResultViewWithSuccess:NO];
+               });
 
             }  else {
-
-               [self showResultViewWithSuccess:YES];
-
+               dispatch_async(dispatch_get_main_queue(), ^{
+                  [self showResultViewWithSuccess:YES];
+               });
             }
 
             tsk.terminationHandler = nil;
@@ -168,6 +173,8 @@
          return;
       }
    }
+   
+   NSLog(@"Coudln't find IDEEditorContext... Seems you've pressed somewhere in incorrect place");
    
 }
 

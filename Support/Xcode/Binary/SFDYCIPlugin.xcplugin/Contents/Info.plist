@@ -23,7 +23,7 @@
 	<key>DTCompiler</key>
 	<string></string>
 	<key>DTPlatformBuild</key>
-	<string>4G2008a</string>
+	<string>4H127</string>
 	<key>DTPlatformVersion</key>
 	<string>GM</string>
 	<key>DTSDKBuild</key>
@@ -31,9 +31,9 @@
 	<key>DTSDKName</key>
 	<string>macosx10.8</string>
 	<key>DTXcode</key>
-	<string>0452</string>
+	<string>0460</string>
 	<key>DTXcodeBuild</key>
-	<string>4G2008a</string>
+	<string>4H127</string>
 	<key>NSPrincipalClass</key>
 	<string>SFDYCIHelper</string>
 	<key>XC4Compatible</key>
