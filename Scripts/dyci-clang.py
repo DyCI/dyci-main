@@ -10,13 +10,14 @@ import os
 from clangParams import parseClangCompileParams
 from subprocess import Popen
 from sys import stdout, stderr
+
 #
 #print('Input args is [' + ' '.join(sys.argv[1:]) + ']')
 
 #loading old params
 indexFileLocation = os.path.expanduser('~/.dyci/index/')
 clangParams = parseClangCompileParams(sys.argv[1:])
-className = clangParams['class']
+className = os.path.normpath(clangParams['class'])
 
 filename = indexFileLocation + hashlib.md5(className).hexdigest()
 

@@ -106,7 +106,7 @@ if filename[-4:] == ".xib":
 if filename[-2:] == ".h": filename = os.path.splitext(filename)[0] + ".m"
 
 # loading it's params from the file
-indexFileLocation = DYCI_ROOT_DIR + '/index/' + hashlib.md5(filename).hexdigest()
+indexFileLocation = DYCI_ROOT_DIR + '/index/' + hashlib.md5(os.path.normpath(filename)).hexdigest()
 
 
 params = []
