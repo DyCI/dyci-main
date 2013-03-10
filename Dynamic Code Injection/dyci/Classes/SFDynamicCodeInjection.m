@@ -219,11 +219,28 @@
  */
 extern void _CFBundleFlushBundleCaches(CFBundleRef bundle) __attribute__((weak_import));
 
-- (void)flushBundleCache {
+- (void)flushBundleCache:(NSBundle *)bundle {
 //   NSLog(@"%d _CFBundleFlushBundleCaches available", _CFBundleFlushBundleCaches);
 //   NSLog(@"Main bundle : %@", [NSBundle mainBundle]);
    if (_CFBundleFlushBundleCaches != NULL) {
-      _CFBundleFlushBundleCaches(CFBundleGetMainBundle());
+      CFURLRef bundleURL;
+      CFBundleRef myBundle;
+      
+      // Make a CFURLRef from the CFString representation of the
+      // bundle’s path.
+      bundleURL = CFURLCreateWithFileSystemPath(
+                                                kCFAllocatorDefault,
+                                                (CFStringRef)[bundle bundlePath],
+                                                kCFURLPOSIXPathStyle,
+                                                true );
+      
+      // Make a bundle instance using the URLRef.
+      myBundle = CFBundleCreate( kCFAllocatorDefault, bundleURL );
+      if (_CFBundleFlushBundleCaches != NULL) {
+         _CFBundleFlushBundleCaches(myBundle);
+      }
+      CFRelease(myBundle);
+      CFRelease(bundleURL);
    }
 }
 
@@ -250,7 +267,7 @@ extern void _CFBundleFlushBundleCaches(CFBundleRef bundle) __attribute__((weak_i
       [self flushUIImageCache];
 
       if ([[injectedResourcePath pathExtension] isEqualToString:@"strings"]) {
-         [self flushBundleCache];
+         [self flushBundleCache:[NSBundle mainBundle]];
       }
 
       [[NSNotificationCenter defaultCenter] postNotificationName:SFDynamicRuntimeResourceUpdatedNotification
