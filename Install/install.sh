@@ -125,7 +125,7 @@ if [[ -d "${USER_HOME}/Library/Preferences/appCode10" ]]; then
   DYCITOOL="${USER_HOME}/Library/Preferences/appCode10/tools/Dynamic Code Injection.xml"
   _scriptsDir="${DYCI_ROOT_DIR}/scripts"
   _script=${_scriptsDir}/dyci-recompile.py
-
+ 
  
   ## Escape path for sed using bash find and replace 
   _scriptsDir="${_scriptsDir//\//\\/}"
