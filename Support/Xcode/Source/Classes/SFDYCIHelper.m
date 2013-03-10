@@ -91,6 +91,8 @@
    while (firstResponder) {
       firstResponder = [firstResponder nextResponder];
 
+      NSLog(@"Responder is :%@", firstResponder);
+      
       if ([firstResponder isKindOfClass:NSClassFromString(@"IDEEditorContext")]) {
 
          // Resolving currently opened file

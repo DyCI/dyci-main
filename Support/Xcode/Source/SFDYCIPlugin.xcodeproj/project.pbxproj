@@ -20,8 +20,6 @@
 		8D5B49B6048680CD000E48DA /* SFDYCIPlugin.xcplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SFDYCIPlugin.xcplugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA37E2DB0E6291C8001BDFEF /* SFDYCIHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFDYCIHelper.m; sourceTree = "<group>"; };
-		E418499E162B3F99006F47C7 /* success.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = success.png; path = Resources/success.png; sourceTree = "<group>"; };
-		E4991D5D162B425E0046D273 /* error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = error.png; path = Resources/error.png; sourceTree = "<group>"; };
 		E4991D5E162B447A0046D273 /* SFDYCIResultView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFDYCIResultView.h; sourceTree = "<group>"; };
 		E4991D5F162B447A0046D273 /* SFDYCIResultView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFDYCIResultView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -62,8 +60,6 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				E4991D5D162B425E0046D273 /* error.png */,
-				E418499E162B3F99006F47C7 /* success.png */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 			);
 			name = Resources;
