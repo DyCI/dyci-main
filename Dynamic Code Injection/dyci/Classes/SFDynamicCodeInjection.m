@@ -220,27 +220,27 @@
 extern void _CFBundleFlushBundleCaches(CFBundleRef bundle) __attribute__((weak_import));
 
 - (void)flushBundleCache:(NSBundle *)bundle {
-//   NSLog(@"%d _CFBundleFlushBundleCaches available", _CFBundleFlushBundleCaches);
-//   NSLog(@"Main bundle : %@", [NSBundle mainBundle]);
+   
+   // Check if we still have this function
    if (_CFBundleFlushBundleCaches != NULL) {
-      CFURLRef bundleURL;
-      CFBundleRef myBundle;
-      
-      // Make a CFURLRef from the CFString representation of the
-      // bundle’s path.
-      bundleURL = CFURLCreateWithFileSystemPath(
-                                                kCFAllocatorDefault,
-                                                (CFStringRef)[bundle bundlePath],
-                                                kCFURLPOSIXPathStyle,
-                                                true );
-      
-      // Make a bundle instance using the URLRef.
-      myBundle = CFBundleCreate( kCFAllocatorDefault, bundleURL );
-      if (_CFBundleFlushBundleCaches != NULL) {
+         CFURLRef bundleURL;
+         CFBundleRef myBundle;
+         
+         // Make a CFURLRef from the CFString representation of the
+         // bundle’s path.
+         bundleURL = CFURLCreateWithFileSystemPath(
+                                                   kCFAllocatorDefault,
+                                                   (CFStringRef)[bundle bundlePath],
+                                                   kCFURLPOSIXPathStyle,
+                                                   true );
+         
+         // Make a bundle instance using the URLRef.
+         myBundle = CFBundleCreate( kCFAllocatorDefault, bundleURL );
+         
          _CFBundleFlushBundleCaches(myBundle);
-      }
-      CFRelease(myBundle);
-      CFRelease(bundleURL);
+         
+         CFRelease(myBundle);
+         CFRelease(bundleURL);
    }
 }
 

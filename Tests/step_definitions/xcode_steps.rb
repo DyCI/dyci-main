@@ -30,7 +30,7 @@ When /^project was successfully built$/ do
 
   d_puts "Copying #{source_project_path} to #{test_project_path}"
   FileUtils.rm_r(test_project_path) if File.exist? test_project_path
-  FileUtils.mkdir(test_project_path)
+  FileUtils.mkdir_p(test_project_path)
   FileUtils.cp_r(source_project_path, test_project_path, :remove_destination => true)
   @config.test_project_root = test_project_path
   @config.test_project_sources_root = File.join(test_project_path, File.basename(source_project_path)).to_s
@@ -114,7 +114,7 @@ def run_project(app_name)
   #puts "Project started to run"
   d_puts "Killing previous running instance"
   %x[kill -9 #{app_name} > /dev/null 2>&1]
-  sleep(0.5)
+  sleep(1)
   env_vars = {
       "DYLD_ROOT_PATH" => @config.sdk_dir,
       "IPHONE_SIMULATOR_ROOT" => @config.sdk_dir,
@@ -197,7 +197,7 @@ When /^Inject inject new version of "([^"]*)" with "([^"]*)" as test string$/ do
 
   d_puts "#{Time.now} : Starting injection"
 
-  verbose_recompile = ""
+  verbose_recompile = "> /tmp/ruby-output-dyci-recompilation 2>&1"
   verbose_recompile = "> /dev/null 2>&1" if @debug_mode == false
   system("~/.dyci/scripts/dyci-recompile.py #{file} #{verbose_recompile}")
   result_code = $?.exitstatus
