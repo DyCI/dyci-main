@@ -8,6 +8,12 @@
 
 #import "IEViewController.h"
 
+@interface UIViewController (Private)
+
+- (void)updateOnClassInjection;
+
+@end
+
 @interface IEViewController ()
 
 @end
@@ -31,6 +37,13 @@
    NSLog(@"Current Label : %@", self.label);
    NSLog(@"Labale text : %@", self.label.text);
    
+}
+
+
+- (void)updateOnClassInjection {
+    [super updateOnClassInjection];
+    NSLog(@"Updated Button frame : %@", NSStringFromCGRect(self.startButton.frame));
+    
 }
 
 @end
