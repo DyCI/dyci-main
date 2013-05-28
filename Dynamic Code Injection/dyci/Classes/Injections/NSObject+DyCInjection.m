@@ -32,6 +32,9 @@ void swizzle(Class c, SEL orig, SEL new) {
 + (void)allowInjectionSubscriptionOnInitMethod {
    swizzle([NSObject class], @selector(init), @selector(_swizzledInit));
    swizzle([NSObject class], NSSelectorFromString(@"dealloc"), @selector(_swizzledDealloc));
+    
+   // Storyboard support
+   swizzle(NSClassFromString(@"UINib"), @selector(instantiateWithOwner:options:), @selector(_swizzledInstantiateWithOwner:options:));
 }
 
 

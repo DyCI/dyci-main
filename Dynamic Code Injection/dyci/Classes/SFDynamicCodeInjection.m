@@ -249,6 +249,7 @@ extern void _CFBundleFlushBundleCaches(CFBundleRef bundle) __attribute__((weak_i
 
 - (void)newFileWasFoundAtPath:(NSString *)filePath {
 
+    NSLog(@"New file injection detected at path : %@", filePath);
    if ([[filePath lastPathComponent] isEqualToString:@"resource"]) {
 
       NSLog(@" ");

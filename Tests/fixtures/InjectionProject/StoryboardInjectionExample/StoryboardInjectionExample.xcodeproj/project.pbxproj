@@ -23,6 +23,7 @@
 
 /* Begin PBXFileReference section */
 		E49452701753C95400EFA87D /* dyci.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = dyci.framework; path = ../InjectionExample/Frameworks/dyci.framework; sourceTree = "<group>"; };
+		E49452761753D02900EFA87D /* Injections */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Injections; sourceTree = "<group>"; };
 		E498D24316F5CF2500D22636 /* StoryboardInjectionExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StoryboardInjectionExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E498D24616F5CF2500D22636 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		E498D24816F5CF2500D22636 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -87,6 +88,7 @@
 		E498D24C16F5CF2500D22636 /* StoryboardInjectionExample */ = {
 			isa = PBXGroup;
 			children = (
+				E49452761753D02900EFA87D /* Injections */,
 				E498D25516F5CF2500D22636 /* IEAppDelegate.h */,
 				E498D25616F5CF2500D22636 /* IEAppDelegate.m */,
 				E498D25E16F5CF2500D22636 /* MainStoryboard.storyboard */,
@@ -232,7 +234,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
 			};
 			name = Debug;

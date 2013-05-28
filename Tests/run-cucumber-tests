@@ -1,1 +1,1 @@
-cucumber -r step_definitions/ -n inject
+cucumber -r step_definitions/ -n storyboard

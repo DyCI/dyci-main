@@ -10,7 +10,7 @@
 
 @interface UIViewController (Private)
 
-- (void)updateOnClassInjection;
+- (void)updateOnResourceInjection:(NSString *)resource;
 
 @end
 
@@ -20,11 +20,6 @@
 
 @implementation IEViewController
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
-}
 
 - (void)didReceiveMemoryWarning
 {
@@ -34,16 +29,17 @@
 
 - (void)viewWillAppear:(BOOL)animated {
    [super viewWillAppear:animated];
-   NSLog(@"Current Label : %@", self.label);
-   NSLog(@"Labale text : %@", self.label.text);
-   
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
 }
 
 
-- (void)updateOnClassInjection {
-    [super updateOnClassInjection];
-    NSLog(@"Updated Button frame : %@", NSStringFromCGRect(self.startButton.frame));
-    
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    NSLog(@"Start button frame : %@", NSStringFromCGRect(self.startButton.frame));
 }
+
 
 @end
