@@ -19,6 +19,8 @@
 		E4CA14351665491800080374 /* SFDynamicCodeInjection.m in Sources */ = {isa = PBXBuildFile; fileRef = E4CA142C1665491800080374 /* SFDynamicCodeInjection.m */; };
 		E4D6E5251668D3DF007A50A4 /* UIViewController+XIBSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = E4D6E5231668D3DF007A50A4 /* UIViewController+XIBSupport.h */; };
 		E4D6E5261668D3DF007A50A4 /* UIViewController+XIBSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = E4D6E5241668D3DF007A50A4 /* UIViewController+XIBSupport.m */; };
+		EEDBE2A6D30E2006AE3BD896 /* UINib+StoryBoardSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = EEDBEE8E6ED9B91A2C34B09F /* UINib+StoryBoardSupport.h */; };
+		EEDBED212F3A8A973EB447A6 /* UINib+StoryBoardSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = EEDBE02EDFF230053A4EF8F0 /* UINib+StoryBoardSupport.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +39,8 @@
 		E4CA142C1665491800080374 /* SFDynamicCodeInjection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFDynamicCodeInjection.m; sourceTree = "<group>"; };
 		E4D6E5231668D3DF007A50A4 /* UIViewController+XIBSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+XIBSupport.h"; sourceTree = "<group>"; };
 		E4D6E5241668D3DF007A50A4 /* UIViewController+XIBSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+XIBSupport.m"; sourceTree = "<group>"; };
+		EEDBE02EDFF230053A4EF8F0 /* UINib+StoryBoardSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINib+StoryBoardSupport.m"; sourceTree = "<group>"; };
+		EEDBEE8E6ED9B91A2C34B09F /* UINib+StoryBoardSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINib+StoryBoardSupport.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +137,8 @@
 				E4D6E5241668D3DF007A50A4 /* UIViewController+XIBSupport.m */,
 				E4CA14291665491800080374 /* NSObject+DyCInjection.h */,
 				E4CA142A1665491800080374 /* NSObject+DyCInjection.m */,
+				EEDBEE8E6ED9B91A2C34B09F /* UINib+StoryBoardSupport.h */,
+				EEDBE02EDFF230053A4EF8F0 /* UINib+StoryBoardSupport.m */,
 			);
 			path = Injections;
 			sourceTree = "<group>";
@@ -150,6 +156,7 @@
 				E4CA142F1665491800080374 /* SFFileWatcher.h in Headers */,
 				E4CA14311665491800080374 /* SFFileWatcherDelegate.h in Headers */,
 				E4D6E5251668D3DF007A50A4 /* UIViewController+XIBSupport.h in Headers */,
+				EEDBE2A6D30E2006AE3BD896 /* UINib+StoryBoardSupport.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -265,6 +272,7 @@
 				E4CA14331665491800080374 /* NSObject+DyCInjection.m in Sources */,
 				E4CA14351665491800080374 /* SFDynamicCodeInjection.m in Sources */,
 				E4D6E5261668D3DF007A50A4 /* UIViewController+XIBSupport.m in Sources */,
+				EEDBED212F3A8A973EB447A6 /* UINib+StoryBoardSupport.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

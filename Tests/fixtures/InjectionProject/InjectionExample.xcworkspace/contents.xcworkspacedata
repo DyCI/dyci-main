@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:StoryboardInjectionExample/StoryboardInjectionExample.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:InjectionExample/InjectionExample.xcodeproj">
    </FileRef>
 </Workspace>
