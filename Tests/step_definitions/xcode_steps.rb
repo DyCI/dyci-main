@@ -115,6 +115,10 @@ When /^project from `([^`]*)` with  name `([^`]*)` is used$/ do |fixtures_projec
 
   d_puts "Setting up @config.fixtures_project_dir = #{@config.fixtures_project_dir}"
   d_puts "Setting up @config.project_name = #{@config.project_name}"
+
+  #Kill previous instance of
+  kill_process_with_name(@config.project_name)
+
 end
 
 When /^project build is configured to `([^`]*)` workspace and `([^`]*)` scheme$/ do |workspace_name, scheme_name|
@@ -190,6 +194,9 @@ When /^I end project process$/ do
       end
     end
   end
+
+  kill_process_with_name(@config.project_name)
+
 end
 
 
@@ -247,3 +254,11 @@ Then /^I should see "([^"]*)" in running project output$/ do |arg|
 end
 
 
+
+
+## Helpers --
+def kill_process_with_name(project_name)
+  # code here
+  pid = `ps -eo pid,comm | awk '/#{project_name}$/  {print $1; exit}'`
+  system("kill -9 #{pid}") unless pid
+end
