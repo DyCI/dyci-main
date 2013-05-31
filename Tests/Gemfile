@@ -1,3 +1,4 @@
 gem "cucumber"
 gem "aruba"
 gem "aruba-doubles"
+gem "xcodebuild-rb"

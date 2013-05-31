@@ -111,32 +111,21 @@ sudo cp Scripts/clangParams.py "${DYCI_ROOT_DIR}/scripts/"
 
 echo "Done."
 
+if [[ -d "${USER_HOME}/Library/Preferences/appCode20" ]]; then
+  echo -n "== AppCode found. Installing DYCI as AppCode plugin : "
 
-if [[ -d "${USER_HOME}/Library/Preferences/appCode10" ]]; then
-  echo -n "== AppCode found. Installing DYCI as AppCode external tool : "
-
-  if [[ ! -d "${USER_HOME}/Library/Preferences/appCode10/tools" ]]; then
-     mkdir -p "${USER_HOME}/Library/Preferences/appCode10/tools"
+  PLUGINS_DIRECTORY="${USER_HOME}/Library/Application Support/appCode20"    
+  PLUGIN_NAME="Dyci Plugin.jar"
+  if [[ ! -d "${PLUGINS_DIRECTORY}" ]]; then
+     mkdir -p "${PLUGINS_DIRECTORY}"
   fi
 
-  log "sudo cp Support/AppCode/Dynamic Code Injection.xml ${USER_HOME}/Library/Preferences/appCode10/tools/"
-  sudo cp Support/AppCode/Dynamic\ Code\ Injection.xml "${USER_HOME}/Library/Preferences/appCode10/tools/"
-
-  DYCITOOL="${USER_HOME}/Library/Preferences/appCode10/tools/Dynamic Code Injection.xml"
-  _scriptsDir="${DYCI_ROOT_DIR}/scripts"
-  _script=${_scriptsDir}/dyci-recompile.py
-
- 
-  ## Escape path for sed using bash find and replace 
-  _scriptsDir="${_scriptsDir//\//\\/}"
-  _script="${_script//\//\\/}"
-
- 
-  # replace __RECOMPILE_SCRIPT_DIRECTORY__ in XML
-  sudo sed -e "s/__RECOMPILE_SCRIPT_DIRECTORY__/${_scriptsDir}/" "${DYCITOOL}" > "${DYCITOOL}_TMP" && mv "${DYCITOOL}_TMP" "${DYCITOOL}"
-  sudo sed -e "s/__RECOMPILE_SCRIPT__/${_script}/" "${DYCITOOL}"               > "${DYCITOOL}_TMP" && mv "${DYCITOOL}_TMP" "${DYCITOOL}"
+  log "cp Support/AppCode/${PLUGIN_NAME} ${PLUGINS_DIRECTORY}"
+  cp "Support/AppCode/${PLUGIN_NAME}" "${PLUGINS_DIRECTORY}"/
 
   echo "Done."
+
+  echo "   Restart Appcode. Plugin should be loaded automaticaly. If not, you may need to install it manually"
 
 fi
 
@@ -153,8 +142,3 @@ echo "  Now you can use DYCI from the Xcode :P (^X)"
 echo
 echo "DYCI was successfully installed!"
 echo
-
-
-
-
-

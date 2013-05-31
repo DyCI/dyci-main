@@ -22,9 +22,8 @@ def runAndFailOnError(stringToRun):
     # emulating output / err
     stdout.write(output)
     stderr.write(err)
-
     if process.returncode != 0:
-        exit(process.returncode)
+        sys.exit(1)
 
 #----------------------------------------------------------------------------------
 def removeDynamicLibsFromDirectory(dir):
@@ -41,6 +40,19 @@ def removeDynamicLibsFromDirectory(dir):
                 continue
             else:
                 os.unlink(path)
+
+#----------------------------------------------------------------------------------
+def copytree(src, dst, symlinks=False, ignore=None):
+    if not os.path.exists(dst):
+        os.makedirs(dst)
+    for item in os.listdir(src):
+        s = os.path.join(src, item)
+        d = os.path.join(dst, item)
+        if os.path.isdir(s):
+            copytree(s, d, symlinks, ignore)
+        else:
+            if not os.path.exists(d) or os.stat(src).st_mtime - os.stat(dst).st_mtime > 1:
+                shutil.copy2(s, d)
 #----------------------------------------------------------------------------------
 def copyResource(source, dyci):
     try:
@@ -55,11 +67,19 @@ def copyResource(source, dyci):
     # Searching, if it is localizable resource or not
     resource_directory = basename(dirname(source))
     if (resource_directory[-5:] == "lproj"):
-        shutil.copy(source, bundlePath + "/" + resource_directory)
-        stdout.write("File " + source + " was successfully copied to application -> " + bundlePath + "/" + resource_directory)
+        if not os.path.isdir(source):
+            copytree(source, bundlePath + "/" + resource_directory)
+            stdout.write("File " + source + " was successfully copied to application -> " + bundlePath + "/" + resource_directory)
+        else:
+            copytree(source, bundlePath + "/" + resource_directory + "/" + os.path.split(source)[1])
+            stdout.write("File " + source + " was successfully copied to application -> " +  bundlePath + "/" + resource_directory + "/" + os.path.split(source)[1])
     else:    
-        shutil.copy(source, bundlePath)
-        stdout.write("File " + source + " was successfully copied to application -> " + bundlePath)
+        if not os.path.isdir(source):
+            copytree(source, bundlePath)
+            stdout.write("File " + source + " was successfully copied to application -> " + bundlePath)
+        else:
+            copytree(source, bundlePath + "/" + os.path.split(source)[1])
+            stdout.write("File " + source + " was successfully copied to application -> " + bundlePath)
 
     try:
        fileHandle = open( dyci + '/resource', 'w' )
@@ -90,7 +110,7 @@ except:
     exit(1)
 
 # In case of resources..
-if filename[-4:] == ".png" or filename[-4:] == ".jpg" or filename[-5:] == ".jpeg": 
+if filename[-4:] == ".png" or filename[-4:] == ".jpg" or filename[-5:] == ".jpeg" or filename[-8:] == ".strings": 
     resultCode = copyResource(filename, DYCI_ROOT_DIR)
     exit(resultCode)
 
@@ -102,12 +122,20 @@ if filename[-4:] == ".xib":
     os.unlink(xibFilename)
     exit(resultCode)
 
+if filename[-11:] == ".storyboard": 
+    storyboardFileName = os.path.splitext(filename)[0] + ".storyboardc"
+    runAndFailOnError(["ibtool", "--compile", storyboardFileName, filename])
+    resultCode = copyResource(storyboardFileName, DYCI_ROOT_DIR)
+    os.unlink(storyboardFileName)
+    exit(resultCode)
+
+
 # In case of header files
 # In some cases you need be able to recompile M file, when you are in header
 if filename[-2:] == ".h": filename = os.path.splitext(filename)[0] + ".m"
 
 # loading it's params from the file
-indexFileLocation = DYCI_ROOT_DIR + '/index/' + hashlib.md5(filename).hexdigest()
+indexFileLocation = DYCI_ROOT_DIR + '/index/' + hashlib.md5(os.path.normpath(filename)).hexdigest()
 
 
 params = []

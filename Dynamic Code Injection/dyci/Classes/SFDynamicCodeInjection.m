@@ -99,11 +99,13 @@
 #pragma mark - Checking for Library
 
 + (NSString *)dciDirectoryPath {
-   NSString * dciDirectoryPath = [@"~" stringByExpandingTildeInPath];
-   NSRange r = [dciDirectoryPath rangeOfString:@"/Library/Application Support"];
-   dciDirectoryPath = [dciDirectoryPath substringToIndex:r.location];
-   dciDirectoryPath = [dciDirectoryPath stringByAppendingPathComponent:@".dyci"];
-   dciDirectoryPath = [dciDirectoryPath stringByAppendingString:@"/"];
+   NSString * dciDirectoryPath = [NSString stringWithFormat:@"/Users/%s/.dyci/", getenv("USER")];
+   NSLog(@"DYCI directory path is : %@", dciDirectoryPath);
+//   NSString * dciDirectoryPath = [@"~" stringByExpandingTildeInPath];
+//   NSRange r = [dciDirectoryPath rangeOfString:@"/Library/Application Support"];
+//   dciDirectoryPath = [dciDirectoryPath substringToIndex:r.location];
+//   dciDirectoryPath = [dciDirectoryPath stringByAppendingPathComponent:@".dyci"];
+//   dciDirectoryPath = [dciDirectoryPath stringByAppendingString:@"/"];
    return dciDirectoryPath;
 }
 
@@ -199,10 +201,47 @@
                          error:nil];
 }
 
+#pragma mark - Privat API's
+
+/*
+ This one was found by searching on Github private headers
+ */
 - (void)flushUIImageCache {
 #warning Fix this
    [NSClassFromString(@"UIImage") performSelector:@selector(_flushSharedImageCache)];
 
+}
+
+/*
+ And this one was found Here
+ http://michelf.ca/blog/2010/killer-private-eraser/
+ Thanks to Michel
+ */
+extern void _CFBundleFlushBundleCaches(CFBundleRef bundle) __attribute__((weak_import));
+
+- (void)flushBundleCache:(NSBundle *)bundle {
+   
+   // Check if we still have this function
+   if (_CFBundleFlushBundleCaches != NULL) {
+         CFURLRef bundleURL;
+         CFBundleRef myBundle;
+         
+         // Make a CFURLRef from the CFString representation of the
+         // bundle’s path.
+         bundleURL = CFURLCreateWithFileSystemPath(
+                                                   kCFAllocatorDefault,
+                                                   (CFStringRef)[bundle bundlePath],
+                                                   kCFURLPOSIXPathStyle,
+                                                   true );
+         
+         // Make a bundle instance using the URLRef.
+         myBundle = CFBundleCreate( kCFAllocatorDefault, bundleURL );
+         
+         _CFBundleFlushBundleCaches(myBundle);
+         
+         CFRelease(myBundle);
+         CFRelease(bundleURL);
+   }
 }
 
 
@@ -210,10 +249,8 @@
 
 - (void)newFileWasFoundAtPath:(NSString *)filePath {
 
+    NSLog(@"New file injection detected at path : %@", filePath);
    if ([[filePath lastPathComponent] isEqualToString:@"resource"]) {
-
-      // Flushing UIImage cache
-      [self flushUIImageCache];
 
       NSLog(@" ");
       NSLog(@" ================================================= ");
@@ -221,12 +258,18 @@
       NSLog(@"All classes will be notified with");
       NSLog(@" - (void)updateOnResourceInjection:(NSString *)path ");
       NSLog(@" ");
-
-
+      
       NSString * injectedResourcePath =
-       [NSString stringWithContentsOfFile:filePath
-                                 encoding:NSUTF8StringEncoding
-                                    error:nil];
+      [NSString stringWithContentsOfFile:filePath
+                                encoding:NSUTF8StringEncoding
+                                   error:nil];
+
+      // Flushing UIImage cache
+      [self flushUIImageCache];
+
+      if ([[injectedResourcePath pathExtension] isEqualToString:@"strings"]) {
+         [self flushBundleCache:[NSBundle mainBundle]];
+      }
 
       [[NSNotificationCenter defaultCenter] postNotificationName:SFDynamicRuntimeResourceUpdatedNotification
                                                           object:injectedResourcePath];
