@@ -76,6 +76,11 @@ void swizzle(Class c, SEL orig, SEL new) {
             return NO;
          }
          break;
+      case 'D':
+         if (className[1] == 'O' && className[2] == 'M') {
+            return NO;
+         }
+         break;
       case 'S':
          if (className[1] == 'F' && className[2] == 'I' && className[3] == 'n' && className[4] == 'j') {
             return NO;
@@ -89,6 +94,12 @@ void swizzle(Class c, SEL orig, SEL new) {
 
       default:
          break;
+   }
+
+   // Disable injection on managed object classes
+   Class clz = NSClassFromString(@"NSManagedObject");
+   if (clz && [instance isKindOfClass:clz]) {
+      return NO;
    }
 
    return YES;
@@ -119,7 +130,6 @@ void swizzle(Class c, SEL orig, SEL new) {
 
       // In case, if we are in need to inject
       if ([NSObject shouldPerformRuntimeCodeInjectionOnObject:result]) {
-
           SFInjectionsNotificationsCenter * notificationCenter = [SFInjectionsNotificationsCenter sharedInstance];
           [notificationCenter addObserver:result];
       }
