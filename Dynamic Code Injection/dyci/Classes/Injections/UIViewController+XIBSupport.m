@@ -11,6 +11,8 @@
 #import "UINib+StoryBoardSupport.h"
 
 
+#if TARGET_IPHONE_SIMULATOR
+
 @interface SFDynamicCodeInjection (Private)
 
 + (id)sharedInstance;
@@ -150,3 +152,5 @@
 }
 
 @end
+
+#endif

@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+#if TARGET_IPHONE_SIMULATOR
 
 @protocol SFInjectionObserver <NSObject>
 
@@ -56,3 +57,5 @@ This will notiy all registered classes about that some resource was injected
 - (void)notifyOnResourceInjection:(NSString *)resourceInjection;
 
 @end
+
+#endif

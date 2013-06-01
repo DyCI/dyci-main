@@ -7,6 +7,8 @@
 //
 #import "UINib+StoryBoardSupport.h"
 
+#if TARGET_IPHONE_SIMULATOR
+
 
 @implementation UINib (StoryBoardSupport)
 
@@ -36,3 +38,5 @@ static NSMutableDictionary * cachedOptions;
 
 
 @end
+
+#endif

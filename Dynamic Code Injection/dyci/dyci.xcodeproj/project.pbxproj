@@ -12,6 +12,7 @@
 		E40867EC164695F70002D2ED /* SFFileWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = E40867E4164695F70002D2ED /* SFFileWatcher.m */; };
 		E40867ED164695F70002D2ED /* NSObject+DyCInjection.m in Sources */ = {isa = PBXBuildFile; fileRef = E40867E8164695F70002D2ED /* NSObject+DyCInjection.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E40867EE164695F70002D2ED /* SFDynamicCodeInjection.m in Sources */ = {isa = PBXBuildFile; fileRef = E40867EA164695F70002D2ED /* SFDynamicCodeInjection.m */; };
+		E4584AE4175A22EC00460B8C /* SFInjectionsNotificationsCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = E4584AE3175A22EC00460B8C /* SFInjectionsNotificationsCenter.m */; };
 		E4D6E5211668D217007A50A4 /* UIViewController+XIBSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = E4D6E5201668D217007A50A4 /* UIViewController+XIBSupport.m */; };
 		EEDBED62B39AD60BD979D525 /* UINib+StoryBoardSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = EEDBE99D210B32C40880289E /* UINib+StoryBoardSupport.m */; };
 /* End PBXBuildFile section */
@@ -41,6 +42,8 @@
 		E40867E8164695F70002D2ED /* NSObject+DyCInjection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+DyCInjection.m"; sourceTree = "<group>"; };
 		E40867E9164695F70002D2ED /* SFDynamicCodeInjection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFDynamicCodeInjection.h; sourceTree = "<group>"; };
 		E40867EA164695F70002D2ED /* SFDynamicCodeInjection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFDynamicCodeInjection.m; sourceTree = "<group>"; };
+		E4584AE2175A22EC00460B8C /* SFInjectionsNotificationsCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFInjectionsNotificationsCenter.h; sourceTree = "<group>"; };
+		E4584AE3175A22EC00460B8C /* SFInjectionsNotificationsCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFInjectionsNotificationsCenter.m; sourceTree = "<group>"; };
 		E4D6E51F1668D217007A50A4 /* UIViewController+XIBSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+XIBSupport.h"; sourceTree = "<group>"; };
 		E4D6E5201668D217007A50A4 /* UIViewController+XIBSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+XIBSupport.m"; sourceTree = "<group>"; };
 		EEDBE99D210B32C40880289E /* UINib+StoryBoardSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINib+StoryBoardSupport.m"; sourceTree = "<group>"; };
@@ -88,6 +91,7 @@
 		E40867DC164695B90002D2ED /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				E4584AE1175A22EC00460B8C /* Notifications */,
 				E40867DF164695F70002D2ED /* Categories */,
 				E40867E2164695F70002D2ED /* FileWatcher */,
 				E40867E6164695F70002D2ED /* Injections */,
@@ -135,6 +139,15 @@
 				EEDBEFD7A35F0700454FF8D5 /* UINib+StoryBoardSupport.h */,
 			);
 			path = Injections;
+			sourceTree = "<group>";
+		};
+		E4584AE1175A22EC00460B8C /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				E4584AE2175A22EC00460B8C /* SFInjectionsNotificationsCenter.h */,
+				E4584AE3175A22EC00460B8C /* SFInjectionsNotificationsCenter.m */,
+			);
+			path = Notifications;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -194,6 +207,7 @@
 				E40867EE164695F70002D2ED /* SFDynamicCodeInjection.m in Sources */,
 				E4D6E5211668D217007A50A4 /* UIViewController+XIBSupport.m in Sources */,
 				EEDBED62B39AD60BD979D525 /* UINib+StoryBoardSupport.m in Sources */,
+				E4584AE4175A22EC00460B8C /* SFInjectionsNotificationsCenter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

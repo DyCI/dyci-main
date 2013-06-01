@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+
+#if TARGET_IPHONE_SIMULATOR
+
 /*
  This category allows Xibs to be injected in runtime
  */
@@ -25,3 +28,5 @@
 - (void)updateOnResourceInjection:(NSString *)path;
 
 @end
+
+#endif
