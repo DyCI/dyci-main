@@ -73,16 +73,17 @@ void Swizzle(Class c,  SEL orig,Class anotherClass, SEL new)
 int main(int argc, char *argv[])
 {
    @autoreleasepool {
-      NSLog(@"Running!");
+      NSLog(@"Running Injection Example!");
       
 #if CEDAR_KNOWS_SOMETHING_ABOUT_FAILING_ON_IOS6_SIMULATOR
       NSLog(@"CEDAR_KNOWS_SOMETHING_ABOUT_FAILING_ON_IOS6_SIMULATOR!");
       CFMessagePortCreateLocal(NULL, (CFStringRef) @"PurpleWorkspacePort", NULL, NULL,NULL);
+       Class clz = NSClassFromString(@"BKSAccelerometer");
+       Class clz2 = NSClassFromString(@"BKSAccelerometerFix");
+       Swizzle(clz, @selector(init), clz2, @selector(init));
+
 #endif
 
-      Class clz = NSClassFromString(@"BKSAccelerometer");
-      Class clz2 = NSClassFromString(@"BKSAccelerometerFix");
-      Swizzle(clz, @selector(init), clz2, @selector(init));
 
       return UIApplicationMain(argc, argv, nil, @"IEAppDelegate");
 

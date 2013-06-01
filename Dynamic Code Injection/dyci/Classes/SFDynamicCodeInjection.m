@@ -11,6 +11,7 @@
 #import "SFFileWatcher.h"
 #import "NSSet+ClassesList.h"
 #import "NSObject+DyCInjection.h"
+#import "SFInjectionsNotificationsCenter.h"
 
 @interface SFDynamicCodeInjection () <SFFileWatcherDelegate>
 
@@ -155,8 +156,7 @@
     NSLog(@"Class (%@) and their subclasses instances would be notified with", NSStringFromClass(originalClass));
     NSLog(@" - (void)updateOnClassInjection ");
 
-   [[NSNotificationCenter defaultCenter] postNotificationName:SFDynamicRuntimeClassUpdatedNotification
-                                                       object:originalClass];
+    [[SFInjectionsNotificationsCenter sharedInstance] notifyOnClassInjection:originalClass];
 
 }
 
@@ -271,8 +271,7 @@ extern void _CFBundleFlushBundleCaches(CFBundleRef bundle) __attribute__((weak_i
          [self flushBundleCache:[NSBundle mainBundle]];
       }
 
-      [[NSNotificationCenter defaultCenter] postNotificationName:SFDynamicRuntimeResourceUpdatedNotification
-                                                          object:injectedResourcePath];
+      [[SFInjectionsNotificationsCenter sharedInstance] notifyOnResourceInjection:injectedResourcePath];
 
    }
 
@@ -296,7 +295,7 @@ extern void _CFBundleFlushBundleCaches(CFBundleRef bundle) __attribute__((weak_i
       
       if (libHandle) {
          
-         NSLog(@"DCI was successfully loaded");
+         NSLog(@"DYCI was successfully loaded");
          NSLog(@"Searching classes to inject");
 
          // Retrieving difference between old classes list and
