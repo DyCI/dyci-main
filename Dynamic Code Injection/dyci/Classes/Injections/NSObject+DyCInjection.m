@@ -11,6 +11,7 @@
 #import <objc/runtime.h>
 #import "NSObject+DyCInjection.h"
 #import "SFDynamicCodeInjection.h"
+#import "SFInjectionsNotificationsCenter.h"
 
 
 void swizzle(Class c, SEL orig, SEL new) {
@@ -23,6 +24,10 @@ void swizzle(Class c, SEL orig, SEL new) {
    }
 }
 
+
+@interface NSObject (DyCInjectionObserver) <SFInjectionObserver>
+
+@end
 
 
 @implementation NSObject (DyCInjection)
@@ -71,9 +76,31 @@ void swizzle(Class c, SEL orig, SEL new) {
             return NO;
          }
          break;
+      case 'D':
+         if (className[1] == 'O' && className[2] == 'M') {
+            return NO;
+         }
+         break;
+      case 'S':
+         if (className[1] == 'F' && className[2] == 'I' && className[3] == 'n' && className[4] == 'j') {
+            return NO;
+         }
+         break;
+       case 'O':
+         if (className[1] == 'S' && className[2] == '_') {
+            return NO;
+         }
+         break;
 
       default:
          break;
+   }
+
+   // Disable injection on NSManagedObject object classes
+   // They have slightly different lifecycle...
+   Class clz = NSClassFromString(@"NSManagedObject");
+   if (clz && [instance isKindOfClass:clz]) {
+      return NO;
    }
 
    return YES;
@@ -104,13 +131,8 @@ void swizzle(Class c, SEL orig, SEL new) {
 
       // In case, if we are in need to inject
       if ([NSObject shouldPerformRuntimeCodeInjectionOnObject:result]) {
-
-         NSNotificationCenter * notificationCenter = [NSNotificationCenter defaultCenter];
-
-         // On class update/inject
-         [notificationCenter addObserver:self selector:@selector(onClassUpdateNotification:) name:SFDynamicRuntimeClassUpdatedNotification object:nil];
-         [notificationCenter addObserver:self selector:@selector(onResourceUpdateNotification:) name:SFDynamicRuntimeResourceUpdatedNotification object:nil];
-
+          SFInjectionsNotificationsCenter * notificationCenter = [SFInjectionsNotificationsCenter sharedInstance];
+          [notificationCenter addObserver:result];
       }
 
    }
@@ -120,7 +142,7 @@ void swizzle(Class c, SEL orig, SEL new) {
 - (void)_swizzledDealloc {
 
    if ([NSObject shouldPerformRuntimeCodeInjectionOnObject:self]) {
-      [[NSNotificationCenter defaultCenter] removeObserver:self];
+      [[SFInjectionsNotificationsCenter sharedInstance] removeObserver:self];
    }
 
    // Swizzled methods are fun
@@ -128,21 +150,6 @@ void swizzle(Class c, SEL orig, SEL new) {
    [self _swizzledDealloc];
 
 }
-
-
-#pragma  mark - Notifications handling
-
-- (void)onClassUpdateNotification:(NSNotification *)note {
-   if ([self isKindOfClass:note.object]) {
-      [self updateOnClassInjection];
-   }
-}
-
-
-- (void)onResourceUpdateNotification:(NSNotification *)note {
-   [self updateOnResourceInjection:note.object];
-}
-
 
 @end
 

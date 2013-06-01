@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E4584ADC1759CC5E00460B8C /* SFInjectionsNotificationsCenter.h in Headers */ = {isa = PBXBuildFile; fileRef = E4584ADA1759CC5E00460B8C /* SFInjectionsNotificationsCenter.h */; };
+		E4584ADD1759CC5E00460B8C /* SFInjectionsNotificationsCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = E4584ADB1759CC5E00460B8C /* SFInjectionsNotificationsCenter.m */; };
 		E4CA13FD166548A700080374 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4CA13FC166548A700080374 /* Foundation.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		E4CA142D1665491800080374 /* NSSet+ClassesList.h in Headers */ = {isa = PBXBuildFile; fileRef = E4CA14221665491800080374 /* NSSet+ClassesList.h */; };
 		E4CA142E1665491800080374 /* NSSet+ClassesList.m in Sources */ = {isa = PBXBuildFile; fileRef = E4CA14231665491800080374 /* NSSet+ClassesList.m */; };
@@ -24,6 +26,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E4584ADA1759CC5E00460B8C /* SFInjectionsNotificationsCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFInjectionsNotificationsCenter.h; sourceTree = "<group>"; };
+		E4584ADB1759CC5E00460B8C /* SFInjectionsNotificationsCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFInjectionsNotificationsCenter.m; sourceTree = "<group>"; };
 		E4CA13F9166548A700080374 /* dyci.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework.static; includeInIndex = 0; path = dyci.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4CA13FC166548A700080374 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		E4CA1400166548A700080374 /* dyci-framework-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "dyci-framework-Info.plist"; sourceTree = "<group>"; };
@@ -55,6 +59,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E4584AD91759CC2900460B8C /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				E4584ADA1759CC5E00460B8C /* SFInjectionsNotificationsCenter.h */,
+				E4584ADB1759CC5E00460B8C /* SFInjectionsNotificationsCenter.m */,
+			);
+			path = Notifications;
+			sourceTree = "<group>";
+		};
 		E4CA13EA166548A700080374 = {
 			isa = PBXGroup;
 			children = (
@@ -101,6 +114,7 @@
 		E4CA14201665491800080374 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				E4584AD91759CC2900460B8C /* Notifications */,
 				E4CA14211665491800080374 /* Categories */,
 				E4CA14241665491800080374 /* FileWatcher */,
 				E4CA14281665491800080374 /* Injections */,
@@ -157,6 +171,7 @@
 				E4CA14311665491800080374 /* SFFileWatcherDelegate.h in Headers */,
 				E4D6E5251668D3DF007A50A4 /* UIViewController+XIBSupport.h in Headers */,
 				EEDBE2A6D30E2006AE3BD896 /* UINib+StoryBoardSupport.h in Headers */,
+				E4584ADC1759CC5E00460B8C /* SFInjectionsNotificationsCenter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -273,6 +288,7 @@
 				E4CA14351665491800080374 /* SFDynamicCodeInjection.m in Sources */,
 				E4D6E5261668D3DF007A50A4 /* UIViewController+XIBSupport.m in Sources */,
 				EEDBED212F3A8A973EB447A6 /* UINib+StoryBoardSupport.m in Sources */,
+				E4584ADD1759CC5E00460B8C /* SFInjectionsNotificationsCenter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -334,7 +350,7 @@
 					"$(ARCHS_STANDARD_32_BIT)",
 				);
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 2;
 				FRAMEWORK_VERSION = A;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "dyci-framework/dyci-framework-Prefix.pch";
@@ -353,7 +369,7 @@
 					"$(ARCHS_STANDARD_32_BIT)",
 				);
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 2;
 				FRAMEWORK_VERSION = A;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "dyci-framework/dyci-framework-Prefix.pch";
