@@ -14,7 +14,7 @@ Feature: as User I should be able to inject new classes to the running project
     Then I should see "<InjectedClass>" in running project output
     And I end project process
 
-  @methods
+  @methods @class_methods
   Scenario: Class method injection
     Given I start project
     And Change its source file "InjectionExample/Classes/IEBase.m" with contents of file "InjectionExample/Classes/IEBaseClassMethodInjection.m"

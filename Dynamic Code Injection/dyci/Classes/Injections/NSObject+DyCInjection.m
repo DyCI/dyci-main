@@ -96,7 +96,8 @@ void swizzle(Class c, SEL orig, SEL new) {
          break;
    }
 
-   // Disable injection on managed object classes
+   // Disable injection on NSManagedObject object classes
+   // They have slightly different lifecycle...
    Class clz = NSClassFromString(@"NSManagedObject");
    if (clz && [instance isKindOfClass:clz]) {
       return NO;
