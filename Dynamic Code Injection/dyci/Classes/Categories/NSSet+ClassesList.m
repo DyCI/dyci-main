@@ -9,6 +9,8 @@
 #import "NSSet+ClassesList.h"
 
 
+#if TARGET_IPHONE_SIMULATOR
+
 @implementation NSSet (ClassesList)
 
 + (NSMutableSet *)currentClassesSet {
@@ -29,3 +31,5 @@
 }
 
 @end
+
+#endif

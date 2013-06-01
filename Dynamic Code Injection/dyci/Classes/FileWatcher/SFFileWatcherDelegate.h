@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 
 
+#if TARGET_IPHONE_SIMULATOR
+
 /*
  Object that get notified by SFFileWatcher, when some files are changed in the
  some directory
@@ -23,3 +25,5 @@
 - (void)newFileWasFoundAtPath:(NSString *)filePath;
 
 @end
+
+#endif

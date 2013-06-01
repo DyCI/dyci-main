@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "SFFileWatcherDelegate.h"
 
+#if TARGET_IPHONE_SIMULATOR
+
 /*
  File watcher object.
  Watching for changes on the specified path
@@ -34,3 +36,5 @@
 
 
 @end
+
+#endif

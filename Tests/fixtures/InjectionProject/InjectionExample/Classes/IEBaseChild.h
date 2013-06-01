@@ -1,14 +1,13 @@
 //
-//  IEBase.m
+//  IEBaseChild.h
 //  InjectionExample
 //
-//  Created by Paul Taykalo on 2/28/13.
+//  Created by Paul Taykalo on 6/1/13.
 //  Copyright (c) 2013 Stanfy. All rights reserved.
 //
 
 #import "IEBase.h"
 
-
-@implementation IEBase
+@interface IEBaseChild : IEBase
 
 @end

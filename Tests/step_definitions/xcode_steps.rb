@@ -32,6 +32,12 @@ Before do |scenario|
   #file that held output that was read from application output :))
   @feature_read_output = "/tmp/ruby-read-output"
 
+  #prepare all outputs
+  FileUtils.rm_r(@feature_debug_output) if File.exist? @feature_debug_output
+  FileUtils.rm_r(@application_output) if File.exist? @application_output
+  FileUtils.rm_r(@build_debug_output) if File.exist? @build_debug_output
+  FileUtils.rm_r(@feature_read_output) if File.exist? @feature_read_output
+
 end
 
 
@@ -144,20 +150,11 @@ def run_project(app_name)
     fail "No file to run #{project_file}. It seems that build was failed"
   end
 
-  run_project_command = "#{project_file} -RegisterForSystemEvents"
+  run_project_command = "#{project_file} -RegisterForSystemEvents > #@application_output 2>&1"
 
-  @project_pid = fork do
-    with_env_vars(env_vars) do
+  with_env_vars(env_vars) do
 
-      stdin, stdout, stderr = Open3.popen3("#{run_project_command}")
-
-      File.open(@application_output, 'w') { |f| f.puts "#{Time.now} : Injection started" }
-
-      while (line = stderr.gets)
-        File.open(@application_output, 'a') { |f1| f1.puts(line) }
-      end
-
-    end
+    Open3.popen3("#{run_project_command}")
 
   end
 
@@ -177,26 +174,7 @@ end
 
 
 When /^I end project process$/ do
-  begin
-    #puts "Ending process"
-    Timeout.timeout(1) do
-      Process.wait @project_pid
-    end
-  rescue Timeout::Error
-    d_puts "Children of current process are #{Process.descendant_processes}"
-    Process.descendant_processes.each do |pid|
-      begin
-        Process.getpgid(pid)
-        d_puts "Killing process with #{pid}"
-        Process.kill("KILL", pid) if Process.getpgid(pid)
-      rescue Errno::ESRCH
-        d_puts "Process #{pid} was already ended"
-      end
-    end
-  end
-
   kill_process_with_name(@config.project_name)
-
 end
 
 
@@ -252,9 +230,6 @@ Then /^I should see "([^"]*)" in running project output$/ do |arg|
     fail("There is no #{arg} in project output :(")
   end
 end
-
-
-
 
 ## Helpers --
 def kill_process_with_name(project_name)

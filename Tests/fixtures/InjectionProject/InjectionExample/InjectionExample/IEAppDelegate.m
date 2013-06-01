@@ -9,9 +9,11 @@
 
 #import "IEAppDelegate.h"
 #import "IEBase.h"
+#import "IEBaseChild.h"
 
 @implementation IEAppDelegate {
    IEBase * _base;
+   IEBaseChild * _baseChild;
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -21,7 +23,9 @@
 //    self.window.backgroundColor = [UIColor whiteColor];
 //    [self.window makeKeyAndVisible];
     _base = [[IEBase alloc] init];
+    _baseChild = [[IEBaseChild alloc] init];
     NSLog(@"Base base : %@", _base);
+    NSLog(@"Base child : %@", _baseChild);
     return YES;
 }
 
