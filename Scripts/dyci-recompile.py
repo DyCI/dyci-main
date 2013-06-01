@@ -67,19 +67,23 @@ def copyResource(source, dyci):
     # Searching, if it is localizable resource or not
     resource_directory = basename(dirname(source))
     if (resource_directory[-5:] == "lproj"):
+
+        # Localizable Resouerces..
         if not os.path.isdir(source):
-            copytree(source, bundlePath + "/" + resource_directory)
-            stdout.write("File " + source + " was successfully copied to application -> " + bundlePath + "/" + resource_directory)
+            shutil.copy(source, bundlePath + "/" + resource_directory)
+            stdout.write("LF : File " + source + " was successfully copied to application -> " + bundlePath + "/" + resource_directory)
         else:
             copytree(source, bundlePath + "/" + resource_directory + "/" + os.path.split(source)[1])
-            stdout.write("File " + source + " was successfully copied to application -> " +  bundlePath + "/" + resource_directory + "/" + os.path.split(source)[1])
+            stdout.write("LD : File " + source + " was successfully copied to application -> " +  bundlePath + "/" + resource_directory + "/" + os.path.split(source)[1])
     else:    
+
+        # Non-Localizable Resouerces..
         if not os.path.isdir(source):
-            copytree(source, bundlePath)
-            stdout.write("File " + source + " was successfully copied to application -> " + bundlePath)
+            shutil.copy(source, bundlePath)
+            stdout.write("NF : File " + source + " was successfully copied to application -> " + bundlePath)
         else:
             copytree(source, bundlePath + "/" + os.path.split(source)[1])
-            stdout.write("File " + source + " was successfully copied to application -> " + bundlePath)
+            stdout.write("ND : File " + source + " was successfully copied to application -> " + bundlePath)
 
     try:
        fileHandle = open( dyci + '/resource', 'w' )
@@ -122,11 +126,12 @@ if filename[-4:] == ".xib":
     os.unlink(xibFilename)
     exit(resultCode)
 
+#Storyboards also welcome
 if filename[-11:] == ".storyboard": 
     storyboardFileName = os.path.splitext(filename)[0] + ".storyboardc"
     runAndFailOnError(["ibtool", "--compile", storyboardFileName, filename])
     resultCode = copyResource(storyboardFileName, DYCI_ROOT_DIR)
-    os.unlink(storyboardFileName)
+    shutil.rmtree(storyboardFileName)
     exit(resultCode)
 
 
