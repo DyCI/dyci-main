@@ -52,6 +52,7 @@ void swizzle(Class c, SEL orig, SEL new) {
 
 #warning We should skip more than just NS, CF, and private classes
    char const * className = object_getClassName(instance);
+   
    switch (className[0]) {
       case '_':
          return NO;
@@ -68,6 +69,13 @@ void swizzle(Class c, SEL orig, SEL new) {
          break;
       case 'U':
          if (className[1] == 'I') {
+            // Allowing to inject UIViewControllers
+             if (strcmp(className, "UIViewController") == 0) {
+                 return YES;
+             }
+             if (strcmp(className, "UITableViewController") == 0) {
+                 return YES;
+             }
             return NO;
          }
          break;
@@ -121,7 +129,7 @@ void swizzle(Class c, SEL orig, SEL new) {
 #pragma  mark - Swizzled methods
 
 - (id)_swizzledInit {
-
+    
    // Calling previous init
 
    id result = self;
@@ -129,7 +137,7 @@ void swizzle(Class c, SEL orig, SEL new) {
 
    if (result) {
 
-      // In case, if we are in need to inject
+       // In case, if we are in need to inject
       if ([NSObject shouldPerformRuntimeCodeInjectionOnObject:result]) {
           SFInjectionsNotificationsCenter * notificationCenter = [SFInjectionsNotificationsCenter sharedInstance];
           [notificationCenter addObserver:result];

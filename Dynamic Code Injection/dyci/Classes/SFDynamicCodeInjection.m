@@ -13,11 +13,12 @@
 #import "NSObject+DyCInjection.h"
 #import "SFInjectionsNotificationsCenter.h"
 
+
+#if TARGET_IPHONE_SIMULATOR
+
 @interface SFDynamicCodeInjection () <SFFileWatcherDelegate>
 
 @end
-
-
 
 @implementation SFDynamicCodeInjection {
 
@@ -26,8 +27,6 @@
    SFFileWatcher * _dciDirectoryFileWatcher;
 
 }
-
-#if TARGET_IPHONE_SIMULATOR
 
 + (void)load {
    [self enable];
@@ -317,20 +316,21 @@ extern void _CFBundleFlushBundleCaches(CFBundleRef bundle) __attribute__((weak_i
    }
 }
 
+@end
 
-#else // End of Target == simulator
+#else
 
-+ (void)enable {
-   NSLog(@"DYCI: Sorry, Dynamic Code Ibjection is not available on devices");
+@implementation SFDynamicCodeInjection {
+    
 }
-
-+ (void)disable {
-   NSLog(@"DYCI: Sorry, Dynamic Code Ibjection is not available on devices");
-}
-
+    + (void)enable {
+        NSLog(@"DYCI: Sorry, Dynamic Code Ibjection is not available on devices");
+    }
+    
+    + (void)disable {
+        NSLog(@"DYCI: Sorry, Dynamic Code Ibjection is not available on devices");
+    }
+    
+@end
 
 #endif
-
-
-
-@end

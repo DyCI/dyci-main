@@ -27,6 +27,9 @@
     CF
     Web
     UI
+    DOM
+    SFInj
+    OS_
 
   are skipped
 
