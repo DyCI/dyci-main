@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
 
   s.source       = { :git => "https://github.com/DyCI/dyci-main.git", :tag => 'v0.1.5.1' }
 
-  s.platform     = :ios, '4.3'
+  s.platform     = :ios, '5.0'
 
   s.source_files = 'Dynamic Code Injection/dyci/Classes/*.{h,m}'
   s.requires_arc = true
