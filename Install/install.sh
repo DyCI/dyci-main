@@ -115,13 +115,13 @@ if [[ -d "${USER_HOME}/Library/Preferences/appCode20" ]]; then
   echo -n "== AppCode found. Installing DYCI as AppCode plugin : "
 
   PLUGINS_DIRECTORY="${USER_HOME}/Library/Application Support/appCode20"    
-  PLUGIN_NAME="Dyci Plugin.jar"
+  PLUGIN_NAME="Dyci.jar"
   if [[ ! -d "${PLUGINS_DIRECTORY}" ]]; then
      mkdir -p "${PLUGINS_DIRECTORY}"
   fi
 
-  log "cp Support/AppCode/${PLUGIN_NAME} ${PLUGINS_DIRECTORY}"
-  cp "Support/AppCode/${PLUGIN_NAME}" "${PLUGINS_DIRECTORY}"/
+  log "cp Support/AppCode/Dyci/${PLUGIN_NAME} ${PLUGINS_DIRECTORY}"
+  cp "Support/AppCode/Dyci/${PLUGIN_NAME}" "${PLUGINS_DIRECTORY}"/
 
   echo "Done."
 
@@ -136,9 +136,10 @@ fi
 
 cp -R Support/Xcode/Binary/*.* "${USER_HOME}/Library/Application Support/Developer/Shared/Xcode/Plug-ins/"
 echo Done. 
-echo "  Now you can use DYCI from the Xcode :P (^X)"
+echo "  Now you can use DYCI from the Xcode :P"
 
 
 echo
 echo "DYCI was successfully installed!"
+echo "Use (^X) hot key in your IDE to perform code injections. Have fun."
 echo
