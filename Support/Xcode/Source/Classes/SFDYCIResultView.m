@@ -63,17 +63,9 @@
       NSAffineTransform* transform = [NSAffineTransform transform];
       [transform translateXBy: -round(oval3BorderRect.size.width) yBy: 0];
       [[transform transformBezierPath: oval3NegativePath] fill];
-      [innerShadow release];
    }
    [NSGraphicsContext restoreGraphicsState];
    
-   
-   
-   //// Cleanup
-   [shadow release];
-   [gradient release];
-   [gradient2 release];
-
 }
 
 @end
