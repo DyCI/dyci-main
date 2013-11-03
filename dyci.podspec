@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "dyci"
-  s.version      = "0.1.5.20130602"
+  s.version      = "0.1.5.20131103"
   s.summary      = "Dynamic code injection tool. Allows to inject code at runtime."
 
   s.homepage     = "https://github.com/DyCI/dyci-main"
@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
 
   s.author       = { "Paul Taykalo" => "tt.kilew@gmail.com" }
 
-  s.source       = { :git => "https://github.com/DyCI/dyci-main.git", :tag => 'v0.1.5.1' }
+  s.source       = { :git => "https://github.com/DyCI/dyci-main.git" }
 
   s.platform     = :ios, '5.0'
 
@@ -18,9 +18,12 @@ Pod::Spec.new do |s|
   #...
 
   s.subspec 'Injections' do |sp|
-    sp.source_files = 'Dynamic Code Injection/dyci/Classes/Injections/*.{h,m}'
-    sp.compiler_flags = '-fobjc-no-arc'
-    sp.requires_arc = false
+    sp.source_files = 'Dynamic Code Injection/dyci/Classes/Injections/NSObject*.{h,m}'
+    sp.compiler_flags = '-fno-objc-arc'
+  end
+
+  s.subspec 'UIKit Support' do |sp|
+    sp.source_files = 'Dynamic Code Injection/dyci/Classes/Injections/*Support.{h,m}'
   end
 
   s.subspec 'Helpers' do |sp|
