@@ -51,3 +51,6 @@ Please, do not use this tool in your real applications, that you about to publis
 
 #FAQ
 If you have some questions, before asking them , make sure that they aren't listed [here](https://github.com/DyCI/dyci-main/wiki/FAQ)
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/DyCI/dyci-main/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
