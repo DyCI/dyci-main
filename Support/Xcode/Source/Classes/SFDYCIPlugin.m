@@ -10,6 +10,12 @@
 #import "SFDYCIResultView.h"
 #import "CDRSXcodeInterfaces.h"
 #import "SFDYCIXCodeHelper.h"
+#import "SFDYCIClangProxyRecompiler.h"
+
+
+@interface SFDYCIPlugin ()
+@property(nonatomic, strong) id<SFDYCIRecompilerProtocol> recompiler;
+@end
 
 
 @implementation SFDYCIPlugin
@@ -60,6 +66,8 @@
 
     }
 
+    self.recompiler = [SFDYCIClangProxyRecompiler new];
+
 }
 
 #pragma mark - Preferences
@@ -95,53 +103,14 @@
         NSLog(@"Opened file url is : %@", openedFileURL);
         // Setting up task, that we are going to call
 
-        NSTask * task = [[NSTask alloc] init];
-        [task setLaunchPath:@"/usr/bin/python"];
-        NSString * dyciDirectoryPath = [@"~" stringByExpandingTildeInPath];
-        dyciDirectoryPath = [dyciDirectoryPath stringByAppendingPathComponent:@".dyci"];
-        dyciDirectoryPath = [dyciDirectoryPath stringByAppendingPathComponent:@"scripts"];
-
-        [task setCurrentDirectoryPath:dyciDirectoryPath];
-
-        NSString * dyciRecompile = [dyciDirectoryPath stringByAppendingPathComponent:@"dyci-recompile.py"];
-
-        NSArray * arguments = [NSArray arrayWithObjects:dyciRecompile, [openedFileURL path], nil];
-        [task setArguments:arguments];
-
-
-        // Setting up pipes for standart and error outputs
-        NSPipe * outputPipe = [NSPipe pipe];
-        NSFileHandle * outputFile = [outputPipe fileHandleForReading];
-        [task setStandardOutput:outputPipe];
-
-        NSPipe * errorPipe = [NSPipe pipe];
-        NSFileHandle * errorFile = [errorPipe fileHandleForReading];
-        [task setStandardError:errorPipe];
-
-        // Setting up termination handler
-        [task setTerminationHandler:^(NSTask * tsk) {
-
-            NSData * outputData = [outputFile readDataToEndOfFile];
-            NSString * outputString = [[NSString alloc] initWithData:outputData
-                                                            encoding:NSUTF8StringEncoding];
-            if (outputString && [outputString length]) {
-                NSLog(@"script returned OK:\n%@", outputString);
-            }
-
-            NSData * errorData = [errorFile readDataToEndOfFile];
-            NSString * errorString = [[NSString alloc] initWithData:errorData encoding:NSUTF8StringEncoding];
-            if (errorString && [errorString length]) {
-                NSLog(@"script returned ERROR:\n%@", errorString);
-            }
-
-            // TODO : Need to add correct notification if something went wrong
-            if (task.terminationStatus != 0) {
+        [self.recompiler recompileFileAtURL:openedFileURL completion:^(NSError * error) {
+            if (error) {
                 dispatch_async(dispatch_get_main_queue(), ^{
 
                     NSAlert * alert = [[NSAlert alloc] init];
                     [alert addButtonWithTitle:@"OK"];
                     [alert setMessageText:@"Failed to inject code"];
-                    [alert setInformativeText:errorString];
+                    [alert setInformativeText:[error localizedDescription]];
                     [alert setAlertStyle:NSCriticalAlertStyle];
                     [alert runModal];
                 });
@@ -154,16 +123,8 @@
                     [self showResultViewWithSuccess:YES];
                 });
             }
-
-            tsk.terminationHandler = nil;
-
         }];
 
-
-        // Starting task
-        [task launch];
-
-        return;
     }
 
     NSLog(@"Coudln't find IDEEditorContext... Seems you've pressed somewhere in incorrect place");

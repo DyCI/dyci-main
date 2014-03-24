@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4523FAAD2E42309AE1468A22 /* SFDYCIXCodeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4523F6E7DE29E60B576DCA81 /* SFDYCIXCodeHelper.m */; };
+		4523FC8462780A5D9F26740A /* SFDYCIClangProxyRecompiler.m in Sources */ = {isa = PBXBuildFile; fileRef = 4523F42DD5469ECCCF1C164A /* SFDYCIClangProxyRecompiler.m */; };
 		7F2EB89C145057F200E97A87 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2EB899145057EA00E97A87 /* AppKit.framework */; };
 		DA1B5D020E64686800921439 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 089C1672FE841209C02AAC07 /* Foundation.framework */; };
 		DA37E2DC0E6291C8001BDFEF /* SFDYCIPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = DA37E2DB0E6291C8001BDFEF /* SFDYCIPlugin.m */; };
@@ -16,8 +17,11 @@
 
 /* Begin PBXFileReference section */
 		089C1672FE841209C02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		4523F42DD5469ECCCF1C164A /* SFDYCIClangProxyRecompiler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFDYCIClangProxyRecompiler.m; sourceTree = "<group>"; };
 		4523F6E7DE29E60B576DCA81 /* SFDYCIXCodeHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFDYCIXCodeHelper.m; sourceTree = "<group>"; };
 		4523F87B4F690DF6FC572176 /* SFDYCIXCodeHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFDYCIXCodeHelper.h; sourceTree = "<group>"; };
+		4523F87C344E73B16840CD6D /* SFDYCIRecompilerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFDYCIRecompilerProtocol.h; sourceTree = "<group>"; };
+		4523FB8F3C9656D317CA85DF /* SFDYCIClangProxyRecompiler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFDYCIClangProxyRecompiler.h; sourceTree = "<group>"; };
 		4523FF3ED09FDC7DB00429D1 /* CDRSXcodeInterfaces.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDRSXcodeInterfaces.h; sourceTree = "<group>"; };
 		7F2B355F15FA59D000DB3249 /* SFDYCIPlugin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SFDYCIPlugin.h; sourceTree = "<group>"; };
 		7F2EB899145057EA00E97A87 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -85,6 +89,16 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
+		4523FE36F1A55E5D468A73AE /* Recompiler */ = {
+			isa = PBXGroup;
+			children = (
+				4523F87C344E73B16840CD6D /* SFDYCIRecompilerProtocol.h */,
+				4523F42DD5469ECCCF1C164A /* SFDYCIClangProxyRecompiler.m */,
+				4523FB8F3C9656D317CA85DF /* SFDYCIClangProxyRecompiler.h */,
+			);
+			path = Recompiler;
+			sourceTree = "<group>";
+		};
 		7F411B0C15FABAC6002F77B6 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -95,6 +109,7 @@
 				4523F3CC8713DEC357CD6D9F /* Protocols */,
 				4523F6E7DE29E60B576DCA81 /* SFDYCIXCodeHelper.m */,
 				4523F87B4F690DF6FC572176 /* SFDYCIXCodeHelper.h */,
+				4523FE36F1A55E5D468A73AE /* Recompiler */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -154,6 +169,7 @@
 				DA37E2DC0E6291C8001BDFEF /* SFDYCIPlugin.m in Sources */,
 				E4991D60162B447A0046D273 /* SFDYCIResultView.m in Sources */,
 				4523FAAD2E42309AE1468A22 /* SFDYCIXCodeHelper.m in Sources */,
+				4523FC8462780A5D9F26740A /* SFDYCIClangProxyRecompiler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
