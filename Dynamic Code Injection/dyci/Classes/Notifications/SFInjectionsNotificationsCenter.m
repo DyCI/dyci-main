@@ -48,6 +48,9 @@
 
 
 - (void)addObserver:(id<SFInjectionObserver>)observer forClass:(Class)class {
+    if (!class) {
+        return;
+    }
     @synchronized (_observers) {
         NSMutableSet * observersPerClass = [_observers objectForKey:class];
         if (!observersPerClass) {

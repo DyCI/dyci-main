@@ -49,9 +49,9 @@
       
       // Adding inject item
       NSMenuItem * recompileAndInjectMenuItem =
-      [[[NSMenuItem alloc] initWithTitle:@"Recompile and inject"
+      [[NSMenuItem alloc] initWithTitle:@"Recompile and inject"
                                   action:@selector(recompileAndInject:)
-                           keyEquivalent:@"x"] autorelease];
+                           keyEquivalent:@"x"];
       [recompileAndInjectMenuItem setKeyEquivalentModifierMask:NSControlKeyMask];
       [recompileAndInjectMenuItem setTarget:self];
       [subMenu addItem:recompileAndInjectMenuItem];
@@ -128,14 +128,14 @@
          [task setTerminationHandler:^(NSTask * tsk) {
             
             NSData * outputData = [outputFile readDataToEndOfFile];
-            NSString * outputString = [[[NSString alloc] initWithData:outputData
-                                                             encoding:NSUTF8StringEncoding] autorelease];
+            NSString * outputString = [[NSString alloc] initWithData:outputData
+                                                             encoding:NSUTF8StringEncoding];
             if (outputString && [outputString length]) {
               NSLog(@"script returned OK:\n%@", outputString);
             }
             
             NSData * errorData = [errorFile readDataToEndOfFile];
-            NSString * errorString = [[[NSString alloc] initWithData:errorData encoding:NSUTF8StringEncoding] autorelease];
+            NSString * errorString = [[NSString alloc] initWithData:errorData encoding:NSUTF8StringEncoding];
             if (errorString && [errorString length]) {
                NSLog(@"script returned ERROR:\n%@", errorString);
             }
@@ -144,13 +144,12 @@
             if (task.terminationStatus != 0) {
                dispatch_async(dispatch_get_main_queue(), ^{
 
-               NSAlert * alert = [[[NSAlert alloc] init] autorelease];
+               NSAlert * alert = [[NSAlert alloc] init];
                [alert addButtonWithTitle:@"OK"];
                [alert setMessageText:@"Failed to inject code"];
                [alert setInformativeText:errorString];
                [alert setAlertStyle:NSCriticalAlertStyle];
                [alert runModal];
-               [alert release];
                });
                dispatch_async(dispatch_get_main_queue(), ^{
                   [self showResultViewWithSuccess:NO];
@@ -163,8 +162,6 @@
             }
 
             tsk.terminationHandler = nil;
-
-            [tsk release];
 
          }];
 
