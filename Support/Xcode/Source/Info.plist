@@ -19,7 +19,7 @@
 	<key>CFBundleVersion</key>
 	<string>${CURRENT_PROJECT_VERSION}</string>
 	<key>NSPrincipalClass</key>
-	<string>SFDYCIHelper</string>
+	<string>SFDYCIPlugin</string>
 	<key>XC4Compatible</key>
 	<true/>
 	<key>XCGCReady</key>

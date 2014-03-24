@@ -7,19 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4523FAAD2E42309AE1468A22 /* SFDYCIXCodeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4523F6E7DE29E60B576DCA81 /* SFDYCIXCodeHelper.m */; };
 		7F2EB89C145057F200E97A87 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2EB899145057EA00E97A87 /* AppKit.framework */; };
 		DA1B5D020E64686800921439 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 089C1672FE841209C02AAC07 /* Foundation.framework */; };
-		DA37E2DC0E6291C8001BDFEF /* SFDYCIHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = DA37E2DB0E6291C8001BDFEF /* SFDYCIHelper.m */; };
+		DA37E2DC0E6291C8001BDFEF /* SFDYCIPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = DA37E2DB0E6291C8001BDFEF /* SFDYCIPlugin.m */; };
 		E4991D60162B447A0046D273 /* SFDYCIResultView.m in Sources */ = {isa = PBXBuildFile; fileRef = E4991D5F162B447A0046D273 /* SFDYCIResultView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		089C1672FE841209C02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		7F2B355F15FA59D000DB3249 /* SFDYCIHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SFDYCIHelper.h; sourceTree = "<group>"; };
+		4523F6E7DE29E60B576DCA81 /* SFDYCIXCodeHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFDYCIXCodeHelper.m; sourceTree = "<group>"; };
+		4523F87B4F690DF6FC572176 /* SFDYCIXCodeHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFDYCIXCodeHelper.h; sourceTree = "<group>"; };
+		4523FF3ED09FDC7DB00429D1 /* CDRSXcodeInterfaces.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDRSXcodeInterfaces.h; sourceTree = "<group>"; };
+		7F2B355F15FA59D000DB3249 /* SFDYCIPlugin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SFDYCIPlugin.h; sourceTree = "<group>"; };
 		7F2EB899145057EA00E97A87 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		8D5B49B6048680CD000E48DA /* SFDYCIPlugin.xcplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SFDYCIPlugin.xcplugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DA37E2DB0E6291C8001BDFEF /* SFDYCIHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFDYCIHelper.m; sourceTree = "<group>"; };
+		DA37E2DB0E6291C8001BDFEF /* SFDYCIPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFDYCIPlugin.m; sourceTree = "<group>"; };
 		E4991D5E162B447A0046D273 /* SFDYCIResultView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFDYCIResultView.h; sourceTree = "<group>"; };
 		E4991D5F162B447A0046D273 /* SFDYCIResultView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFDYCIResultView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -73,13 +77,24 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		4523F3CC8713DEC357CD6D9F /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				4523FF3ED09FDC7DB00429D1 /* CDRSXcodeInterfaces.h */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
 		7F411B0C15FABAC6002F77B6 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				7F2B355F15FA59D000DB3249 /* SFDYCIHelper.h */,
-				DA37E2DB0E6291C8001BDFEF /* SFDYCIHelper.m */,
+				7F2B355F15FA59D000DB3249 /* SFDYCIPlugin.h */,
+				DA37E2DB0E6291C8001BDFEF /* SFDYCIPlugin.m */,
 				E4991D5E162B447A0046D273 /* SFDYCIResultView.h */,
 				E4991D5F162B447A0046D273 /* SFDYCIResultView.m */,
+				4523F3CC8713DEC357CD6D9F /* Protocols */,
+				4523F6E7DE29E60B576DCA81 /* SFDYCIXCodeHelper.m */,
+				4523F87B4F690DF6FC572176 /* SFDYCIXCodeHelper.h */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -136,8 +151,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA37E2DC0E6291C8001BDFEF /* SFDYCIHelper.m in Sources */,
+				DA37E2DC0E6291C8001BDFEF /* SFDYCIPlugin.m in Sources */,
 				E4991D60162B447A0046D273 /* SFDYCIResultView.m in Sources */,
+				4523FAAD2E42309AE1468A22 /* SFDYCIXCodeHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -148,14 +164,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ENABLE_OBJC_ARC = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEPLOYMENT_LOCATION = YES;
 				DEPLOYMENT_POSTPROCESSING = YES;
 				DSTROOT = "$(HOME)";
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_OBJC_GC = supported;
+				GCC_ENABLE_OBJC_GC = unsupported;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = Info.plist;
