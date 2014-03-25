@@ -118,3 +118,6 @@
 - (NSArray *)currentSelectedDocumentLocations;
 - (long long)_currentOneBasedLineNubmer;
 @end
+
+
+

@@ -11,6 +11,7 @@
 #import "CDRSXcodeInterfaces.h"
 #import "SFDYCIXCodeHelper.h"
 #import "SFDYCIClangProxyRecompiler.h"
+#import "SFDYCIXcodeRuntimeRecompiler.h"
 
 
 @interface SFDYCIPlugin ()
@@ -66,7 +67,7 @@
 
     }
 
-    self.recompiler = [SFDYCIClangProxyRecompiler new];
+    self.recompiler = [SFDYCIXcodeRuntimeRecompiler new];
 
 }
 

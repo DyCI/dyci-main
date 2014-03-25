@@ -7,7 +7,7 @@
 //
 #import <Foundation/Foundation.h>
 #import "CDRSXcodeInterfaces.h"
-
+#import "CDRSXcodeDevToolsInterfaces.h"
 
 @interface SFDYCIXCodeHelper : NSObject
 
@@ -22,5 +22,11 @@
 Currently active opened file
  */
 - (NSURL *)activeDocumentFileURL;
+
+/*
+Returns target for specified fileURL
+ */
+- (XC(PBXTarget))targetInOpenedProjectForFileURL:(NSURL *)fileURL;
+
 
 @end
