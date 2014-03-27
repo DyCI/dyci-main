@@ -9,11 +9,32 @@
 #import "CDRSXcodeInterfaces.h"
 #import "CDRSXcodeDevToolsInterfaces.h"
 #import "SFDYCIXCodeHelper.h"
+#import "DSUnixTask.h"
+#import "DSUnixShellTask.h"
+#import "DSUnixTaskSubProcessManager.h"
+#import "SFDYCIErrorFactory.h"
+#import "SFDYCIClangParamsExtractor.h"
+#import "SFDYCIClangParams.h"
 
 
-@implementation SFDYCIXcodeRuntimeRecompiler {
+@interface SFDYCIXcodeRuntimeRecompiler ()
 
+@property(nonatomic, strong) DSUnixTaskAbstractManager * taskManager;
+@property(nonatomic, strong) SFDYCIClangParamsExtractor * clangParamsExtractor;
+
+@end
+
+@implementation SFDYCIXcodeRuntimeRecompiler
+
+- (id)init {
+    self = [super init];
+    if (self) {
+        self.taskManager =  [DSUnixTaskSubProcessManager sharedManager];
+        self.clangParamsExtractor = [SFDYCIClangParamsExtractor new];
+    }
+    return self;
 }
+
 
 - (void)recompileFileAtURL:(NSURL *)fileURL completion:(void (^)(NSError * error))completionBlock {
 
@@ -47,8 +68,17 @@
 
                 NSLog(@"Found command that was originally created this file. Rerunning it");
                 NSLog(@"We should actually run %@ %@", command.commandPath, command.arguments);
-                
                 NSLog(@"Command tool specification : %@", [command toolSpecification]);
+
+                [self runCompilationCommand:command completion:^(NSError * error){
+                    if (error != nil) {
+                        completionBlock(error);
+                    } else {
+                        [self createDylibWithCommand:command completion:completionBlock];
+                    }
+                }];
+                return;
+
             }
 
             // Linker arguments
@@ -61,34 +91,161 @@
                 NSLog(@"\nLinker: %@ %@", command.commandPath, command.arguments);
             }
         }];
-//        {
-//            NSArray *rule_info = [obj performSelector: NSSelectorFromString(@"ruleInfo")];
-//            // Dump compiler arguments for the file
-//            if ([[rule_info firstObject] isEqualToString: @"CompileC"]) {
-//                /**
-//                 * Commands can contain build rules for multiple file so
-//                 * make sure you got the right one.
-//                 */
-//                NSString *sourcefile_path = [rule_info objectAtIndex: 2];
-//                if ( ! [sourcefile_path isEqualToString: @"/Users/rodionovd/Documents/Job/HookBuildParametersPlugin/HookBuildParametersPlugin/HookBuildParametersPlugin.m"]) {
-//                    return;
-//                }
-//                NSString *compiler_path  = [obj valueForKey: @"_commandPath"];
-//                NSArray  *compiler_args  = [obj valueForKey: @"_arguments"];
-//
-//                NSLog(@"\nCompile file '%@' with command line:\n%@ %@",
-//                  [sourcefile_path lastPathComponent], [compiler_path lastPathComponent],
-//                  [compiler_args componentsJoinedByString:@" "]);
-//            }
-//            }
-//        }];
-        return;
+
+    } else {
+
+        // Fall back to previous recompiler
+        [super recompileFileAtURL:fileURL completion:completionBlock];
+
     }
 
-    // Fall back to previous recompiler
-    [super recompileFileAtURL:fileURL completion:completionBlock];
 }
 
+
+#pragma mark - Running command
+
+- (void)runCompilationCommand:(id<CDRSXcode_XCDependencyCommand>)command completion:(void (^)(NSError *))completion {
+    DSUnixTask * task = [self.taskManager task];
+    [task setLaunchPath:command.commandPath];
+    [task setArguments:command.arguments];
+    [task setEnvironment:command.environment];
+    [task setWorkingDirectory:command.workingDirectoryPath];
+
+    [task setLaunchHandler:^(DSUnixTask * taskLauncher) {
+        NSLog(@"Task started %@ + %@", command.commandPath, command.arguments);
+    }];
+
+    [task setFailureHandler:^(DSUnixTask * taskLauncher) {
+        NSLog(@"Task failed %@ + %@", command.commandPath, command.arguments);
+        NSLog(@"Task failed %i", taskLauncher.terminationStatus);
+        NSLog(@"Task failed %@", taskLauncher.standardError);
+        if (completion) {
+            completion([SFDYCIErrorFactory compilationErrorWithMessage:[taskLauncher.standardError copy]]);
+        }
+    }];
+
+    [task setTerminationHandler:^(DSUnixTask * taskLauncher) {
+        NSLog(@"Task terminated %i", taskLauncher.terminationStatus);
+        if (completion) {
+            completion(nil);
+        }
+    }];
+
+    // Showing up handlers
+    [task launch];
+
+}
+
+
+#pragma mark - Creating Dylib
+
+- (void)createDylibWithCommand:(id<CDRSXcode_XCDependencyCommand>)command completion:(void (^)(NSError *))completion {
+
+    SFDYCIClangParams * clangParams = [self.clangParamsExtractor extractParamsFromArguments:command.arguments];
+    NSLog(@"Clang params extracted : %@", clangParams);
+
+    NSString * libraryName = [NSString stringWithFormat:@"dyci%d.dylib", arc4random_uniform(10000000)];
+
+    /*
+     + ["-arch"] + [clangParams['arch']]\
+     + ["-dynamiclib"]\
+     + ["-isysroot"] + [clangParams['isysroot']]\
+     + clangParams['LParams']\
+     + clangParams['FParams']\
+     + [clangParams['object']]\
+     + ["-install_name"] + ["/usr/local/lib/" + libraryName]\
+     + ['-Xlinker']\
+     + ['-objc_abi_version']\
+     + ['-Xlinker']\
+     + ["2"]\
+     + ["-ObjC"]\
+     + ["-undefined"]\
+     + ["dynamic_lookup"]\
+     + ["-fobjc-arc"]\
+     + ["-fobjc-link-runtime"]\
+     + ["-Xlinker"]\
+     + ["-no_implicit_dylibs"]\
+     + [clangParams['minOSParam']]\
+     + ["-single_module"]\
+     + ["-compatibility_version"]\
+     + ["5"]\
+     + ["-current_version"]\
+     + ["5"]\
+     + ["-o"]\
+     + [DYCI_ROOT_DIR + "/" + libraryName]
+     */
+    NSMutableArray * dlybArguments = [NSMutableArray array];
+    [dlybArguments addObjectsFromArray:
+      @[
+        @"-arch", clangParams.arch,
+        @"-dynamiclib",
+        @"-isysroot", clangParams.isysroot,
+      ]
+    ];
+    [dlybArguments addObjectsFromArray:clangParams.LParams];
+    [dlybArguments addObjectsFromArray:clangParams.FParams];
+
+    [dlybArguments addObjectsFromArray:
+      @[
+        clangParams.objectCompilation,
+        @"-install_name", [NSString stringWithFormat:@"/usr/local/lib/%@", libraryName],
+        @"-Xlinker",
+        @"-objc_abi_version",
+        @"-Xlinker",
+        @"2",
+        @"-ObjC",
+        @"-undefined",
+        @"dynamic_lookup",
+        @"-fobjc-arc",
+        @"-fobjc-link-runtime",
+        @"-Xlinker",
+        @"-no_implicit_dylibs",
+        clangParams.minOSParams,
+        @"-single_module",
+        @"-compatibility_version",
+        @"5",
+        @"-current_version",
+        @"5",
+        @"-o",
+        [[@"~/.dyci" stringByExpandingTildeInPath] stringByAppendingPathComponent:libraryName]
+        //, @"-v"
+      ]
+    ];
+
+
+    DSUnixTask * task = [self.taskManager task];
+    [task setLaunchPath:command.commandPath];
+    [task setArguments:dlybArguments];
+    [task setEnvironment:command.environment];
+    [task setWorkingDirectory:command.workingDirectoryPath];
+
+    [task setLaunchHandler:^(DSUnixTask * taskLauncher) {
+        NSLog(@"Task started %@ + %@", command.commandPath, dlybArguments);
+    }];
+
+    [task setFailureHandler:^(DSUnixTask * taskLauncher) {
+        NSLog(@"Task failed %@ + %@", command.commandPath, dlybArguments);
+        NSLog(@"Task failed %i", taskLauncher.terminationStatus);
+        NSLog(@"Task failed %@", taskLauncher.standardError);
+        if (completion) {
+            completion([SFDYCIErrorFactory compilationErrorWithMessage:[taskLauncher.standardError copy]]);
+        }
+    }];
+
+    [task setTerminationHandler:^(DSUnixTask * taskLauncher) {
+        NSLog(@"Task terminated %i", taskLauncher.terminationStatus);
+        if (completion) {
+            completion(nil);
+        }
+    }];
+
+    // Showing up handlers
+    [task launch];
+
+}
+
+
+#pragma mark - Compilation
 
 - (void)failWithError:(NSError *)error completionBlock:(void (^)(NSError *))block {
   if (block) {

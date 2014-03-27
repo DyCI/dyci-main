@@ -42,6 +42,7 @@
 - (NSArray *)arguments;
 - (NSDictionary *)environment;
 - (id)toolSpecification;
+- (NSString *)workingDirectoryPath;
 
 // :))
 - (void)rerunCommand;
