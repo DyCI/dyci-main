@@ -111,23 +111,29 @@ sudo cp Scripts/clangParams.py "${DYCI_ROOT_DIR}/scripts/"
 
 echo "Done."
 
-if [[ -d "${USER_HOME}/Library/Preferences/appCode20" ]]; then
-  echo -n "== AppCode found. Installing DYCI as AppCode plugin : "
 
-  PLUGINS_DIRECTORY="${USER_HOME}/Library/Application Support/appCode20"    
-  PLUGIN_NAME="Dyci.jar"
-  if [[ ! -d "${PLUGINS_DIRECTORY}" ]]; then
-     mkdir -p "${PLUGINS_DIRECTORY}"
-  fi
+for i in $(seq 2 9); 
+  do 
 
-  log "cp Support/AppCode/Dyci/${PLUGIN_NAME} ${PLUGINS_DIRECTORY}"
-  cp "Support/AppCode/Dyci/${PLUGIN_NAME}" "${PLUGINS_DIRECTORY}"/
+    if [[ -d "${USER_HOME}/Library/Preferences/appCode${i}0" ]]; then
+      echo -n "== AppCode ${i}.x found. Installing DYCI as AppCode plugin : "
 
-  echo "Done."
+      PLUGINS_DIRECTORY="${USER_HOME}/Library/Application Support/appCode${i}"    
+      PLUGIN_NAME="Dyci.jar"
+      if [[ ! -d "${PLUGINS_DIRECTORY}" ]]; then
+         mkdir -p "${PLUGINS_DIRECTORY}"
+      fi
 
-  echo "   Restart Appcode. Plugin should be loaded automaticaly. If not, you may need to install it manually"
+      log "cp Support/AppCode/Dyci/${PLUGIN_NAME} ${PLUGINS_DIRECTORY}"
+      cp "Support/AppCode/Dyci/${PLUGIN_NAME}" "${PLUGINS_DIRECTORY}"/
 
-fi
+      echo "Done."
+
+      echo "   Restart Appcode. Plugin should be loaded automaticaly. If not, you may need to install it manually"
+
+    fi
+
+done
 
 echo -n "== Installing Xcode DYCI plugin : "
 if [[ ! -d "${USER_HOME}/Library/Application Support/Developer/Shared/Xcode/Plug-ins" ]]; then
