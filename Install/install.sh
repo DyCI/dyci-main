@@ -118,7 +118,7 @@ for i in $(seq 2 9);
     if [[ -d "${USER_HOME}/Library/Preferences/appCode${i}0" ]]; then
       echo -n "== AppCode ${i}.x found. Installing DYCI as AppCode plugin : "
 
-      PLUGINS_DIRECTORY="${USER_HOME}/Library/Application Support/appCode${i}"    
+      PLUGINS_DIRECTORY="${USER_HOME}/Library/Application Support/appCode${i}0"
       PLUGIN_NAME="Dyci.jar"
       if [[ ! -d "${PLUGINS_DIRECTORY}" ]]; then
          mkdir -p "${PLUGINS_DIRECTORY}"
