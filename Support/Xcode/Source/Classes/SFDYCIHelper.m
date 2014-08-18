@@ -179,7 +179,7 @@
 
 
 - (void)showResultViewWithSuccess:(BOOL)success {
-   SFDYCIResultView * resultView = [[[SFDYCIResultView alloc] initWithFrame:NSMakeRect(0, 0, 100, 100)] autorelease];
+   SFDYCIResultView * resultView = [[SFDYCIResultView alloc] initWithFrame:NSMakeRect(0, 0, 100, 100)];
    resultView.success = success;
 
    // Adding result view on window
@@ -211,7 +211,6 @@
 
 - (void)dealloc {
    [[NSNotificationCenter defaultCenter] removeObserver:self];
-   [super dealloc];
 }
 
 @end
