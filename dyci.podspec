@@ -12,6 +12,14 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   s.platform     = :ios, '5.0'
   s.source_files = 'Dynamic Code Injection/dyci/**/*.{h,m}'
+  s.exclude_files = 'Dynamic Code Injection/dyci/Classes/Injections/NSObject*.{h,m}'
+  s.default_subspec = 'Injections'
   s.prefix_header_contents = ''
+
+  s.subspec 'Injections' do |sp|
+  	sp.requires_arc = false
+    sp.source_files = 'Dynamic Code Injection/dyci/Classes/Injections/NSObject*.{h,m}'
+    sp.compiler_flags = '-fno-objc-arc'
+  end
 
 end
