@@ -99,13 +99,25 @@
 #pragma mark - Checking for Library
 
 + (NSString *)dciDirectoryPath {
-   NSString * dciDirectoryPath = [NSString stringWithFormat:@"/Users/%s/.dyci/", getenv("USER")];
-   NSLog(@"DYCI directory path is : %@", dciDirectoryPath);
-//   NSString * dciDirectoryPath = [@"~" stringByExpandingTildeInPath];
-//   NSRange r = [dciDirectoryPath rangeOfString:@"/Library/Application Support"];
-//   dciDirectoryPath = [dciDirectoryPath substringToIndex:r.location];
-//   dciDirectoryPath = [dciDirectoryPath stringByAppendingPathComponent:@".dyci"];
-//   dciDirectoryPath = [dciDirectoryPath stringByAppendingString:@"/"];
+    
+    char * userENV = getenv("USER");
+    NSString * dciDirectoryPath = nil;
+    if (userENV != NULL) {
+        dciDirectoryPath = [NSString stringWithFormat:@"/Users/%s/.dyci/", userENV];
+    } else {
+        // Fallback to the path, since, we cannot get USER variable
+        NSString * userDirectoryPath = [@"~" stringByExpandingTildeInPath];
+        
+        // Assume default installation, which will have /Users/{username}/ structure
+        NSArray * simUserDirectoryPathComponents = [userDirectoryPath pathComponents];
+        if (simUserDirectoryPathComponents.count > 3) {
+            // Get first 3 components
+            NSMutableArray * macUserDirectoryPathComponents = [[simUserDirectoryPathComponents subarrayWithRange:NSMakeRange(0, 3)] mutableCopy];
+            [macUserDirectoryPathComponents addObject:@".dyci"];
+            dciDirectoryPath = [NSString pathWithComponents:macUserDirectoryPathComponents];
+        }
+    }
+    NSLog(@"DYCI directory path is : %@", dciDirectoryPath);
    return dciDirectoryPath;
 }
 
