@@ -8,8 +8,6 @@ DCI is an Xcode plugin that allows to perform lesser restarts.
 
 I'm [@tt_kilew](http://twitter.com/tt_kilew) on Twitter.
 
-<a href="http://flattr.com/thing/879121/omzColorSense-for-Xcode-on-GitHub" target="_blank">
-<img src="http://api.flattr.com/button/flattr-badge-large.png" alt="Flattr this" title="Flattr this" border="0" /></a>
 
 ## Installation
 
