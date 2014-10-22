@@ -4,7 +4,7 @@
 
 DCI is an Xcode plugin that allows to perform lesser restarts.
 
-**[Watch Demo Video (YouTube)](http://www.youtube.com/watch?v=eblRfDQM0Go)**
+**[Watch Demo Video (YouTube)](https://www.youtube.com/watch?v=8nyEpAqUug4)**
 
 I'm [@tt_kilew](http://twitter.com/tt_kilew) on Twitter.
 
