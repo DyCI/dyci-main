@@ -25,7 +25,6 @@ def runAndFailOnError(stringToRun):
     if process.returncode != 0:
         sys.exit(1)
 
-
 #----------------------------------------------------------------------------------
 def removeDynamicLibsFromDirectory(dir):
     if dir[-1] == os.sep: dir = dir[:-1]
