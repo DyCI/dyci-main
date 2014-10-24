@@ -162,13 +162,15 @@ workingDir = params[len(params)-1]
 os.chdir(workingDir)
 params = params[:-1]
 
-
-# Searching where is Xcode with it's Clang located
-process = Popen(["xcode-select","-print-path"],
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE)
-xcodeLocation, err = process.communicate()
-xcodeLocation = xcodeLocation.rstrip(os.linesep)
+if len(args)>1:
+    xcodeLocation = args[2]
+else:
+    # Searching where is Xcode with it's Clang located
+    process = Popen(["xcode-select","-print-path"],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE)
+    xcodeLocation, err = process.communicate()
+    xcodeLocation = xcodeLocation.rstrip(os.linesep)
 
 compileString = [xcodeLocation + '/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-real'] \
                 + params
