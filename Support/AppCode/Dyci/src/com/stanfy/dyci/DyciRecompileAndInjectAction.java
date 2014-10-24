@@ -15,12 +15,8 @@ import com.intellij.ui.awt.RelativePoint;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-
-import javax.xml.xpath.*;
-import org.xml.sax.InputSource;
 
 /**
  * Created with IntelliJ IDEA.
@@ -53,24 +49,6 @@ public class DyciRecompileAndInjectAction extends AnAction{
 
 
   }
-  
-  private String xcodePath(java.io.FileReader fileReader){
-	String xpathExpression = "/application/component[@name='XcodeSettings']/option[@name='selectedXcode']/@value";
-
-	XPathFactory xpathFactory = XPathFactory.newInstance();
-	XPath xpath = xpathFactory.newXPath();
-	try{
-		XPathExpression expr = xpath.compile(xpathExpression);
-		InputSource inputSource = new InputSource(fileReader);
-		String result = expr.evaluate(inputSource);
-		return result;
-		
-	} catch(Exception e){
-        LOG.error("Exception getting Xcode path: " + e.getMessage());
-        this.showMessageBubble(actionEvent, MessageType.ERROR, "Failed to run injection script");
-	}
-  	
-  }
 
   private void injectFile(final AnActionEvent actionEvent, final String path) {
 
@@ -91,21 +69,9 @@ public class DyciRecompileAndInjectAction extends AnAction{
       this.showMessageBubble(actionEvent, MessageType.ERROR, "Cannot run injection. No Dyci scripts were found. Make sure, that you've ran install.sh");
       return;
     }
-	
-	String appcodeOptionsFilename = System.getProperty("user.home") + "/Library/Preferences/appCode30/options/other.xml";
-	
-    String[] commands;
-	try {
-		FileReader appcodeOptions = new FileReader(appcodeOptionsFilename);
-		String xcodePath = xcodePath(appcodeOptions);
-		commands = new String[] {dyciScriptLocation, path, xcodePath};
-	} catch(IOException e) {
-		// If the file cannot be found, it might not be a problem (user has appcode 2 or maybe the setting wasn't saved)
-		// We'll just leave it up to the dyci script to find Xcode.
-		commands = new String[] {dyciScriptLocation, path};
-	}
 
     Runtime rt = Runtime.getRuntime();
+    String[] commands = {dyciScriptLocation, path};
     try {
       Process proc = rt.exec(commands);
 
