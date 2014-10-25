@@ -79,7 +79,29 @@
 }
 
 
+- (IDEEditorDocument *)currentDocument
+{
+    NSWindowController *currentWindowController = [[NSApp keyWindow] windowController];
+    if ([currentWindowController isKindOfClass:NSClassFromString(@"IDEWorkspaceWindowController")]) {
+        IDEWorkspaceWindowController *workspaceController = (IDEWorkspaceWindowController *)currentWindowController;
+        IDEEditorArea *editorArea = [workspaceController editorArea];
+        return editorArea.primaryEditorDocument;
+    }
+    return nil;
+}
+
 - (void)recompileAndInject:(id)sender {
+    
+    if ([self currentDocument]) {
+        [[self currentDocument] saveDocument:nil];
+    }
+    
+    dispatch_async(dispatch_get_main_queue(), ^{ // This add a little delay for saving, maybe a perform:withDelay will be better ?
+        [self recompileAndInjectAfterSave: nil];
+    });
+}
+
+- (void)recompileAndInjectAfterSave:(id)sender {
    NSLog(@"Yupee :)");
    NSResponder * firstResponder = [[NSApp keyWindow] firstResponder];
    NSLog(@"firstResponder = %@", firstResponder);
