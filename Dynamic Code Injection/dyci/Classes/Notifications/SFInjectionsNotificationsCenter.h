@@ -49,7 +49,7 @@ Returns notification center instance
 /*
 This will notify about class injection
  */
-- (void)notifyOnClassInjection:(Class)class;
+- (void)notifyOnClassInjection:(Class)aClass;
 
 /*
 This will notiy all registered classes about that some resource was injected

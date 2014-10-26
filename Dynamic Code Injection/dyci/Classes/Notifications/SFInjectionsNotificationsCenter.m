@@ -35,9 +35,9 @@
 }
 
 
-- (void)removeObserver:(id<SFInjectionObserver>)observer ofClass:(Class)class {
+- (void)removeObserver:(id<SFInjectionObserver>)observer ofClass:(Class)aClass {
     @synchronized (_observers) {
-        NSMutableSet * observersPerClass = [_observers objectForKey:class];
+        NSMutableSet * observersPerClass = [_observers objectForKey:aClass];
         if (observersPerClass) {
             @synchronized (observersPerClass) {
                 [observersPerClass removeObject:observer];
@@ -47,15 +47,15 @@
 }
 
 
-- (void)addObserver:(id<SFInjectionObserver>)observer forClass:(Class)class {
-    if (!class) {
+- (void)addObserver:(id<SFInjectionObserver>)observer forClass:(Class)aClass {
+    if (!aClass) {
         return;
     }
     @synchronized (_observers) {
-        NSMutableSet * observersPerClass = [_observers objectForKey:class];
+        NSMutableSet * observersPerClass = [_observers objectForKey:aClass];
         if (!observersPerClass) {
             observersPerClass = (__bridge_transfer NSMutableSet *) CFSetCreateMutable(nil, 0, nil);
-            [_observers setObject:observersPerClass forKey:class];
+            [_observers setObject:observersPerClass forKey:aClass];
         }
         @synchronized (observersPerClass) {
             [observersPerClass addObject:observer];
