@@ -10,6 +10,11 @@
 
 #if TARGET_IPHONE_SIMULATOR
 
+/*
+ notification.object will be the class that was injected
+ */
+extern NSString * const SFInjectionsClassInjectedNotification;
+
 @protocol SFInjectionObserver <NSObject>
 
 /*

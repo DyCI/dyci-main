@@ -10,6 +10,8 @@
 
 #if TARGET_IPHONE_SIMULATOR
 
+NSString * const SFInjectionsClassInjectedNotification = @"SFInjectionsClassInjectedNotification";
+
 @implementation SFInjectionsNotificationsCenter {
     NSMutableDictionary * _observers;
 }
@@ -68,6 +70,9 @@
 This will notify about class injection
  */
 - (void)notifyOnClassInjection:(Class)injectedClass {
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:SFInjectionsClassInjectedNotification object:injectedClass];
+
     int idx = 0;
     @synchronized (_observers) {
         for (NSMutableSet * observersPerClass in [_observers allValues]) {
