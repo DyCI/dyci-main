@@ -13,10 +13,10 @@ If you've already expirienced this issue - remove and reinstall Xcode.
 
 ## Installation
 
-### 1. Install on machine
+#### 1. Install on machine
 This is done once per machine. See details on [installation page](https://github.com/DyCI/dyci-main/wiki/Installation).
 
-### 2. Add to your project
+#### 2. Add to your project
 DyCI needs to integrate with the project as well. If you are using [CocoaPods](https://github.com/CocoaPods/CocoaPods) you can add this to your podfile
 
 ```
