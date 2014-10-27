@@ -1,59 +1,64 @@
-# WARNING
-**Please, Read this.**  
-Uninstall dyci before updating Xcode.  
-In other case, you'll need to reinstall it :(
+# DyCI – Dynamic Code Injection
+This tool allows you to inject code into running iOS application, without restarting it.
+
+1. DyCI is not about loading new code in application.
+2. DyCI is about speeding up development.
+3. Each time, you are using DyCI, it saves you time.
+
+## WARNING 
+Uninstall DyCI before updating Xcode.  
+If you don't you may need to reinstall xcode.
 We're currenlty working on [this issue](https://github.com/DyCI/dyci-main/issues/8)...   
 If you've already expirienced this issue - remove and reinstall Xcode.
 
-# dyci
-Dynamic code injection tool.
-Allows you to inject your code into running iOS application, whithout restarting it.
-
 ## Installation
-If you already know, what this tool is about, you can move to [Installation page](https://github.com/DyCI/dyci-main/wiki/Installation)
 
-## Adding to your project
-After installation, you need to add dyci library to your project  
-If you are using [CocoaPods](https://github.com/CocoaPods/CocoaPods), then, just add this line to your PodFile  
+### 1. Install on machine
+This is done once per machine. See details on [installation page](https://github.com/DyCI/dyci-main/wiki/Installation).
 
-`pod 'dyci', :git => 'https://github.com/DyCI/dyci-main.git'` 
+### 2. Add to your project
+DyCI needs to integrate with the project as well. If you are using [CocoaPods](https://github.com/CocoaPods/CocoaPods) you can add this to your podfile
 
-If not, then, you can add dyci in [other ways](https://github.com/DyCI/dyci-main/wiki/Using-dyci)
+```
+pod 'dyci', :git => 'https://github.com/DyCI/dyci-main.git'
+```
+
+If you prefer a manual approach you can read about it in the [wiki](https://github.com/DyCI/dyci-main/wiki/Using-dyci).
 
 ## Reasons, why do you need this tool 
-* It's good for applying small logic changes 
-* It's good for quick small fixes on big projects.
-* It's good for debugging purposes. Remember, you can inject any code at runtime. Logging is the code also.
+* apply small logic changes in no time
+* when working with UI and animations you can see the results immediately
+* It's good for debugging purposes. Remember, you can inject any code at runtime, add log statements etc.
 
-## Differences from other tools
+## Compared to other tools
 * You need minimum moves to enable dyci
 * You aren't writing some kind of script, you are writing your code!
 * You don't need to prepare/modify/lock your code for dyci 
-* Your changes are always saved (They will not be discarded on next run)
+* Your changes are always saved (they will not be discarded on next run)
 
 ## How it works
-If you curious about How [how it works](https://github.com/DyCI/dyci-main/wiki/How-it-Works), you can read about it in [wiki](https://github.com/DyCI/dyci-main/wiki/How-it-Works).
+You can read all about it in the [How it works wiki](https://github.com/DyCI/dyci-main/wiki/How-it-Works).
 
-##Example
-There's one example in sources  
-There's video about Tic-Tac-Toe game creation without project restart  
-[Video at Youtube](https://www.youtube.com/watch?v=8nyEpAqUug4)
+## Demos
 
+[![ic-Tac-Toe game](http://img.youtube.com/vi/8nyEpAqUug4/maxresdefault.jpg)](https://www.youtube.com/watch?v=8nyEpAqUug4) 
 
-##Some points of view
-1. Dyci is not about loading new code in application.
-2. Dyci is about speeding up development.
-3. Each time, you are using dyci, it saves your time.
+[Tic-Tac-Toe Game recreation](https://www.youtube.com/watch?v=8nyEpAqUug4)
 
+## Example
 
-##WARNING
-Please, do not use this tool in your real applications, that you about to publish in App Store. Dyci won't work on devices by default. It was made for purpose. Dynamic code injection is good for development, but it will leave huge security hole if you put it in your application. Please, do not :) I warned you.
+- There's an interactive demo in the workspace found in the `Dynamic Code Injection` folder.
+- Krzysztof Zabłocki created [KZPlayground](https://github.com/krzysztofzablocki/KZPlayground).
 
-#FAQ
-If you have some questions, before asking them , make sure that they aren't listed [here](https://github.com/DyCI/dyci-main/wiki/FAQ)
+## WARNING
+Please, do not use this tool in your real applications, that you will publish to the App Store. DyCI won't work on devices by default, by purpose. Dynamic code injection is good for development, but it will leave huge security hole if you put it in your application. 
 
-#Other Tools
+## FAQ
+Please open any issue, but be sure to read the [FAQ](https://github.com/DyCI/dyci-main/wiki/FAQ) before you do:-) 
+
+## Other Tools
 There's few other tools those works kind'a the same, so if you don't like dyci - you can try those  
-[injectionforxcode](https://github.com/johnno1962/injectionforxcode)
+
+- [injectionforxcode](https://github.com/johnno1962/injectionforxcode)
 
 
