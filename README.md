@@ -1,4 +1,5 @@
-# DyCI – Dynamic Code Injection
+![# DyCI – Dynamic Code Injection](/Meta/logo.png?raw=true "DyCI – Dynamic Code Injection")
+
 This tool allows you to inject code into running iOS application, without restarting it.
 
 1. DyCI is not about loading new code in application.
