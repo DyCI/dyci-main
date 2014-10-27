@@ -10,6 +10,19 @@
 
 #if TARGET_IPHONE_SIMULATOR
 
+/*
+ notification.object will be the class that was injected
+ This notification is private due to discussion here https://github.com/DyCI/dyci-main/pull/51
+ */
+NSString * const SFInjectionsClassInjectedNotification = @"SFInjectionsClassInjectedNotification";
+
+/*
+ notification.object will be the resource that was injected
+ This notification is private due to discussion here https://github.com/DyCI/dyci-main/pull/51
+ */
+NSString * const SFInjectionsResourceInjectedNotification = @"SFInjectionsResourceInjectedNotification";
+
+
 @implementation SFInjectionsNotificationsCenter {
     NSMutableDictionary * _observers;
 }
@@ -68,6 +81,9 @@
 This will notify about class injection
  */
 - (void)notifyOnClassInjection:(Class)injectedClass {
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:SFInjectionsClassInjectedNotification object:injectedClass];
+
     int idx = 0;
     @synchronized (_observers) {
         for (NSMutableSet * observersPerClass in [_observers allValues]) {
@@ -94,6 +110,9 @@ This will notify about class injection
 This will notiy all registered classes about that some resource was injected
  */
 - (void)notifyOnResourceInjection:(NSString *)resourceInjection {
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:SFInjectionsResourceInjectedNotification object:resourceInjection];
+
     int idx = 0;
     @synchronized (_observers) {
         for (NSMutableSet * observersPerClass in [_observers allValues]) {
