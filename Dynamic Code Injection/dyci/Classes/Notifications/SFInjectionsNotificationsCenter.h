@@ -11,9 +11,21 @@
 #if TARGET_IPHONE_SIMULATOR
 
 /*
- notification.object will be the class that was injected
+ 
+ You can observe for changes in any class by saying
+
+ #if TARGET_IPHONE_SIMULATOR
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(classInjectionNotification:) name:@"SFInjectionsClassInjectedNotification" object:nil];
+ #endif
+ 
+ Or by specifying a specific class
+
+ #if TARGET_IPHONE_SIMULATOR
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(myViewControllerClassInjectionNotification:) name:@"SFInjectionsClassInjectedNotification" object:(id)[MyViewController class]];
+ #endif
+ 
  */
-extern NSString * const SFInjectionsClassInjectedNotification;
+
 
 @protocol SFInjectionObserver <NSObject>
 
