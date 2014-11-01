@@ -9,7 +9,7 @@
 #import "SFDYCIPlugin.h"
 #import "SFDYCIXCodeHelper.h"
 #import "SFDYCIClangProxyRecompiler.h"
-#import "SFDYCIXcodeRuntimeRecompiler.h"
+#import "SFDYCIXcodeObjectiveCRecompiler.h"
 #import "SFDYCIViewsHelper.h"
 #import "SFDYCICompositeRecompiler.h"
 
@@ -53,7 +53,7 @@
 
     // Kind of dependecy injection here
     self.recompiler = [[SFDYCICompositeRecompiler alloc]
-        initWithCompilers:@[ [SFDYCIXcodeRuntimeRecompiler new], [SFDYCIClangProxyRecompiler new] ]];
+        initWithCompilers:@[ [SFDYCIXcodeObjectiveCRecompiler new], [SFDYCIClangProxyRecompiler new] ]];
 
     self.viewHelper = [SFDYCIViewsHelper new];
 

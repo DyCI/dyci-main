@@ -11,7 +11,7 @@
 		1737C3690489071295F1ED2A /* SFDYCIViewsHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1737CCFD789AA4DC9CDB53E4 /* SFDYCIViewsHelper.m */; };
 		1737C63CAAB3BAD48D707967 /* SFDYCIClangParams.m in Sources */ = {isa = PBXBuildFile; fileRef = 1737CDD9227B03811DB7C8F3 /* SFDYCIClangParams.m */; };
 		1737C7E4C6DBE4A12ADCEE5A /* SFDYCICompositeRecompiler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1737CBFD482340A6C0A3813D /* SFDYCICompositeRecompiler.m */; };
-		1737C9E0C86E268DF36FB95E /* SFDYCIXcodeRuntimeRecompiler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1737CA6A14FB753D1457D1A1 /* SFDYCIXcodeRuntimeRecompiler.m */; };
+		1737C9E0C86E268DF36FB95E /* SFDYCIXcodeObjectiveCRecompiler.m in Sources */ = {isa = PBXBuildFile; fileRef = 1737CA6A14FB753D1457D1A1 /* SFDYCIXcodeObjectiveCRecompiler.m */; };
 		1737CBA138DC45E51677E3A5 /* SFDYCIClangParamsExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 1737CA7088CD44F21AE7CAF3 /* SFDYCIClangParamsExtractor.m */; };
 		1737CBAF94811668C5651B06 /* SFDYCIPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 1737CFAB9E49A9FE6BAF7BF7 /* SFDYCIPlugin.m */; };
 		1737CD95A064DFFFFA81EA41 /* SFDYCIResultView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1737CFE8681081201C1D17A9 /* SFDYCIResultView.m */; };
@@ -30,10 +30,10 @@
 /* Begin PBXFileReference section */
 		089C1672FE841209C02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		1737C04FC1098BB8BB1817A2 /* SFDYCIResultView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFDYCIResultView.h; sourceTree = "<group>"; };
-		1737C245F8C91F3F6E029D92 /* SFDYCIXcodeRuntimeRecompiler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFDYCIXcodeRuntimeRecompiler.h; sourceTree = "<group>"; };
+		1737C245F8C91F3F6E029D92 /* SFDYCIXcodeObjectiveCRecompiler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFDYCIXcodeObjectiveCRecompiler.h; sourceTree = "<group>"; };
 		1737C47F20083EDA975C219F /* SFDYCIPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFDYCIPlugin.h; sourceTree = "<group>"; };
 		1737C6F659CDFC8C7F47548C /* SFDYCIViewsHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFDYCIViewsHelper.h; sourceTree = "<group>"; };
-		1737CA6A14FB753D1457D1A1 /* SFDYCIXcodeRuntimeRecompiler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFDYCIXcodeRuntimeRecompiler.m; sourceTree = "<group>"; };
+		1737CA6A14FB753D1457D1A1 /* SFDYCIXcodeObjectiveCRecompiler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFDYCIXcodeObjectiveCRecompiler.m; sourceTree = "<group>"; };
 		1737CA7088CD44F21AE7CAF3 /* SFDYCIClangParamsExtractor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFDYCIClangParamsExtractor.m; sourceTree = "<group>"; };
 		1737CB33CDBF11DB8BEF5125 /* SFDYCIClangParamsExtractor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFDYCIClangParamsExtractor.h; sourceTree = "<group>"; };
 		1737CBC550D3E59A685E154A /* SFDYCIClangParams.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFDYCIClangParams.h; sourceTree = "<group>"; };
@@ -155,8 +155,8 @@
 		1737C88A919343D1212DE02E /* Xcode */ = {
 			isa = PBXGroup;
 			children = (
-				1737CA6A14FB753D1457D1A1 /* SFDYCIXcodeRuntimeRecompiler.m */,
-				1737C245F8C91F3F6E029D92 /* SFDYCIXcodeRuntimeRecompiler.h */,
+				1737CA6A14FB753D1457D1A1 /* SFDYCIXcodeObjectiveCRecompiler.m */,
+				1737C245F8C91F3F6E029D92 /* SFDYCIXcodeObjectiveCRecompiler.h */,
 				1737CDD9227B03811DB7C8F3 /* SFDYCIClangParams.m */,
 				1737CBC550D3E59A685E154A /* SFDYCIClangParams.h */,
 				1737CA7088CD44F21AE7CAF3 /* SFDYCIClangParamsExtractor.m */,
@@ -357,7 +357,7 @@
 				4523FFE76CFE3DD880950013 /* DSUnixTaskSubProcessManager.m in Sources */,
 				4523F86D385DA84639278A62 /* SFDYCIErrorFactory.m in Sources */,
 				1737C2BCFD1A5B029A1B0E54 /* SFDYCIClangProxyRecompiler.m in Sources */,
-				1737C9E0C86E268DF36FB95E /* SFDYCIXcodeRuntimeRecompiler.m in Sources */,
+				1737C9E0C86E268DF36FB95E /* SFDYCIXcodeObjectiveCRecompiler.m in Sources */,
 				1737C63CAAB3BAD48D707967 /* SFDYCIClangParams.m in Sources */,
 				1737CBA138DC45E51677E3A5 /* SFDYCIClangParamsExtractor.m in Sources */,
 				1737CBAF94811668C5651B06 /* SFDYCIPlugin.m in Sources */,

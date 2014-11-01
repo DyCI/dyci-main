@@ -1,11 +1,11 @@
 //
-// SFDYCIXcodeRuntimeRecompiler
+// SFDYCIXcodeObjectiveCRecompiler
 // SFDYCIPlugin
 //
 // Created by Paul Taykalo on 3/24/14.
 // Copyright (c) 2014 Stanfy. All rights reserved.
 //
-#import "SFDYCIXcodeRuntimeRecompiler.h"
+#import "SFDYCIXcodeObjectiveCRecompiler.h"
 #import "CDRSXcodeInterfaces.h"
 #import "CDRSXcodeDevToolsInterfaces.h"
 #import "SFDYCIXCodeHelper.h"
@@ -16,14 +16,14 @@
 #import "SFDYCIClangParams.h"
 
 
-@interface SFDYCIXcodeRuntimeRecompiler ()
+@interface SFDYCIXcodeObjectiveCRecompiler ()
 
 @property(nonatomic, strong) DSUnixTaskAbstractManager * taskManager;
 @property(nonatomic, strong) SFDYCIClangParamsExtractor * clangParamsExtractor;
 
 @end
 
-@implementation SFDYCIXcodeRuntimeRecompiler
+@implementation SFDYCIXcodeObjectiveCRecompiler
 
 - (id)init {
     self = [super init];

@@ -1,5 +1,5 @@
 //
-// SFDYCIXcodeRuntimeRecompiler
+// SFDYCIXcodeObjectiveCRecompiler
 // SFDYCIPlugin
 //
 // Created by Paul Taykalo on 3/24/14.
@@ -8,8 +8,10 @@
 #import <Foundation/Foundation.h>
 #import "SFDYCIClangProxyRecompiler.h"
 
-
-@interface SFDYCIXcodeRuntimeRecompiler : NSObject <SFDYCIRecompilerProtocol>
+/*
+Recompiler that works with .h and .m classes
+ */
+@interface SFDYCIXcodeObjectiveCRecompiler : NSObject <SFDYCIRecompilerProtocol>
 
 
 @end
