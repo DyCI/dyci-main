@@ -71,7 +71,7 @@
                 if (error != nil) {
                     completionBlock(error);
                 } else {
-                    [self createDylibWithCommand:command completion:completionBlock];
+                    [self createDynamiclibraryWithCommand:command completion:completionBlock];
                 }
             }];
             return;
@@ -129,7 +129,7 @@
 
 #pragma mark - Creating Dylib
 
-- (void)createDylibWithCommand:(id<CDRSXcode_XCDependencyCommand>)command completion:(void (^)(NSError *))completion {
+- (void)createDynamiclibraryWithCommand:(id <CDRSXcode_XCDependencyCommand>)command completion:(void (^)(NSError *))completion {
 
     SFDYCIClangParams * clangParams = [self.clangParamsExtractor extractParamsFromArguments:command.arguments];
     NSLog(@"Clang params extracted : %@", clangParams);
