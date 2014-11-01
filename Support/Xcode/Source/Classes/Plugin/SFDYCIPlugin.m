@@ -1,4 +1,4 @@
-//
+#import <sys/cdefs.h>//
 //  SFDYCIPlugin.m
 //  SFDYCIPlugin
 //
@@ -7,20 +7,17 @@
 //
 
 #import "SFDYCIPlugin.h"
-#import "SFDYCIResultView.h"
-#import "CDRSXcodeInterfaces.h"
 #import "SFDYCIXCodeHelper.h"
 #import "SFDYCIClangProxyRecompiler.h"
 #import "SFDYCIXcodeRuntimeRecompiler.h"
+#import "SFDYCIViewsHelper.h"
+#import "SFDYCICompositeRecompiler.h"
 
 
 @interface SFDYCIPlugin ()
-/*
-Array of recompilers those can be used to perform recompilation
-All of those checked if file at specified URL can ber recompiled
- */
-@property(nonatomic, strong) NSArray * recompilers;
-
+@property(nonatomic, strong) id <SFDYCIRecompilerProtocol> recompiler;
+@property(nonatomic, strong) SFDYCIViewsHelper *viewHelper;
+@property(nonatomic, strong) SFDYCIXCodeHelper *xcodeStructureManager;
 @end
 
 
@@ -28,7 +25,7 @@ All of those checked if file at specified URL can ber recompiled
 
 #pragma mark - Plugin Initialization
 
-+ (void)pluginDidLoad:(NSBundle *)plugin {
++ (void)pluginDidLoad:(NSBundle *)plugin{
     static id sharedPlugin = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -53,9 +50,17 @@ All of those checked if file at specified URL can ber recompiled
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {
     NSLog(@"App finished launching");
+
+    // Kind of dependecy injection here
+    self.recompiler = [[SFDYCICompositeRecompiler alloc]
+        initWithCompilers:@[ [SFDYCIXcodeRuntimeRecompiler new], [SFDYCIClangProxyRecompiler new] ]];
+
+    self.viewHelper = [SFDYCIViewsHelper new];
+
+    self.xcodeStructureManager = [SFDYCIXCodeHelper instance];
+
     [self setupMenu];
     //We'll use Xcode recompiler, and if that one fails, we'll fallback to dyci-recompile.py
-    self.recompilers = @[ [SFDYCIXcodeRuntimeRecompiler new], [SFDYCIClangProxyRecompiler new] ];
 
 }
 
@@ -102,81 +107,26 @@ All of those checked if file at specified URL can ber recompiled
 
 - (void)recompileAndInject:(id)sender {
     NSLog(@"Yupee :),  ");
+    __weak SFDYCIPlugin *weakSelf = self;
 
-    // Searching our IDEEditorContext
-    // This class has information about URL of file that being edited
-    SFDYCIXCodeHelper * xcode = [SFDYCIXCodeHelper instance];
-    NSURL * openedFileURL = [xcode activeDocumentFileURL];
+    NSURL *openedFileURL = self.xcodeStructureManager.activeDocumentFileURL;
+
     if (openedFileURL) {
 
         NSLog(@"Opened file url is : %@", openedFileURL);
         // Setting up task, that we are going to call
 
-        id<SFDYCIRecompilerProtocol> recompiler = [self recompilerForUR:openedFileURL];
-        [recompiler recompileFileAtURL:openedFileURL completion:^(NSError * error) {
+        [self.recompiler recompileFileAtURL:openedFileURL completion:^(NSError *error) {
             if (error) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-
-                    NSAlert * alert = [[NSAlert alloc] init];
-                    [alert addButtonWithTitle:@"OK"];
-                    [alert setMessageText:@"Failed to inject code"];
-                    [alert setInformativeText:[error localizedDescription]];
-                    [alert setAlertStyle:NSCriticalAlertStyle];
-                    [alert runModal];
-                });
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self showResultViewWithSuccess:NO];
-                });
-
+                [weakSelf.viewHelper showError:error];
             } else {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self showResultViewWithSuccess:YES];
-                });
+                [weakSelf.viewHelper showSuccessResult];
             }
         }];
-        return;
+
+    } else {
+        NSLog(@"Coudln't find IDEEditorContext... Seems you've pressed somewhere in incorrect place");
     }
-
-    NSLog(@"Coudln't find IDEEditorContext... Seems you've pressed somewhere in incorrect place");
-
-}
-
-- (id <SFDYCIRecompilerProtocol>)recompilerForUR:(NSURL *)url {
-    for (id<SFDYCIRecompilerProtocol>recompiler in self.recompilers) {
-      if ([recompiler canRecompileFileAtURL:url]) {
-          return recompiler;
-      }
-    }
-    return nil;
-}
-
-
-- (void)showResultViewWithSuccess:(BOOL)success {
-    SFDYCIResultView * resultView = [[SFDYCIResultView alloc] initWithFrame:NSMakeRect(0, 0, 100, 100)];
-    resultView.success = success;
-
-    // Adding result view on window
-    [[[NSApp keyWindow] contentView] addSubview:resultView];
-
-
-    // Performing animations
-    resultView.alphaValue = 0.0;
-
-    [NSAnimationContext runAnimationGroup:^(NSAnimationContext * context) {
-
-        context.duration = 1;
-        [[resultView animator] setAlphaValue:1.0];
-
-    }                   completionHandler:^{
-
-        [NSAnimationContext runAnimationGroup:^(NSAnimationContext * context) {
-            context.duration = 1;
-            [[resultView animator] setAlphaValue:0.0];
-        }                   completionHandler:^{
-            [resultView removeFromSuperview];
-        }];
-
-    }];
 
 }
 

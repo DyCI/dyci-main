@@ -9,6 +9,10 @@
 #import <Foundation/Foundation.h>
 #import <AppKit/AppKit.h>
 
+@class SFDYCIViewsHelper;
+@class SFDYCIRecompileController;
+@class SFDYCIXCodeHelper;
+
 
 @interface SFDYCIPlugin : NSObject {
 	

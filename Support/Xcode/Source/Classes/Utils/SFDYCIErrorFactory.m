@@ -12,6 +12,7 @@ typedef NS_ENUM(NSUInteger , SFDYCIErrorCode) {
     SFDYCIErrorCodeUnknown = 0,
     SFDYCIErrorCodeCompilationFailed = -100,
     SFDYCIErrorCodeDlybCreatoinFailed = -200,
+    SFDYCIErrorCodeNoRecomilerCanBeFound = -300,
 };
 
 @implementation SFDYCIErrorFactory {
@@ -28,6 +29,12 @@ typedef NS_ENUM(NSUInteger , SFDYCIErrorCode) {
     return [[NSError alloc] initWithDomain:SFDYCIErrorDomain
                                       code:SFDYCIErrorCodeDlybCreatoinFailed
                                   userInfo: message ? @{NSLocalizedDescriptionKey : message} : nil];
+}
+
++ (NSError *)noRecompilerFoundErrorForFileURL:(NSURL *)fileURL {
+    return [[NSError alloc] initWithDomain:SFDYCIErrorDomain
+                                      code:SFDYCIErrorCodeNoRecomilerCanBeFound
+                                  userInfo: @{NSLocalizedDescriptionKey : [NSString stringWithFormat:@"No recompiler found to handle this file (%@)", fileURL]}];
 }
 
 

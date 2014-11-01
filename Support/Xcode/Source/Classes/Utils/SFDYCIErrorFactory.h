@@ -13,4 +13,6 @@ extern NSString * SFDYCIErrorDomain;
 
 + (NSError *)compilationErrorWithMessage:(NSString *)message;
 + (NSError *)dylibCreationErrorWithMessage:(NSString *)message;
++ (NSError *)noRecompilerFoundErrorForFileURL:(NSURL *)fileURL;
+
 @end
