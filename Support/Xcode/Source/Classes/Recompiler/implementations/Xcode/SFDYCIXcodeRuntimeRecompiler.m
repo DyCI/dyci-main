@@ -10,7 +10,6 @@
 #import "CDRSXcodeDevToolsInterfaces.h"
 #import "SFDYCIXCodeHelper.h"
 #import "DSUnixTask.h"
-#import "DSUnixShellTask.h"
 #import "DSUnixTaskSubProcessManager.h"
 #import "SFDYCIErrorFactory.h"
 #import "SFDYCIClangParamsExtractor.h"
@@ -36,68 +35,59 @@
 }
 
 
-- (void)recompileFileAtURL:(NSURL *)fileURL completion:(void (^)(NSError * error))completionBlock {
+- (void)recompileFileAtURL:(NSURL *)fileURL completion:(void (^)(NSError *error))completionBlock {
 
-    if ([self canRecompileFileAtURL:fileURL]) {
+    SFDYCIXCodeHelper *xcode = [SFDYCIXCodeHelper instance];
+    XC(PBXTarget) target = [xcode targetInOpenedProjectForFileURL:fileURL];
+    if (!target) {
+        // TODO : Custom error
+        [self failWithError:nil completionBlock:completionBlock];
+        return;
+    }
 
-        SFDYCIXCodeHelper * xcode = [SFDYCIXCodeHelper instance];
-        XC(PBXTarget) target = [xcode targetInOpenedProjectForFileURL:fileURL];
-        if (!target) {
-            // TODO : Custom error
-            [self failWithError:nil completionBlock:completionBlock];
+    XC(PBXTargetBuildContext) buildContext = target.targetBuildContext;
+    NSArray *commands = [buildContext commands];
+    NSLog(@"Commands : %@", commands);
+    [commands enumerateObjectsUsingBlock:^(XC(XCDependencyCommand) command, NSUInteger idx, BOOL *stop) {
+        NSLog(@"Command #%lu of classs %@ : %@", idx, [(id) command class], command);
+
+        NSArray *ruleInfo = [command ruleInfo];
+        NSLog(@"Command : %@", ruleInfo);
+        if ([[ruleInfo firstObject] isEqualToString:@"CompileC"]) {
+            /**
+            * Commands can contain build rules for multiple file so
+            * make sure you got the right one.
+            */
+            NSString *sourcefile_path = ruleInfo[2];
+            if (![sourcefile_path isEqualToString:fileURL.path]) {
+                return;
+            }
+
+            NSLog(@"Found command that was originally created this file. Rerunning it");
+            NSLog(@"We should actually run %@ %@", command.commandPath, command.arguments);
+            NSLog(@"Command tool specification : %@", [command toolSpecification]);
+
+            [self runCompilationCommand:command completion:^(NSError *error) {
+                if (error != nil) {
+                    completionBlock(error);
+                } else {
+                    [self createDylibWithCommand:command completion:completionBlock];
+                }
+            }];
             return;
+
         }
 
-        XC(PBXTargetBuildContext) buildContext = target.targetBuildContext;
-        NSArray * commands = [buildContext commands];
-        NSLog(@"Commands : %@", commands);
-        [commands enumerateObjectsUsingBlock:^(XC(XCDependencyCommand) command, NSUInteger idx, BOOL *stop) {
-            NSLog(@"Command #%lu of classs %@ : %@", idx, [(id)command class], command);
-
-            NSArray * ruleInfo = [command ruleInfo];
-            NSLog(@"Command : %@", ruleInfo);
-            if ([[ruleInfo firstObject] isEqualToString: @"CompileC"]) {
-                /**
-                 * Commands can contain build rules for multiple file so
-                 * make sure you got the right one.
-                 */
-                NSString *sourcefile_path = [ruleInfo objectAtIndex:2];
-                if ( ! [sourcefile_path isEqualToString: fileURL.path]) {
-                    return;
-                }
-
-                NSLog(@"Found command that was originally created this file. Rerunning it");
-                NSLog(@"We should actually run %@ %@", command.commandPath, command.arguments);
-                NSLog(@"Command tool specification : %@", [command toolSpecification]);
-
-                [self runCompilationCommand:command completion:^(NSError * error){
-                    if (error != nil) {
-                        completionBlock(error);
-                    } else {
-                        [self createDylibWithCommand:command completion:completionBlock];
-                    }
-                }];
-                return;
-
-            }
-
-            // Linker arguments
-            if ([[ruleInfo firstObject] isEqualToString: @"Ld"]) {
-                /*
-                 * Xcode doesn't pass object files (.o) directly to the linker (it uses
-                 * a dependency info file instead) so the only thing we can do here is to grab
-                 * the linker arguments.
-                 */
-                NSLog(@"\nLinker: %@ %@", command.commandPath, command.arguments);
-            }
-        }];
-
-    } else {
-
-        // Fall back to previous recompiler
-        [super recompileFileAtURL:fileURL completion:completionBlock];
-
-    }
+        // Linker arguments
+        if ([[ruleInfo firstObject] isEqualToString:@"Ld"]) {
+            /*
+             * Xcode doesn't pass object files (.o) directly to the linker (it uses
+             * a dependency info file instead) so the only thing we can do here is to grab
+             * the linker arguments.
+             */
+            NSLog(@"\nLinker: %@ %@", command.commandPath, command.arguments);
+        }
+    }];
 
 }
 
@@ -187,7 +177,7 @@
 
     [dlybArguments addObjectsFromArray:
       @[
-        clangParams.objectCompilation,
+        clangParams.objectCompilationPath,
         @"-install_name", [NSString stringWithFormat:@"/usr/local/lib/%@", libraryName],
         @"-Xlinker",
         @"-objc_abi_version",
@@ -253,6 +243,8 @@
   }
 }
 
+
+#pragma mark - SFDYCIRecompilerProtocol
 
 - (BOOL)canRecompileFileAtURL:(NSURL *)fileURL {
     NSString * filePath = [fileURL absoluteString];

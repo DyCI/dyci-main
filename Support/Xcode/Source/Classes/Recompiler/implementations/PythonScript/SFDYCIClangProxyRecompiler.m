@@ -14,17 +14,11 @@
 - (void)recompileFileAtURL:(NSURL *)fileURL completion:(void (^)(NSError * error))completionBlock {
     NSTask * task = [[NSTask alloc] init];
     [task setLaunchPath:@"/usr/bin/python"];
-    NSString * dyciDirectoryPath = [@"~" stringByExpandingTildeInPath];
-    dyciDirectoryPath = [dyciDirectoryPath stringByAppendingPathComponent:@".dyci"];
-    dyciDirectoryPath = [dyciDirectoryPath stringByAppendingPathComponent:@"scripts"];
 
-    [task setCurrentDirectoryPath:dyciDirectoryPath];
+    [task setCurrentDirectoryPath:self.dyciRecompilerDirectoryPath];
 
-    NSString * dyciRecompile = [dyciDirectoryPath stringByAppendingPathComponent:@"dyci-recompile.py"];
-
-    NSArray * arguments = [NSArray arrayWithObjects:dyciRecompile, [fileURL path], nil];
+    NSArray * arguments = @[self.dyciRecompilerPath, [fileURL path]];
     [task setArguments:arguments];
-
 
     // Setting up pipes for standart and error outputs
     NSPipe * outputPipe = [NSPipe pipe];
@@ -39,8 +33,7 @@
     [task setTerminationHandler:^(NSTask * tsk) {
 
         NSData * outputData = [outputFile readDataToEndOfFile];
-        NSString * outputString = [[NSString alloc] initWithData:outputData
-                                                        encoding:NSUTF8StringEncoding];
+        NSString * outputString = [[NSString alloc] initWithData:outputData encoding:NSUTF8StringEncoding];
         if (outputString && [outputString length]) {
             NSLog(@"script returned OK:\n%@", outputString);
         }
@@ -74,5 +67,25 @@
     [task launch];
 
 }
+
+- (NSString *)dyciRecompilerDirectoryPath {
+    NSString * dyciDirectoryPath = [@"~" stringByExpandingTildeInPath];
+    dyciDirectoryPath = [dyciDirectoryPath stringByAppendingPathComponent:@".dyci"];
+    dyciDirectoryPath = [dyciDirectoryPath stringByAppendingPathComponent:@"scripts"];
+    return dyciDirectoryPath;
+}
+
+
+- (NSString *)dyciRecompilerPath {
+    return [self.dyciRecompilerDirectoryPath stringByAppendingPathComponent:@"dyci-recompile.py"];
+}
+
+
+#pragma mark - SFDYCIRecompilerProtocol
+
+- (BOOL)canRecompileFileAtURL:(NSURL *)fileURL {
+    return YES;
+}
+
 
 @end

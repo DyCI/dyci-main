@@ -9,6 +9,10 @@
 #import "CDRSXcodeInterfaces.h"
 #import "CDRSXcodeDevToolsInterfaces.h"
 
+/*
+This is the helper that should know about xcode project.
+No other parts of this project should know about Xcode project structure, about active targers whatever
+ */
 @interface SFDYCIXCodeHelper : NSObject
 
 + (SFDYCIXCodeHelper *)instance;

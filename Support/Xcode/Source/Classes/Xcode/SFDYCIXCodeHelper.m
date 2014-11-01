@@ -15,7 +15,7 @@
 
 }
 + (SFDYCIXCodeHelper *)instance {
-    static SFDYCIXCodeHelper * _instance = nil;
+    static SFDYCIXCodeHelper *_instance = nil;
 
     @synchronized (self) {
         if (_instance == nil) {
@@ -27,14 +27,14 @@
 }
 
 - (XC(IDEEditorContext))activeEditorContext {
-    NSResponder * firstResponder = [[NSApp keyWindow] firstResponder];
+    NSResponder *firstResponder = [[NSApp keyWindow] firstResponder];
     while (firstResponder) {
         firstResponder = [firstResponder nextResponder];
 
         NSLog(@"Responder is :%@", firstResponder);
 
         if ([firstResponder isKindOfClass:NSClassFromString(@"IDEEditorContext")]) {
-            return (id<CDRSXcode_IDEEditorContext>) firstResponder;
+            return (id <CDRSXcode_IDEEditorContext>) firstResponder;
         }
     }
     return nil;
@@ -46,7 +46,7 @@
     if (editorContext) {
 
         // Resolving currently opened file
-        NSURL * openedFileURL = [[[editorContext editor] document] fileURL];
+        NSURL *openedFileURL = [[[editorContext editor] document] fileURL];
         return openedFileURL;
     }
 
@@ -54,34 +54,34 @@
 }
 
 
-- (id<CDRSXcode_PBXTarget>)targetInOpenedProjectForFileURL:(NSURL *)fileURL {
-    Class<XCP(PBXReference)> PBXReference = NSClassFromString(@"PBXReference");
-    XC(PBXReference) selectedFileReference = [[PBXReference alloc] initWithPath: fileURL.path];
+- (id <CDRSXcode_PBXTarget>)targetInOpenedProjectForFileURL:(NSURL *)fileURL {
+    Class <XCP(PBXReference)> PBXReference = NSClassFromString(@"PBXReference");
+    XC(PBXReference) selectedFileReference = [[PBXReference alloc] initWithPath:fileURL.path];
 
-    Class<XCP(PBXProject>) PBXProject = NSClassFromString(@"PBXProject");
-    NSArray * suggested_targets = [PBXProject targetsInAllProjectsForFileReference:selectedFileReference
-                                                                        justNative:NO];
+    Class <XCP(PBXProject >) PBXProject = NSClassFromString(@"PBXProject");
+    NSArray *suggested_targets = [PBXProject targetsInAllProjectsForFileReference:selectedFileReference
+                                                                       justNative:NO];
 
     NSLog(@"Targets : %@", suggested_targets);
 
-    NSLog(@"Projects %@", [PBXProject openProjects] );
+    NSLog(@"Projects %@", [PBXProject openProjects]);
 
     // TODO: Find a better way to do it :)
-    NSArray * activeRunContextTargetsIds = [NSClassFromString(@"IDEWorkspaceWindow")
-      valueForKeyPath:
-        @"lastActiveWorkspaceWindowController."
-        "_workspace."
-          "runContextManager."
-          "activeRunContext."
-          "buildSchemeAction."
-          "buildActionEntries."
-          "buildableReference."
-          "blueprintIdentifier"];
+    NSArray *activeRunContextTargetsIds = [NSClassFromString(@"IDEWorkspaceWindow")
+        valueForKeyPath:
+            @"lastActiveWorkspaceWindowController."
+                "_workspace."
+                "runContextManager."
+                "activeRunContext."
+                "buildSchemeAction."
+                "buildActionEntries."
+                "buildableReference."
+                "blueprintIdentifier"];
 
     NSLog(@"ACtive Run Context Target sIDs %@", activeRunContextTargetsIds);
     // Go through all opened projects and find one with suggested target == it's active target
     for (XC(PBXTarget) suggestedTarget in suggested_targets) {
-        NSObject * targetObjectID = [(id)suggestedTarget valueForKey:@"objectID"];
+        NSObject *targetObjectID = [(id) suggestedTarget valueForKey:@"objectID"];
         NSLog(@"Suggsested target obejct ID %@", targetObjectID);
         if ([activeRunContextTargetsIds containsObject:targetObjectID]) {
             NSLog(@"Returning suggested target : %@ == %@", suggestedTarget, targetObjectID);

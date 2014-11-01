@@ -9,8 +9,15 @@
 @class SFDYCIClangParams;
 
 
+/*
+Object that is responsibel for extracting parameters those are needed to
+perform successful recompilation
+ */
 @interface SFDYCIClangParamsExtractor : NSObject
 
+/*
+Extracts parameters from specified array of arguments
+ */
 - (SFDYCIClangParams *)extractParamsFromArguments:(NSArray *)arguments;
 
 @end

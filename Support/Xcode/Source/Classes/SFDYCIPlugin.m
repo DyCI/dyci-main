@@ -15,7 +15,12 @@
 
 
 @interface SFDYCIPlugin ()
-@property(nonatomic, strong) id<SFDYCIRecompilerProtocol> recompiler;
+/*
+Array of recompilers those can be used to perform recompilation
+All of those checked if file at specified URL can ber recompiled
+ */
+@property(nonatomic, strong) NSArray * recompilers;
+
 @end
 
 
@@ -48,30 +53,35 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {
     NSLog(@"App finished launching");
-    NSMenuItem * runMenuItem = [[NSApp mainMenu] itemWithTitle:@"Product"];
+    [self setupMenu];
+    //We'll use Xcode recompiler, and if that one fails, we'll fallback to dyci-recompile.py
+    self.recompilers = @[ [SFDYCIXcodeRuntimeRecompiler new], [SFDYCIClangProxyRecompiler new] ];
+
+}
+
+#pragma mark - Preferences
+
+- (void)setupMenu {
+    NSMenuItem *runMenuItem = [[NSApp mainMenu] itemWithTitle:@"Product"];
     if (runMenuItem) {
 
-        NSMenu * subMenu = [runMenuItem submenu];
+        NSMenu *subMenu = [runMenuItem submenu];
 
         // Adding separator
         [subMenu addItem:[NSMenuItem separatorItem]];
 
         // Adding inject item
-        NSMenuItem * recompileAndInjectMenuItem =
-          [[NSMenuItem alloc] initWithTitle:@"Recompile and inject"
-                                     action:@selector(recompileAndInject:)
-                              keyEquivalent:@"x"];
+        NSMenuItem *recompileAndInjectMenuItem =
+            [[NSMenuItem alloc] initWithTitle:@"Recompile and inject"
+                                       action:@selector(recompileAndInject:)
+                                keyEquivalent:@"x"];
         [recompileAndInjectMenuItem setKeyEquivalentModifierMask:NSControlKeyMask];
         [recompileAndInjectMenuItem setTarget:self];
         [subMenu addItem:recompileAndInjectMenuItem];
 
     }
-
-    self.recompiler = [SFDYCIXcodeRuntimeRecompiler new];
-
 }
 
-#pragma mark - Preferences
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem {
     // TODO : We need correct checks, when we can use Ibject, and where we cannot
@@ -91,20 +101,19 @@
 
 
 - (void)recompileAndInject:(id)sender {
-    NSLog(@"Yupee :)");
-
+    NSLog(@"Yupee :),  ");
 
     // Searching our IDEEditorContext
     // This class has information about URL of file that being edited
     SFDYCIXCodeHelper * xcode = [SFDYCIXCodeHelper instance];
-
     NSURL * openedFileURL = [xcode activeDocumentFileURL];
     if (openedFileURL) {
 
         NSLog(@"Opened file url is : %@", openedFileURL);
         // Setting up task, that we are going to call
 
-        [self.recompiler recompileFileAtURL:openedFileURL completion:^(NSError * error) {
+        id<SFDYCIRecompilerProtocol> recompiler = [self recompilerForUR:openedFileURL];
+        [recompiler recompileFileAtURL:openedFileURL completion:^(NSError * error) {
             if (error) {
                 dispatch_async(dispatch_get_main_queue(), ^{
 
@@ -125,11 +134,20 @@
                 });
             }
         }];
-
+        return;
     }
 
     NSLog(@"Coudln't find IDEEditorContext... Seems you've pressed somewhere in incorrect place");
 
+}
+
+- (id <SFDYCIRecompilerProtocol>)recompilerForUR:(NSURL *)url {
+    for (id<SFDYCIRecompilerProtocol>recompiler in self.recompilers) {
+      if ([recompiler canRecompileFileAtURL:url]) {
+          return recompiler;
+      }
+    }
+    return nil;
 }
 
 

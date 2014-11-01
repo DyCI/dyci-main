@@ -21,9 +21,9 @@
     [arguments enumerateObjectsUsingBlock:^(NSString * argument, NSUInteger idx, BOOL * stop) {
 
         if ([argument rangeOfString:@".*\\w+\\.mm?$" options:NSRegularExpressionSearch].location != NSNotFound) {
-            clangParams.className = argument;
+            clangParams.compilationObjectName = argument;
         } else if ([argument rangeOfString:@".*\\w+\\.o$" options:NSRegularExpressionSearch].location != NSNotFound) {
-            clangParams.objectCompilation = argument;
+            clangParams.objectCompilationPath = argument;
         } else if ([argument rangeOfString:@"^-L.*" options:NSRegularExpressionSearch].location != NSNotFound) {
             [LParams addObject:argument];
         } else if ([argument rangeOfString:@"^-F.*" options:NSRegularExpressionSearch].location != NSNotFound) {
