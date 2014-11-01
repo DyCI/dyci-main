@@ -21,14 +21,16 @@ className = os.path.normpath(clangParams['class'])
 
 filename = indexFileLocation + hashlib.md5(className).hexdigest()
 
-try:
-    with open(filename, "w") as text_file:
-        workingDirectory = os.getcwd()
-        text_file.write('\n'.join(sys.argv[1:] + [workingDirectory]))
-        text_file.close()
-except:
-    #stderr.write("Couldn't write index file '%s' %s. This is bad:( But compilation will be continued" % (className, className.hash))
-    pass
+# Skip clang invocations of analyzer
+if clangParams['isAnalyzer'] == False:
+  try:
+      with open(filename, "w") as text_file:
+          workingDirectory = os.getcwd()
+          text_file.write('\n'.join(sys.argv[1:] + [workingDirectory]))
+          text_file.close()
+  except:
+      #stderr.write("Couldn't write index file '%s' %s. This is bad:( But compilation will be continued" % (className, className.hash))
+      pass
 
 #faking compile string...
 #... Since we are clang...
