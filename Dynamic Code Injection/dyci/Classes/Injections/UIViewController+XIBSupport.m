@@ -9,9 +9,13 @@
 #import "UIViewController+XIBSupport.h"
 #import "SFDynamicCodeInjection.h"
 #import "UINib+StoryBoardSupport.h"
+#import "SFDYCIDefines.h"
 
 
 #if TARGET_IPHONE_SIMULATOR
+
+DYCI_FIX_CATEGORY_BUG(UIViewController_XIBSupport);
+
 
 @interface SFDynamicCodeInjection (Private)
 
