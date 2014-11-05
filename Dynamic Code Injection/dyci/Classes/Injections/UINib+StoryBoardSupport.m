@@ -6,9 +6,11 @@
 //  Copyright (c) 2012 Stanfy LLC. All rights reserved.
 //
 #import "UINib+StoryBoardSupport.h"
+#import "SFDYCIDefines.h"
 
 #if TARGET_IPHONE_SIMULATOR
 
+DYCI_FIX_CATEGORY_BUG(UINib_StoryBoardSupport);
 
 @implementation UINib (StoryBoardSupport)
 
