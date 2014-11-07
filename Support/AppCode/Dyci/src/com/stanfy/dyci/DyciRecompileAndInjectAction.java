@@ -54,22 +54,23 @@ public class DyciRecompileAndInjectAction extends AnAction{
 
   }
   
-  private String xcodePath(java.io.FileReader fileReader){
+  private String xcodePath(final AnActionEvent actionEvent,java.io.FileReader fileReader){
 	String xpathExpression = "/application/component[@name='XcodeSettings']/option[@name='selectedXcode']/@value";
+	String result = null;
 
 	XPathFactory xpathFactory = XPathFactory.newInstance();
 	XPath xpath = xpathFactory.newXPath();
 	try{
 		XPathExpression expr = xpath.compile(xpathExpression);
 		InputSource inputSource = new InputSource(fileReader);
-		String result = expr.evaluate(inputSource);
-		return result;
+		result = expr.evaluate(inputSource);
 		
 	} catch(Exception e){
         LOG.error("Exception getting Xcode path: " + e.getMessage());
         this.showMessageBubble(actionEvent, MessageType.ERROR, "Failed to run injection script");
 	}
   	
+	return result;
   }
 
   private void injectFile(final AnActionEvent actionEvent, final String path) {
@@ -97,7 +98,7 @@ public class DyciRecompileAndInjectAction extends AnAction{
     String[] commands;
 	try {
 		FileReader appcodeOptions = new FileReader(appcodeOptionsFilename);
-		String xcodePath = xcodePath(appcodeOptions);
+		String xcodePath = xcodePath(actionEvent, appcodeOptions);
 		commands = new String[] {dyciScriptLocation, path, xcodePath};
 	} catch(IOException e) {
 		// If the file cannot be found, it might not be a problem (user has appcode 2 or maybe the setting wasn't saved)
