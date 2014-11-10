@@ -18,7 +18,6 @@
           <root url="file:///Applications/AppCode.app/Contents/lib" />
         </SOURCES>
         <jarDirectory url="file:///Applications/AppCode.app/Contents/lib" recursive="false" />
-        <jarDirectory url="file:///Applications/AppCode.app/Contents/lib" recursive="false" type="SOURCES" />
       </library>
     </orderEntry>
   </component>
