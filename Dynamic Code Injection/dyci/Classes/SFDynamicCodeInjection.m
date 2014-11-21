@@ -125,7 +125,7 @@
             // 
             NSRange userHomeEndPosition = [simUserDirectoryPath rangeOfString:@"/Library/Developer"];
             NSString * macUserHomePath = [simUserDirectoryPath substringToIndex:userHomeEndPosition.location];
-            dciDirectoryPath = [macUserHomePath stringByAppendingPathComponent:@",dyci"];
+            dciDirectoryPath = [macUserHomePath stringByAppendingPathComponent:@".dyci"];
         }
 
     }
