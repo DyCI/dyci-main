@@ -6,6 +6,7 @@
 //  Copyright (c) 2012 Stanfy LLC. All rights reserved.
 //
 #import <Foundation/Foundation.h>
+#import "SFDYCIDefines.h"
 
 
 #if TARGET_IPHONE_SIMULATOR
