@@ -27,60 +27,6 @@ DIR="$( cd -P "$( dirname "$0" )" && pwd )"
 cd "${DIR}"
 cd ..
 
-CLANG_LOCATION=`xcrun -find clang`
-CLANG_USR_BIN=`dirname "${CLANG_LOCATION}"`
-CLANG_BACKUP_LOCATION=$CLANG_LOCATION.backup
-CLANG_REAL_LOCATION=$CLANG_LOCATION-real
-CLANG_REAL_LOCATION_PP="$CLANG_LOCATION-real++"
-
-echo
-echo -n "== Backing up clang : "
-
-if [[ ! -f ${CLANG_BACKUP_LOCATION} ]]; then
-  # Checking, if it isn't our script laying in clang
-  echo grep -Fq "== CLANG_PROXY ==" "$CLANG_LOCATION"
-  if grep -Fq "== CLANG_PROXY ==" "$CLANG_LOCATION"  
-    then
-    # code if found
-    # This is bad....
-   echo "Original clang compiler was already proxied via dyci and no backup can be found."
-   echo "This can be because of Xcode update without dyci uninstallation."
-   echo "In case, if you see this, clang is little broken now, and you need to update it manually."
-   echo "By running next command in your terminal : "
-   echo "echo ""${CLANG_LOCATION}"" ""${CLANG_BACKUP_LOCATION}"" | xargs -n 1 sudo cp /usr/bin/clang"
-   exit 1
-  fi
-# We should backup clang ONLY if it is an binary file only
-  log "sudo cp ${CLANG_LOCATION} ${CLANG_BACKUP_LOCATION}"
-  sudo cp "${CLANG_LOCATION}" "${CLANG_BACKUP_LOCATION}"
-  log "echo Backup is at : ${CLANG_BACKUP_LOCATION}"
-  echo "Done."
-else
-  echo "Skipped."
-  echo "   Seems dyci-clang has already been installed"
-  log "Backup is at : ${CLANG_BACKUP_LOCATION}"
-fi
-
-echo -n "== Faking up clang : "
-
-log "sudo cp ${CLANG_BACKUP_LOCATION} ${CLANG_REAL_LOCATION}"
-sudo cp "${CLANG_BACKUP_LOCATION}" "${CLANG_REAL_LOCATION}"
-
-log "sudo cp ${CLANG_BACKUP_LOCATION} ${CLANG_REAL_LOCATION_PP}"
-sudo cp "${CLANG_BACKUP_LOCATION}" "${CLANG_REAL_LOCATION_PP}"
-
-#DYCI-CLANG RIGHTS
-sudo chmod +x Scripts/dyci-clang.py
-sudo chmod +x Scripts/dyci-recompile.py
-
-log "sudo cp Scripts/dyci-clang.py ${CLANG_LOCATION}"
-log "sudo cp Scripts/clangParams.py ${CLANG_USR_BIN}"
-
-sudo cp Scripts/dyci-clang.py "${CLANG_LOCATION}"
-sudo cp Scripts/clangParams.py "${CLANG_USR_BIN}"
-
-echo "Done."
-
 USER_HOME=$(eval echo ~${SUDO_USER})
 log "USER_HOME = ${USER_HOME}"
 
@@ -88,16 +34,13 @@ DYCI_ROOT_DIR="${USER_HOME}/.dyci"
 log "DYCI_ROOT_DIR='${USER_HOME}/.dyci'" 
 
 echo -n "== Preparing dyci-recompile directories: "
-log "if [[ ! -d ${DYCI_ROOT_DIR}/index ]]; then"
-if [[ ! -d "${DYCI_ROOT_DIR}/index" ]]; then
+if [[ ! -d "${DYCI_ROOT_DIR}/scripts" ]]; then
 
-  sudo mkdir -p "${DYCI_ROOT_DIR}/index"
-  sudo mkdir -p "${DYCI_ROOT_DIR}/scripts"
+  mkdir -p "${DYCI_ROOT_DIR}/scripts"
 
   # not sure about this really
-  sudo chmod 777 "${DYCI_ROOT_DIR}"
-  sudo chmod 777 "${DYCI_ROOT_DIR}/index"
-  sudo chmod 777 "${DYCI_ROOT_DIR}/scripts"
+  chmod 777 "${DYCI_ROOT_DIR}"
+  chmod 777 "${DYCI_ROOT_DIR}/scripts"
   echo "Done."
 else
   echo "Skipped. (Already prepared)."  
@@ -106,8 +49,9 @@ fi
 #Copying scripts
 echo -n "== Copying scripts : "
 
-sudo cp Scripts/dyci-recompile.py "${DYCI_ROOT_DIR}/scripts/"
-sudo cp Scripts/clangParams.py "${DYCI_ROOT_DIR}/scripts/"
+cp Scripts/dyci-recompile.py "${DYCI_ROOT_DIR}/scripts/"
+cp Scripts/clangParams.py "${DYCI_ROOT_DIR}/scripts/"
+cp Scripts/xcactivity-parser.py "${DYCI_ROOT_DIR}/scripts/"
 
 echo "Done."
 

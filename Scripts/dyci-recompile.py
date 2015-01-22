@@ -3,6 +3,7 @@ import hashlib
 import os
 import time
 import shutil
+import re
 
 import random
 from subprocess import Popen
@@ -13,10 +14,13 @@ from os.path import normpath, basename, dirname
 import sys
 
 # Running process
-def runAndFailOnError(stringToRun):
+def runAndFailOnError(stringToRun, shell=True):
+    stderr.write("Running %s" % stringToRun)
     process = Popen(stringToRun,
+                shell=shell,
                 stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE)
+                stderr=subprocess.PIPE
+                )
     output, err = process.communicate()
 
     # emulating output / err
@@ -140,43 +144,38 @@ if filename[-11:] == ".storyboard":
 if filename[-2:] == ".h": filename = os.path.splitext(filename)[0] + ".m"
 
 # loading it's params from the file
-indexFileLocation = DYCI_ROOT_DIR + '/index/' + hashlib.md5(os.path.normpath(filename)).hexdigest()
+xcactivityParserLocation = DYCI_ROOT_DIR + "/scripts/xcactivity-parser.py" 
 
-
-params = []
-try:
-    params = [line.strip() for line in open(indexFileLocation)]
-except:
-    stderr.write("Couldn't load index file '%s' (%s). Use default compilation instead" % (indexFileLocation, filename))
-    exit(1)
-
-# searching params by filename
-
-if not params:
-    stderr.write("Could not find saved params for file %s. File need to be compiled first " % filename)
-    exit(1)
-
+# print "xcactivityParserLocation \n%s" % DYCI_ROOT_DIR
+# print xcactivityParserLocation + " -f " + filename + " -x "+  "/Users/ptaykalo/Library/Developer/Xcode/DerivedData/Ladybug-beaxpvgiwpmzbwamzrmskgifxtmw/Logs/Build" 
 
 # Switching to the specified working directory
-workingDir = params[len(params)-1]
-os.chdir(workingDir)
-params = params[:-1]
-
 
 # Searching where is Xcode with it's Clang located
-process = Popen(["xcode-select","-print-path"],
+process = Popen([xcactivityParserLocation,"-f",filename,"-x","/Users/ptaykalo/Library/Developer/Xcode/DerivedData/Ladybug-beaxpvgiwpmzbwamzrmskgifxtmw/Logs/Build", "-a","i386"],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE)
-xcodeLocation, err = process.communicate()
-xcodeLocation = xcodeLocation.rstrip(os.linesep)
+compileString, err = process.communicate()
+compileString = compileString.rstrip(os.linesep)
 
-compileString = [xcodeLocation + '/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-real'] \
-                + params
+# print "Compiler string was \n%s" % ''.join(compileString)
+# stdout.write(compileString)
+stderr.write(err)
+if process.returncode != 0:
+    sys.exit(1)
+
+if compileString is None or len(compileString) == 0:
+    stderr.write("Cannot inject this file. It seems that it wasn't ever compiled :(\nPlease, compile it first")
+    sys.exit(1)
+
 
 #Compiling file again
+workingDir = "/Volumes/data/Projects/ladybug-ios/LadyBug"
+os.chdir(workingDir)
 runAndFailOnError(compileString)
 
 #Compilation was successful... performing linking
+params = re.compile("(?<!\\\\) ").split(compileString)
 clangParams = parseClangCompileParams(params)
 
 #creating new random name wor the dynamic library
@@ -190,10 +189,19 @@ libraryName = "dyci%s.dylib" % random.randint(0, 10000000)
 #        'FParams':Fparams,
 #        'minOSParam':minOSParam
 #}
+# print "Compiler string was \n%s" % clangParams
+
+
+# Searching where is Xcode with it's Clang located
+process = Popen(["xcode-select","-print-path"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE)
+xcodeLocation, err = process.communicate()
+xcodeLocation = xcodeLocation.rstrip(os.linesep)
 
 #Running linker, that will create dynamic library for us
 linkArgs = \
-[xcodeLocation + "/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-real"] \
+[xcodeLocation + "/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang"] \
 + ["-arch"] + [clangParams['arch']]\
 + ["-dynamiclib"]\
 + ["-isysroot"] + [clangParams['isysroot']]\
@@ -219,8 +227,9 @@ linkArgs = \
 + ["-current_version"]\
 + ["5"]\
 + ["-o"]\
-+ [DYCI_ROOT_DIR + "/" + libraryName]
-#       + ['-v']
++ [DYCI_ROOT_DIR + "/" + libraryName]\
++ ["-v"]
 
-#print "Linker arks \n%s" % ' '.join(linkArgs)
-runAndFailOnError(linkArgs)
+runAndFailOnError(linkArgs, False)
+# print "Linker arks \n%s" % ' '.join(linkArgs)
+
