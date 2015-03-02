@@ -13,6 +13,20 @@ from clangParams import parseClangCompileParams
 from os.path import normpath, basename, dirname
 import sys
 
+#----------------------------------------------------------------------------------
+#Some contstants
+
+DYCI_ROOT_DIR = os.path.expanduser('~/.dyci')
+ARGS = sys.argv
+
+FILENAME = ''
+try:
+    FILENAME = ARGS[1]
+except:
+    stderr.write("Incorrect usage. Path to .m,.h file or resource should be used as the parameter")
+    exit(1)
+
+#----------------------------------------------------------------------------------
 # Running process
 def runAndFailOnError(stringToRun, shell=True):
     stderr.write("Running %s" % stringToRun)
@@ -27,6 +41,19 @@ def runAndFailOnError(stringToRun, shell=True):
     stdout.write(output)
     stderr.write(err)
     if process.returncode != 0:
+        sys.exit(1)
+
+#----------------------------------------------------------------------------------
+def locateCompileStringForFile(filename):
+    process = Popen([xcactivityParserLocation,"-f",filename,"-x","/Users/ptaykalo/Library/Developer/Xcode/DerivedData/Ladybug-beaxpvgiwpmzbwamzrmskgifxtmw/Logs/Build", "-a","i386"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE)
+    compileString, err = process.communicate()
+    compileString = compileString.rstrip(os.linesep)
+    stderr.write(err)
+    
+    if process.returncode != 0 or compileString is None or len(compileString) == 0:
+        stderr.write("Cannot find how this file was compiled. \nPlease, try to compile it first")
         sys.exit(1)
 
 #----------------------------------------------------------------------------------
@@ -57,6 +84,7 @@ def copytree(src, dst, symlinks=False, ignore=None):
         else:
             if not os.path.exists(d) or os.stat(src).st_mtime - os.stat(dst).st_mtime > 1:
                 shutil.copy2(s, d)
+
 #----------------------------------------------------------------------------------
 def copyResource(source, dyci):
     try:
@@ -101,26 +129,20 @@ def copyResource(source, dyci):
     return 0    
 
 #----------------------------------------------------------------------------------
+def filenameIsResounce(filename):
+    return filename[-4:] == ".png" or filename[-4:] == ".jpg" or filename[-5:] == ".jpeg" or filename[-8:] == ".strings"
 
-
-DYCI_ROOT_DIR = os.path.expanduser('~/.dyci')
-
-#removing old library and resources
-removeDynamicLibsFromDirectory(DYCI_ROOT_DIR)
-
-args = sys.argv
-
-filename = ''
-try:
-    filename = args[1]
-except:
-    stderr.write("Incorrect usage. Path to .m,.h file or resource should be used as the parameter")
-    exit(1)
-
-# In case of resources..
-if filename[-4:] == ".png" or filename[-4:] == ".jpg" or filename[-5:] == ".jpeg" or filename[-8:] == ".strings": 
+def dyciHandleResounce(filename):
     resultCode = copyResource(filename, DYCI_ROOT_DIR)
     exit(resultCode)
+
+#----------------------------------------------------------------------------------
+
+
+
+# In case of resources..
+if filenameIsResounce(FILENAME): 
+   dyciHandleResounce() 
 
 #In case of xibs
 if filename[-4:] == ".xib": 
@@ -152,21 +174,11 @@ xcactivityParserLocation = DYCI_ROOT_DIR + "/scripts/xcactivity-parser.py"
 # Switching to the specified working directory
 
 # Searching where is Xcode with it's Clang located
-process = Popen([xcactivityParserLocation,"-f",filename,"-x","/Users/ptaykalo/Library/Developer/Xcode/DerivedData/Ladybug-beaxpvgiwpmzbwamzrmskgifxtmw/Logs/Build", "-a","i386"],
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE)
-compileString, err = process.communicate()
-compileString = compileString.rstrip(os.linesep)
+
+compileString = locateCompileStringForFile(filename)
 
 # print "Compiler string was \n%s" % ''.join(compileString)
 # stdout.write(compileString)
-stderr.write(err)
-if process.returncode != 0:
-    sys.exit(1)
-
-if compileString is None or len(compileString) == 0:
-    stderr.write("Cannot inject this file. It seems that it wasn't ever compiled :(\nPlease, compile it first")
-    sys.exit(1)
 
 
 #Compiling file again
