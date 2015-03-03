@@ -28,6 +28,7 @@ except:
 
 # loading it's params from the file
 XCACTIVITYPARSER_LOCATION = DYCI_ROOT_DIR + "/scripts/xcactivity-parser.py" 
+# XCACTIVITYPARSER_LOCATION = "/Volumes/data/Educate/xcactiviy-parser/src/xcactivity-parser.py"
 DERIVED_DATA_DIR = os.path.expanduser("~/Library/Developer/Xcode/DerivedData")
 #ARCH = "x86_64"
 
@@ -82,7 +83,7 @@ def locateCompileStringForFile(original_filename):
             
     dyciLOG("Usin ARCH for search %s" % ARCH)
     
-    command = [XCACTIVITYPARSER_LOCATION,"-f",filename,"-x",lastBuildDir, "-a", ARCH]
+    command = [XCACTIVITYPARSER_LOCATION,"-f",filename,"-x",lastBuildDir, "-a", ARCH, "-w"]
     dyciLOG("Running command\n%s" % " ".join(command))
 
     process = Popen(command,
@@ -96,7 +97,7 @@ def locateCompileStringForFile(original_filename):
     
     if process.returncode != 0 or compileString is None or len(compileString) == 0:
         dyciLOG("Compile string is empty. This file wasn't compiled for speficified architecture %s, or build directory wasn't resolved correctly %s" % (ARCH, lastBuildDir) )
-        stderr.write("Cannot find how this file was compiled. \nPlease, try to compile it first")
+        stderr.write("Cannot find how this file was compiled. \nPlease, try to compile it first (see /tmp/dyci.log)")
         sys.exit(1)
 
     os.chdir(currDir)  
@@ -234,11 +235,10 @@ if FILENAME[-2:] == ".h": FILENAME = os.path.splitext(FILENAME)[0] + ".m"
 
 # Searching where is Xcode with it's Clang located
 
-compileString = locateCompileStringForFile(FILENAME)
+WORKING_DIR, compileString = locateCompileStringForFile(FILENAME).splitlines()[0:2]
 
 #Compiling file again
 dyciLOGStep("3.3", "Locate previos working directory")
-WORKING_DIR = "/Volumes/data/Projects/ladybug-ios/LadyBug"
 dyciLOG("Working dir %s" % WORKING_DIR)
 
 os.chdir(WORKING_DIR)
