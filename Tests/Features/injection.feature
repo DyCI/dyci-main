@@ -12,7 +12,6 @@ Feature: as User I should be able to inject new classes to the running project
     And Change its source file "InjectionExample/Classes/IEBase.m" with contents of file "InjectionExample/Classes/IEBaseUpdateOnClassInjection.m"
     And Inject inject new version of "InjectionExample/Classes/IEBase.m" with "<InjectedClass>" as test string
     Then I should see "<InjectedClass>" in running project output
-    And I end project process
 
   @methods @class_methods
   Scenario: Class method injection
@@ -20,7 +19,6 @@ Feature: as User I should be able to inject new classes to the running project
     And Change its source file "InjectionExample/Classes/IEBase.m" with contents of file "InjectionExample/Classes/IEBaseClassMethodInjection.m"
     And Inject inject new version of "InjectionExample/Classes/IEBase.m" with "<InjectedClassMethod>" as test string
     Then I should see "<InjectedClassMethod>" in running project output
-    And I end project process
 
   @methods @children
   Scenario: Call updateOnClass injection on child (successor) classes
@@ -28,7 +26,6 @@ Feature: as User I should be able to inject new classes to the running project
     And Change its source file "InjectionExample/Classes/IEBase.m" with contents of file "InjectionExample/Classes/IEBaseUpdateOnClassInjection.m"
     And Inject inject new version of "InjectionExample/Classes/IEBase.m" with "<InjectedClass>" as test string
     Then I should see "<IEBaseChild updateOnClassInjecton called>" in running project output
-    And I end project process
 
   @strings
   Scenario: Localizable strings injection
@@ -37,7 +34,7 @@ Feature: as User I should be able to inject new classes to the running project
     And Inject inject new version of "InjectionExample/Classes/IEBase.m" with "" as test string
     And Inject inject new version of "InjectionExample/InjectionExample/Resources/Localizable.strings" with "<Injected localizable string>" as test string
     Then I should see "<Injected localizable string>" in running project output
-    And I end project process
+    # And I end project process
 
   @strings
   Scenario: Real Localizable strings injection (with .lproj)
@@ -46,5 +43,5 @@ Feature: as User I should be able to inject new classes to the running project
     And Inject inject new version of "InjectionExample/Classes/IEBase.m" with "" as test string
     And Inject inject new version of "InjectionExample/InjectionExample/Resources/en.lproj/ReallyLocalizable.strings" with "<Really Injected localizable string>" as test string
     Then I should see "<Really Injected localizable string>" in running project output
-    And I end project process
+
 

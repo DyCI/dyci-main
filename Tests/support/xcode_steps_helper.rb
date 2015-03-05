@@ -13,7 +13,7 @@ class XcodeTestsHelper
   def initialize
     @output_dir = "/tmp/output"
     @configuration = "Debug"
-    @sdk_version = "6.1"
+    @sdk_version = "8.1"
     @test_project_root = nil
     @test_project_sources_root = nil
     @project_name = nil

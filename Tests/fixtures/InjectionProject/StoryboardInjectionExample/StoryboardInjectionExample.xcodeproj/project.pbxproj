@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E49452711753C95400EFA87D /* dyci.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E49452701753C95400EFA87D /* dyci.framework */; };
+		73435EC51AA8AEDC000FDA6A /* dyci.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73435EC41AA8AEDC000FDA6A /* dyci.framework */; };
 		E498D24716F5CF2500D22636 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E498D24616F5CF2500D22636 /* UIKit.framework */; };
 		E498D24916F5CF2500D22636 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E498D24816F5CF2500D22636 /* Foundation.framework */; };
 		E498D24B16F5CF2500D22636 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E498D24A16F5CF2500D22636 /* CoreGraphics.framework */; };
@@ -22,7 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		E49452701753C95400EFA87D /* dyci.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = dyci.framework; path = ../InjectionExample/Frameworks/dyci.framework; sourceTree = "<group>"; };
+		73435EC41AA8AEDC000FDA6A /* dyci.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = dyci.framework; path = ../dyci.framework; sourceTree = "<group>"; };
 		E49452761753D02900EFA87D /* Injections */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Injections; sourceTree = "<group>"; };
 		E498D24316F5CF2500D22636 /* StoryboardInjectionExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StoryboardInjectionExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E498D24616F5CF2500D22636 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -50,7 +50,7 @@
 				E498D24716F5CF2500D22636 /* UIKit.framework in Frameworks */,
 				E498D24916F5CF2500D22636 /* Foundation.framework in Frameworks */,
 				E498D24B16F5CF2500D22636 /* CoreGraphics.framework in Frameworks */,
-				E49452711753C95400EFA87D /* dyci.framework in Frameworks */,
+				73435EC51AA8AEDC000FDA6A /* dyci.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,7 +77,7 @@
 		E498D24516F5CF2500D22636 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				E49452701753C95400EFA87D /* dyci.framework */,
+				73435EC41AA8AEDC000FDA6A /* dyci.framework */,
 				E498D24616F5CF2500D22636 /* UIKit.framework */,
 				E498D24816F5CF2500D22636 /* Foundation.framework */,
 				E498D24A16F5CF2500D22636 /* CoreGraphics.framework */,
@@ -270,6 +270,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../InjectionExample/Frameworks\"",
+					"/Volumes/data/Projects/dyci-main/Tests/fixtures/InjectionProject",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "StoryboardInjectionExample/StoryboardInjectionExample-Prefix.pch";
@@ -286,6 +287,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../InjectionExample/Frameworks\"",
+					"/Volumes/data/Projects/dyci-main/Tests/fixtures/InjectionProject",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "StoryboardInjectionExample/StoryboardInjectionExample-Prefix.pch";

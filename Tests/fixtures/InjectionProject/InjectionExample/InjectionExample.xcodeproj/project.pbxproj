@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		73435EC71AA8AEEC000FDA6A /* dyci.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73435EC61AA8AEEC000FDA6A /* dyci.framework */; };
 		E4584AE01759E71800460B8C /* IEBaseChild.m in Sources */ = {isa = PBXBuildFile; fileRef = E4584ADF1759E71800460B8C /* IEBaseChild.m */; };
 		E48048FD16E2E7CB009FFF35 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E48048FC16E2E7CB009FFF35 /* Localizable.strings */; };
 		E498D23316F5C70700D22636 /* ReallyLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E498D23516F5C70700D22636 /* ReallyLocalizable.strings */; };
-		E49EB1C216E2763D009CE6EB /* dyci.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E49EB1C116E2763D009CE6EB /* dyci.framework */; };
 		E49EB1C716E27BAA009CE6EB /* IEBase.m in Sources */ = {isa = PBXBuildFile; fileRef = E49EB1C416E27BAA009CE6EB /* IEBase.m */; };
 		E49EB1D516E27CD5009CE6EB /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E49EB1CB16E27CD5009CE6EB /* Default-568h@2x.png */; };
 		E49EB1D616E27CD5009CE6EB /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = E49EB1CC16E27CD5009CE6EB /* Default.png */; };
@@ -26,13 +26,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		73435EC61AA8AEEC000FDA6A /* dyci.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = dyci.framework; path = ../dyci.framework; sourceTree = "<group>"; };
 		E4584ADE1759E71800460B8C /* IEBaseChild.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IEBaseChild.h; sourceTree = "<group>"; };
 		E4584ADF1759E71800460B8C /* IEBaseChild.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IEBaseChild.m; sourceTree = "<group>"; };
 		E48048FC16E2E7CB009FFF35 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		E48048FF16E2E919009FFF35 /* IEBaseLocalizableStringInjection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IEBaseLocalizableStringInjection.m; sourceTree = "<group>"; };
 		E498D23416F5C70700D22636 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ReallyLocalizable.strings; sourceTree = "<group>"; };
 		E498D23816F5C7A800D22636 /* IEBaseRealLocalizableStringInjection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IEBaseRealLocalizableStringInjection.m; sourceTree = "<group>"; };
-		E49EB1C116E2763D009CE6EB /* dyci.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = dyci.framework; path = Frameworks/dyci.framework; sourceTree = "<group>"; };
 		E49EB1C316E27BAA009CE6EB /* IEBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IEBase.h; sourceTree = "<group>"; };
 		E49EB1C416E27BAA009CE6EB /* IEBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IEBase.m; sourceTree = "<group>"; };
 		E49EB1C516E27BAA009CE6EB /* IEBaseClassMethodInjection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IEBaseClassMethodInjection.m; sourceTree = "<group>"; };
@@ -61,8 +61,8 @@
 				E4E3FE3416E300C000902DB7 /* CoreFoundation.framework in Frameworks */,
 				E4B1F1DA16DA33A800ACDD2E /* UIKit.framework in Frameworks */,
 				E4B1F1DC16DA33A800ACDD2E /* Foundation.framework in Frameworks */,
+				73435EC71AA8AEEC000FDA6A /* dyci.framework in Frameworks */,
 				E4B1F1DE16DA33A800ACDD2E /* CoreGraphics.framework in Frameworks */,
-				E49EB1C216E2763D009CE6EB /* dyci.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -133,7 +133,7 @@
 		E4B1F1D816DA33A800ACDD2E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				E49EB1C116E2763D009CE6EB /* dyci.framework */,
+				73435EC61AA8AEEC000FDA6A /* dyci.framework */,
 				E4B1F1D916DA33A800ACDD2E /* UIKit.framework */,
 				E4B1F1DB16DA33A800ACDD2E /* Foundation.framework */,
 				E4B1F1DD16DA33A800ACDD2E /* CoreGraphics.framework */,
@@ -303,6 +303,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Frameworks\"",
+					"/Volumes/data/Projects/dyci-main/Tests/fixtures/InjectionProject",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "InjectionExample/InjectionExample-Prefix.pch";
@@ -319,6 +320,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Frameworks\"",
+					"/Volumes/data/Projects/dyci-main/Tests/fixtures/InjectionProject",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "InjectionExample/InjectionExample-Prefix.pch";
