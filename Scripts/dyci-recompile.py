@@ -40,6 +40,10 @@ def dyciLOG(value, init=False):
 def dyciLOGStep(value, message = ""):
     dyciLOG("\n>> Step #" + value + " " + message + " http://bit.ly/1KjK81p ")
 
+def dyciLOGError(value):
+    dyciLOG(value) 
+    stderr.write(value)   
+
 #----------------------------------------------------------------------------------
 # Running process
 def runAndFailOnError(stringToRun, shell=True):
@@ -134,10 +138,11 @@ def copytree(src, dst, symlinks=False, ignore=None):
 
 #----------------------------------------------------------------------------------
 def copyResource(source, dyci):
+    dyciLOG("Copying Source %s. Dyci dir %s" % (source, dyci))
     try:
        fileHandle = open( dyci + '/bundle', 'r' )
     except IOError as e:
-       stderr.write("Error when tried to copy resource :( Cannot find file at " + dyci + '/bundle')
+       dyciLOGError("Error when tried to copy resource :(\nCannot find file at " + dyci + '/bundle.\nThe application wasn\'t run, or it doesn\'t contain dyci.framework, or dyci pod dependnency')
        return 1
 
     bundlePath = fileHandle.read()
@@ -148,32 +153,36 @@ def copyResource(source, dyci):
     if (resource_directory[-5:] == "lproj"):
 
         # Localizable Resouerces..
+        dyciLOG("Handling as localized resouce %s" % resource_directory)
         if not os.path.isdir(source):
             shutil.copy(source, bundlePath + "/" + resource_directory)
-            stdout.write("LF : File " + source + " was successfully copied to application -> " + bundlePath + "/" + resource_directory)
+            dyciLOG("LocalizedFile : File " + source + " was successfully copied to application -> " + bundlePath + "/" + resource_directory)
         else:
             copytree(source, bundlePath + "/" + resource_directory + "/" + os.path.split(source)[1])
-            stdout.write("LD : File " + source + " was successfully copied to application -> " +  bundlePath + "/" + resource_directory + "/" + os.path.split(source)[1])
+            dyciLOG("LocalizedDirectory : Directory " + source + " was successfully copied to application -> " +  bundlePath + "/" + resource_directory + "/" + os.path.split(source)[1])
     else:    
 
         # Non-Localizable Resouerces..
+        dyciLOG("Handling as non-localized resouce %s" % resource_directory)
         if not os.path.isdir(source):
             shutil.copy(source, bundlePath)
-            stdout.write("NF : File " + source + " was successfully copied to application -> " + bundlePath)
+            dyciLOG("NonLocalizedFile : File " + source + " was successfully copied to application -> " + bundlePath)
         else:
             copytree(source, bundlePath + "/" + os.path.split(source)[1])
-            stdout.write("ND : File " + source + " was successfully copied to application -> " + bundlePath)
-
+            dyciLOG("NonLocalizedDirectory : Directory " + source + " was successfully copied to application -> " + bundlePath)
+    
+    result = 0;
     try:
        fileHandle = open( dyci + '/resource', 'w' )
        fileHandle.write(source)
+       dyciLOG("Resource file was updated %s  -> %s" % (source, dyci + '/resource'))
     except IOError as e:
-       stderr.write("Error when tried to write to file " + dyci + '/resource')
-       return 1
-
-    fileHandle.close()
-
-    return 0    
+       dyciLOGError("Error when tried to write to file " + dyci + '/resource')
+       result = 1
+    finally:   
+        fileHandle.close()
+    
+    return result    
 
 #----------------------------------------------------------------------------------
 def filenameIsResource(filename):
@@ -210,6 +219,7 @@ def dyciHandleStoryboard(filename):
     exit(resultCode)
 
 #----------------------------------------------------------------------------------
+removeDynamicLibsFromDirectory(DYCI_ROOT_DIR)
 dyciLOG("--------------------------------------", True)
 dyciLOGStep("3", "Locate previous compilation parameters")
 dyciLOG("Injecting %s" % FILENAME)
