@@ -59,12 +59,12 @@ def runAndFailOnError(stringToRun, shell=True):
     stdout.write(output)
     stderr.write(err)
     if process.returncode != 0:
+        dyciLOG("Failed to run " + stringToRun + " : " + err)
         sys.exit(1)
-
     return output.rstrip(os.linesep)    
 
 #----------------------------------------------------------------------------------
-def locateCompileStringForFile(original_filename):
+def locateCompileStringForFile(original_filename, arch_fallback=None):
     currDir = os.getcwd()
     dyciLOGStep("3.1", "Locate latest build dir")
     os.chdir(DERIVED_DATA_DIR)    
@@ -79,11 +79,14 @@ def locateCompileStringForFile(original_filename):
 
     dyciLOGStep("3.4", "Resolving ARCH of file to search")
     ARCH_FILE = DYCI_ROOT_DIR + "/arch"
-    ARCH = "x86_64"
-    if os.path.exists(ARCH_FILE):
-        with open(ARCH_FILE) as f: ARCH = f.read()
+    if arch_fallback == None:
+        if os.path.exists(ARCH_FILE):
+            with open(ARCH_FILE) as f: ARCH = f.read()
+        else:
+            dyciLOG("ARCH file doesn't exists and no arch_fallback speficified %s" % ARCH_FILE )
+            return (None, None)
     else:
-        dyciLOG("Falling back to deafult arch %s" % ARCH)
+       ARCH = arch_fallback         
             
     dyciLOG("Usin ARCH for search %s" % ARCH)
     
@@ -102,10 +105,10 @@ def locateCompileStringForFile(original_filename):
     if process.returncode != 0 or compileString is None or len(compileString) == 0:
         dyciLOG("Compile string is empty. This file wasn't compiled for speficified architecture %s, or build directory wasn't resolved correctly %s" % (ARCH, lastBuildDir) )
         stderr.write("Cannot find how this file was compiled. \nPlease, try to compile it first (see /tmp/dyci.log)")
-        sys.exit(1)
+        return (None, None)
 
     os.chdir(currDir)  
-    return compileString  
+    return compileString.splitlines()[0:2]  
 
 #----------------------------------------------------------------------------------
 def removeDynamicLibsFromDirectory(dir):
@@ -155,9 +158,11 @@ def copyResource(source, dyci):
         # Localizable Resouerces..
         dyciLOG("Handling as localized resouce %s" % resource_directory)
         if not os.path.isdir(source):
+            dyciLOG("File '" +  source + "' --- >" + bundlePath + "/" + resource_directory)
             shutil.copy(source, bundlePath + "/" + resource_directory)
             dyciLOG("LocalizedFile : File " + source + " was successfully copied to application -> " + bundlePath + "/" + resource_directory)
         else:
+            dyciLOG("Directory")
             copytree(source, bundlePath + "/" + resource_directory + "/" + os.path.split(source)[1])
             dyciLOG("LocalizedDirectory : Directory " + source + " was successfully copied to application -> " +  bundlePath + "/" + resource_directory + "/" + os.path.split(source)[1])
     else:    
@@ -165,12 +170,16 @@ def copyResource(source, dyci):
         # Non-Localizable Resouerces..
         dyciLOG("Handling as non-localized resouce %s" % resource_directory)
         if not os.path.isdir(source):
+            dyciLOG("File")
             shutil.copy(source, bundlePath)
             dyciLOG("NonLocalizedFile : File " + source + " was successfully copied to application -> " + bundlePath)
         else:
+            dyciLOG("Directory")
             copytree(source, bundlePath + "/" + os.path.split(source)[1])
             dyciLOG("NonLocalizedDirectory : Directory " + source + " was successfully copied to application -> " + bundlePath)
     
+
+    dyciLOG("File/Dir was copied");
     result = 0;
     try:
        fileHandle = open( dyci + '/resource', 'w' )
@@ -213,8 +222,10 @@ def filenameIsStoryboard(filename):
 def dyciHandleStoryboard(filename):
     dyciLOG("Handling Storyboard %s" % filename)
     storyboardFileName = os.path.splitext(filename)[0] + ".storyboardc"
-    runAndFailOnError(["ibtool", "--compile", storyboardFileName, filename])
+    runAndFailOnError(["ibtool", "--compile", storyboardFileName, filename], False)
+    dyciLOG("Compiled Storyboard to %s" % storyboardFileName)
     resultCode = copyResource(storyboardFileName, DYCI_ROOT_DIR)
+    dyciLOG("Copied storyboard to  the app")
     shutil.rmtree(storyboardFileName)
     exit(resultCode)
 
@@ -244,8 +255,16 @@ if FILENAME[-2:] == ".h": FILENAME = os.path.splitext(FILENAME)[0] + ".m"
 
 
 # Searching where is Xcode with it's Clang located
+WORKING_DIR, compileString = locateCompileStringForFile(FILENAME)
+if WORKING_DIR == None or compileString == None:
+    WORKING_DIR, compileString = locateCompileStringForFile(FILENAME,"x86_64")
+if WORKING_DIR == None or compileString == None:
+    WORKING_DIR, compileString = locateCompileStringForFile(FILENAME,"i386")
 
-WORKING_DIR, compileString = locateCompileStringForFile(FILENAME).splitlines()[0:2]
+if WORKING_DIR == None or compileString == None:
+    dyciLOGError("Cannot find how file was compiled : No arch file found, and no compiled staings for fallback archs [x86_64, i386]")
+    exit(1)
+
 
 #Compiling file again
 dyciLOGStep("3.3", "Locate previos working directory")
