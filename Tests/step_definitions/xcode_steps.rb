@@ -68,19 +68,18 @@ When /^project was successfully built$/ do
   d_puts "output dir is #{@config.output_dir} and test project root is #{@config.test_project_root} and pr path is #{@config.test_project_sources_root}"
   d_puts "Project name is #{@config.project_name}"
 
-
-  # Xcconfig file for little more configuration
-  xcconfig_location = "/tmp/config.xcconfig"
-  write_file(xcconfig_location,
-             "" "
-    OBJROOT=#{@config.output_dir}
-    SYMROOT=#{@config.output_dir}
-    " ""
-  )
-
   # Running this on via fork, because...
   # Because sometimes..
-  @build_project_process = fork do
+  # @build_project_process = fork do
+
+    # Xcconfig file for little more configuration
+    @xcconfig_location = "/tmp/config.xcconfig"
+    write_file(@xcconfig_location,
+               "" "
+      OBJROOT=#{@config.output_dir}
+      SYMROOT=#{@config.output_dir}
+      " ""
+    )
 
     File.open(@feature_debug_output, 'w') { |f| f.puts "output dir is #{@config.output_dir} and test project root is #{@config.test_project_root} and pr path is #{@config.test_project_sources_root}" }
 
@@ -88,26 +87,27 @@ When /^project was successfully built$/ do
     d_puts "Running at '#{task_working_dir}"
     File.open(@feature_debug_output, 'a') { |f| f.puts "Running at '#{task_working_dir}" }
 
+    Dir.chdir(task_working_dir) do
+      def build_opts
+        [].tap do |opts|
+          opts << "-workspace \"#{@config.workspace_name}\"" if @config.workspace_name
+          opts << "-scheme \"#{@config.scheme_name}\"" if @config.scheme_name
+          opts << "-configuration \"#{@config.configuration}\"" if @config.configuration
+          opts << "-sdk iphonesimulator#{@config.sdk_version}"
+          opts << "-xcconfig \"#{@xcconfig_location}\""
+        end
+      end   
 
-    task = XcodeBuild::Tasks::BuildTask.new do |t|
-      t.scheme = @config.scheme_name
-      t.workspace = @config.workspace_name
-      t.invoke_from_within = task_working_dir
-      t.sdk = "iphonesimulator#{@config.sdk_version}"
-      t.configuration = @config.configuration
-      t.output_to = @build_debug_output unless @debug_mode
-      t.xcconfig = xcconfig_location
+      running_command = "xcrun -log xcodebuild " + build_opts.join(" ") + " -verbose clean build > #{@build_debug_output}"
+      d_puts "Running command #{running_command}"
+
+     `#{running_command}`
     end
 
-    d_puts "Build opts #{task.build_opts}"
-    File.open(@feature_debug_output, 'a') { |f| f.puts "Build opts #{task.build_opts}" }
+  # end
 
-    task.run("clean")
-    task.run("build")
-  end
-
-  d_puts "Waiting for project build"
-  Process.wait(@build_project_process)
+  # d_puts "Waiting for project build"
+  # Process.wait(@build_project_process)
 end
 
 
