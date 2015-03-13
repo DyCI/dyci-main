@@ -114,7 +114,7 @@ except:
     exit(1)
 
 # In case of resources..
-if filename[-4:] == ".png" or filename[-4:] == ".jpg" or filename[-5:] == ".jpeg" or filename[-8:] == ".strings": 
+if filename[-4:] == ".png" or filename[-4:] == ".jpg" or filename[-5:] == ".jpeg" or filename[-5:] == ".json" or filename[-8:] == ".strings": 
     resultCode = copyResource(filename, DYCI_ROOT_DIR)
     exit(resultCode)
 
