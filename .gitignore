@@ -4,3 +4,5 @@
 Build
 DerivedData
 *.pyc
+Dynamic Code Injection/output
+err.log
