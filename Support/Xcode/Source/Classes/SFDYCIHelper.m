@@ -96,9 +96,8 @@
         [[self currentDocument] saveDocument:nil];
     }
     
-    dispatch_async(dispatch_get_main_queue(), ^{ // This add a little delay for saving, maybe a perform:withDelay will be better ?
-        [self recompileAndInjectAfterSave: nil];
-    });
+   // Add a delay of 0.5s, better handle big source or slow mac
+   [self performSelector:@selector(recompileAndInjectAfterSave:) withObject:nil afterDelay:0.5f];
 }
 
 - (void)recompileAndInjectAfterSave:(id)sender {
