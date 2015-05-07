@@ -91,14 +91,16 @@
 }
 
 - (void)recompileAndInject:(id)sender {
-    
-    if ([self currentDocument]) {
-        [[self currentDocument] saveDocument:nil];
+    if ([[self currentDocument] isDocumentEdited]) {
+        [[self currentDocument] saveDocumentWithDelegate:self didSaveSelector:@selector(document:didSave:contextInfo:) contextInfo:nil];
+    } else {
+        [self recompileAndInjectAfterSave: nil];
     }
     
-    dispatch_async(dispatch_get_main_queue(), ^{ // This add a little delay for saving, maybe a perform:withDelay will be better ?
-        [self recompileAndInjectAfterSave: nil];
-    });
+}
+
+- (void)document:(NSDocument *)document didSave:(BOOL)didSaveSuccessfully contextInfo:(void *)contextInfo {
+    [self recompileAndInjectAfterSave: nil];
 }
 
 - (void)recompileAndInjectAfterSave:(id)sender {
