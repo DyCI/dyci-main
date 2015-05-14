@@ -28,7 +28,7 @@
 		73B68F8B1A0AB7E2009F6D44 /* NSSet+ClassesList.m in Sources */ = {isa = PBXBuildFile; fileRef = E4CA14231665491800080374 /* NSSet+ClassesList.m */; };
 		73B68F8C1A0AB7E8009F6D44 /* SFFileWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = E4CA14261665491800080374 /* SFFileWatcher.m */; };
 		73B68F8D1A0AB7F1009F6D44 /* UIViewController+XIBSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = E4D6E5241668D3DF007A50A4 /* UIViewController+XIBSupport.m */; };
-		73B68F8E1A0AB7F1009F6D44 /* NSObject+DyCInjection.m in Sources */ = {isa = PBXBuildFile; fileRef = E4CA142A1665491800080374 /* NSObject+DyCInjection.m */; };
+		73B68F8E1A0AB7F1009F6D44 /* NSObject+DyCInjection.m in Sources */ = {isa = PBXBuildFile; fileRef = E4CA142A1665491800080374 /* NSObject+DyCInjection.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		73B68F8F1A0AB7F1009F6D44 /* UINib+StoryBoardSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = EEDBE02EDFF230053A4EF8F0 /* UINib+StoryBoardSupport.m */; };
 		73B68F901A0AB7F1009F6D44 /* SFDynamicCodeInjection.m in Sources */ = {isa = PBXBuildFile; fileRef = E4CA142C1665491800080374 /* SFDynamicCodeInjection.m */; };
 		73B68F921A0AB821009F6D44 /* SFInjectionsNotificationsCenter.h in Headers */ = {isa = PBXBuildFile; fileRef = E4584ADA1759CC5E00460B8C /* SFInjectionsNotificationsCenter.h */; };
