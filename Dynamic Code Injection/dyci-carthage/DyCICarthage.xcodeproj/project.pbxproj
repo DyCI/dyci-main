@@ -41,9 +41,9 @@
 		9B278F731B14B91900CE01E2 /* UIViewController+XIBSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+XIBSupport.m"; sourceTree = "<group>"; };
 		9B278F751B14B91900CE01E2 /* SFInjectionsNotificationsCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFInjectionsNotificationsCenter.h; sourceTree = "<group>"; };
 		9B278F761B14B91900CE01E2 /* SFInjectionsNotificationsCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFInjectionsNotificationsCenter.m; sourceTree = "<group>"; };
-		9B278F771B14B91900CE01E2 /* SFDYCIDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SFDYCIDefines.h; path = "Dynamic Code Injection/dyci/Classes/SFDYCIDefines.h"; sourceTree = SOURCE_ROOT; };
-		9B278F781B14B91900CE01E2 /* SFDynamicCodeInjection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SFDynamicCodeInjection.h; path = "Dynamic Code Injection/dyci/Classes/SFDynamicCodeInjection.h"; sourceTree = SOURCE_ROOT; };
-		9B278F791B14B91900CE01E2 /* SFDynamicCodeInjection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SFDynamicCodeInjection.m; path = "Dynamic Code Injection/dyci/Classes/SFDynamicCodeInjection.m"; sourceTree = SOURCE_ROOT; };
+		9B278F771B14B91900CE01E2 /* SFDYCIDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SFDYCIDefines.h; path = ../dyci/Classes/SFDYCIDefines.h; sourceTree = SOURCE_ROOT; };
+		9B278F781B14B91900CE01E2 /* SFDynamicCodeInjection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SFDynamicCodeInjection.h; path = ../dyci/Classes/SFDynamicCodeInjection.h; sourceTree = SOURCE_ROOT; };
+		9B278F791B14B91900CE01E2 /* SFDynamicCodeInjection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SFDynamicCodeInjection.m; path = ../dyci/Classes/SFDynamicCodeInjection.m; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,7 +85,8 @@
 				9B278F791B14B91900CE01E2 /* SFDynamicCodeInjection.m */,
 				9B278F4C1B14B46900CE01E2 /* Supporting Files */,
 			);
-			path = DyCI;
+			name = DyCI;
+			path = ../dyci/Classes;
 			sourceTree = "<group>";
 		};
 		9B278F4C1B14B46900CE01E2 /* Supporting Files */ = {
@@ -103,7 +104,7 @@
 				9B278F681B14B91900CE01E2 /* NSSet+ClassesList.m */,
 			);
 			name = Categories;
-			path = "Dynamic Code Injection/dyci/Classes/Categories";
+			path = ../dyci/Classes/Categories;
 			sourceTree = SOURCE_ROOT;
 		};
 		9B278F691B14B91900CE01E2 /* FileWatcher */ = {
@@ -114,7 +115,7 @@
 				9B278F6C1B14B91900CE01E2 /* SFFileWatcherDelegate.h */,
 			);
 			name = FileWatcher;
-			path = "Dynamic Code Injection/dyci/Classes/FileWatcher";
+			path = ../dyci/Classes/FileWatcher;
 			sourceTree = SOURCE_ROOT;
 		};
 		9B278F6D1B14B91900CE01E2 /* Injections */ = {
@@ -128,7 +129,7 @@
 				9B278F731B14B91900CE01E2 /* UIViewController+XIBSupport.m */,
 			);
 			name = Injections;
-			path = "Dynamic Code Injection/dyci/Classes/Injections";
+			path = ../dyci/Classes/Injections;
 			sourceTree = SOURCE_ROOT;
 		};
 		9B278F741B14B91900CE01E2 /* Notifications */ = {
@@ -138,7 +139,7 @@
 				9B278F761B14B91900CE01E2 /* SFInjectionsNotificationsCenter.m */,
 			);
 			name = Notifications;
-			path = "Dynamic Code Injection/dyci/Classes/Notifications";
+			path = ../dyci/Classes/Notifications;
 			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
