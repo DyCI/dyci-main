@@ -131,13 +131,15 @@
 
     if (openedFileURL) {
 
-        [console log:[NSString stringWithFormat:@"Injecting %@(%@)", openedFileURL, openedFileURL.lastPathComponent]];
+        [console log:[NSString stringWithFormat:@"Injecting %@(%@)", openedFileURL.lastPathComponent, openedFileURL]];
 
         [self.recompiler recompileFileAtURL:openedFileURL completion:^(NSError *error) {
             if (error) {
                 [weakSelf.viewHelper showError:error];
+                [console error:[NSString stringWithFormat:@"Recompilation failed %@", error]];
             } else {
                 [weakSelf.viewHelper showSuccessResult];
+                [console log:@"Recompilation was successful"];
             }
         }];
 

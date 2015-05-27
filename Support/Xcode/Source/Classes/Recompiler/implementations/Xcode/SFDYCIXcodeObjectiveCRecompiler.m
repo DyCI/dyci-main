@@ -131,6 +131,8 @@
     SFDYCIClangParams * clangParams = [self.clangParamsExtractor extractParamsFromArguments:command.arguments];
     [self.console debug:[NSString stringWithFormat:@"Clang params extracted : %@", clangParams]];
 
+    [self.console log:@"Creating Dynamic library..."];
+
     NSString * libraryName = [NSString stringWithFormat:@"dyci%d.dylib", arc4random_uniform(10000000)];
 
     /*
@@ -201,7 +203,7 @@
 
 
     CCPXCodeConsole *console = [CCPXCodeConsole consoleForKeyWindow];
-    [console log:[NSString stringWithFormat:@"Task started %@ + %@", command.commandPath, command.arguments]];
+    [console debug:[NSString stringWithFormat:@"Task started %@ + %@", command.commandPath, command.arguments]];
 
     [CCPShellRunner runShellCommand:command.commandPath withArgs:command.arguments directory:command.workingDirectoryPath environment:[command.environment mutableCopy]
                          completion:^(NSTask *t) {
