@@ -4,7 +4,7 @@
 _V=0
 _SKIP_CLANG_PROXY=0
 
-while getopts "v:s" OPTION
+while getopts "vs" OPTION
 do
   case $OPTION in
     v) _V=1
