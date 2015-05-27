@@ -9,11 +9,11 @@
 #import "SFDYCIXCodeHelper.h"
 #import "CDRSXcodeDevToolsInterfaces.h"
 #import "NSObject+Runtime.h"
-#import "CCPXCodeConsole.h"
+#import "DYCI_CCPXCodeConsole.h"
 
 
 @interface SFDYCIXCodeHelper ()
-@property(nonatomic, strong) CCPXCodeConsole *console;
+@property(nonatomic, strong) DYCI_CCPXCodeConsole *console;
 @end
 
 @implementation SFDYCIXCodeHelper {
@@ -25,7 +25,7 @@
     @synchronized (self) {
         if (_instance == nil) {
             _instance = [[self alloc] init];
-            _instance.console = [CCPXCodeConsole consoleForKeyWindow];
+            _instance.console = [DYCI_CCPXCodeConsole consoleForKeyWindow];
         }
     }
 

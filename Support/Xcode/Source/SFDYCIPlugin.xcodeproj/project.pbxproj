@@ -18,9 +18,9 @@
 		4523F2F31E5F7A9B468CD015 /* NSObject+Runtime.m in Sources */ = {isa = PBXBuildFile; fileRef = 4523F73C8941AA3ADCE7FCB5 /* NSObject+Runtime.m */; };
 		4523F86D385DA84639278A62 /* SFDYCIErrorFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 4523FC9E721C8A40333A1C57 /* SFDYCIErrorFactory.m */; };
 		4523FF196CB3C89E73C549A5 /* SFDYCIXCodeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4523F5428F7FF0BEBBA8EB36 /* SFDYCIXCodeHelper.m */; };
-		73966C251B15F4F800F39A28 /* CCPRunOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 73966C1B1B15F4F800F39A28 /* CCPRunOperation.m */; };
-		73966C261B15F4F800F39A28 /* CCPShellRunner.m in Sources */ = {isa = PBXBuildFile; fileRef = 73966C1D1B15F4F800F39A28 /* CCPShellRunner.m */; };
-		73966C281B15F4F800F39A28 /* CCPXCodeConsole.m in Sources */ = {isa = PBXBuildFile; fileRef = 73966C211B15F4F800F39A28 /* CCPXCodeConsole.m */; };
+		73966C251B15F4F800F39A28 /* DYCI_CCPRunOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 73966C1B1B15F4F800F39A28 /* DYCI_CCPRunOperation.m */; };
+		73966C261B15F4F800F39A28 /* DYCI_CCPShellRunner.m in Sources */ = {isa = PBXBuildFile; fileRef = 73966C1D1B15F4F800F39A28 /* DYCI_CCPShellRunner.m */; };
+		73966C281B15F4F800F39A28 /* DYCI_CCPXCodeConsole.m in Sources */ = {isa = PBXBuildFile; fileRef = 73966C211B15F4F800F39A28 /* DYCI_CCPXCodeConsole.m */; };
 		7F2EB89C145057F200E97A87 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2EB899145057EA00E97A87 /* AppKit.framework */; };
 		DA1B5D020E64686800921439 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 089C1672FE841209C02AAC07 /* Foundation.framework */; };
 /* End PBXBuildFile section */
@@ -52,12 +52,12 @@
 		4523FCEBD65EB1E218CD94FC /* NSObject+Runtime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Runtime.h"; sourceTree = "<group>"; };
 		4523FF3ED09FDC7DB00429D1 /* CDRSXcodeInterfaces.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDRSXcodeInterfaces.h; sourceTree = "<group>"; };
 		4523FF602E8A438EFBC74F65 /* SFDYCIErrorFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFDYCIErrorFactory.h; sourceTree = "<group>"; };
-		73966C1A1B15F4F800F39A28 /* CCPRunOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPRunOperation.h; sourceTree = "<group>"; };
-		73966C1B1B15F4F800F39A28 /* CCPRunOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPRunOperation.m; sourceTree = "<group>"; };
-		73966C1C1B15F4F800F39A28 /* CCPShellRunner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPShellRunner.h; sourceTree = "<group>"; };
-		73966C1D1B15F4F800F39A28 /* CCPShellRunner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPShellRunner.m; sourceTree = "<group>"; };
-		73966C201B15F4F800F39A28 /* CCPXCodeConsole.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPXCodeConsole.h; sourceTree = "<group>"; };
-		73966C211B15F4F800F39A28 /* CCPXCodeConsole.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPXCodeConsole.m; sourceTree = "<group>"; };
+		73966C1A1B15F4F800F39A28 /* DYCI_CCPRunOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DYCI_CCPRunOperation.h; sourceTree = "<group>"; };
+		73966C1B1B15F4F800F39A28 /* DYCI_CCPRunOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DYCI_CCPRunOperation.m; sourceTree = "<group>"; };
+		73966C1C1B15F4F800F39A28 /* DYCI_CCPShellRunner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DYCI_CCPShellRunner.h; sourceTree = "<group>"; };
+		73966C1D1B15F4F800F39A28 /* DYCI_CCPShellRunner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DYCI_CCPShellRunner.m; sourceTree = "<group>"; };
+		73966C201B15F4F800F39A28 /* DYCI_CCPXCodeConsole.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DYCI_CCPXCodeConsole.h; sourceTree = "<group>"; };
+		73966C211B15F4F800F39A28 /* DYCI_CCPXCodeConsole.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DYCI_CCPXCodeConsole.m; sourceTree = "<group>"; };
 		7F2EB899145057EA00E97A87 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		8D5B49B6048680CD000E48DA /* SFDYCIPlugin.xcplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SFDYCIPlugin.xcplugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -158,12 +158,12 @@
 		1737CC6E0135B339CEF099A6 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				73966C1A1B15F4F800F39A28 /* CCPRunOperation.h */,
-				73966C1B1B15F4F800F39A28 /* CCPRunOperation.m */,
-				73966C1C1B15F4F800F39A28 /* CCPShellRunner.h */,
-				73966C1D1B15F4F800F39A28 /* CCPShellRunner.m */,
-				73966C201B15F4F800F39A28 /* CCPXCodeConsole.h */,
-				73966C211B15F4F800F39A28 /* CCPXCodeConsole.m */,
+				73966C1A1B15F4F800F39A28 /* DYCI_CCPRunOperation.h */,
+				73966C1B1B15F4F800F39A28 /* DYCI_CCPRunOperation.m */,
+				73966C1C1B15F4F800F39A28 /* DYCI_CCPShellRunner.h */,
+				73966C1D1B15F4F800F39A28 /* DYCI_CCPShellRunner.m */,
+				73966C201B15F4F800F39A28 /* DYCI_CCPXCodeConsole.h */,
+				73966C211B15F4F800F39A28 /* DYCI_CCPXCodeConsole.m */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -292,17 +292,17 @@
 			files = (
 				4523FF196CB3C89E73C549A5 /* SFDYCIXCodeHelper.m in Sources */,
 				4523F2F31E5F7A9B468CD015 /* NSObject+Runtime.m in Sources */,
-				73966C261B15F4F800F39A28 /* CCPShellRunner.m in Sources */,
+				73966C261B15F4F800F39A28 /* DYCI_CCPShellRunner.m in Sources */,
 				4523F86D385DA84639278A62 /* SFDYCIErrorFactory.m in Sources */,
 				1737C2BCFD1A5B029A1B0E54 /* SFDYCIClangProxyRecompiler.m in Sources */,
-				73966C281B15F4F800F39A28 /* CCPXCodeConsole.m in Sources */,
+				73966C281B15F4F800F39A28 /* DYCI_CCPXCodeConsole.m in Sources */,
 				1737C9E0C86E268DF36FB95E /* SFDYCIXcodeObjectiveCRecompiler.m in Sources */,
 				1737C63CAAB3BAD48D707967 /* SFDYCIClangParams.m in Sources */,
 				1737CBA138DC45E51677E3A5 /* SFDYCIClangParamsExtractor.m in Sources */,
 				1737CBAF94811668C5651B06 /* SFDYCIPlugin.m in Sources */,
 				1737CD95A064DFFFFA81EA41 /* SFDYCIResultView.m in Sources */,
 				1737C3690489071295F1ED2A /* SFDYCIViewsHelper.m in Sources */,
-				73966C251B15F4F800F39A28 /* CCPRunOperation.m in Sources */,
+				73966C251B15F4F800F39A28 /* DYCI_CCPRunOperation.m in Sources */,
 				1737C7E4C6DBE4A12ADCEE5A /* SFDYCICompositeRecompiler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

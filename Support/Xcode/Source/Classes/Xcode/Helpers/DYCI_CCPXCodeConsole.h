@@ -1,5 +1,5 @@
 //
-//  CCPShellHandler.m
+//  DYCI_CCPXCodeConsole.h
 //
 //  Copyright (c) 2013 Delisa Mason. http://delisa.me
 //
@@ -22,29 +22,19 @@
 //  IN THE SOFTWARE.
 
 #import <AppKit/AppKit.h>
-#import "CCPShellRunner.h"
-#import "CCPRunOperation.h"
 
-@implementation CCPShellRunner
+@interface DYCI_CCPXCodeConsole : NSObject
 
-+ (void)runShellCommand:(NSString *)command withArgs:(NSArray *)args directory:(NSString *)directory environment:(NSMutableDictionary *)environment completion:(void (^)(NSTask *t))completion {
-    static NSOperationQueue* operationQueue;
-    if (operationQueue == nil) {
-        operationQueue = [NSOperationQueue new];
-    }
++ (instancetype)consoleForKeyWindow;
 
-    NSTask* task = [NSTask new];
+@property(nonatomic, assign) BOOL shouldShowDebugInfo;
 
-    task.currentDirectoryPath = directory;
-    task.launchPath = command;
-    task.arguments = args;
+- (void)appendText:(NSString*)text;
+- (void)appendText:(NSString*)text color:(NSColor*)color;
 
-    CCPRunOperation* operation = [[CCPRunOperation alloc] initWithTask:task];
-    operation.completionBlock = ^{
-        if (completion)
-            completion(task);
-    };
-    [operationQueue addOperation:operation];
-}
+- (void)debug:(id)obj;
+- (void)debug:(id)obj color:(NSColor *)color;
+- (void)log:(id)obj;
+- (void)error:(id)obj;
 
 @end

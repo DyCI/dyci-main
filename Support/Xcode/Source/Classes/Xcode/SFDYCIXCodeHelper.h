@@ -9,7 +9,7 @@
 #import "CDRSXcodeInterfaces.h"
 #import "CDRSXcodeDevToolsInterfaces.h"
 
-@class CCPXCodeConsole;
+@class DYCI_CCPXCodeConsole;
 
 /*
 This is the helper that should know about xcode project.

@@ -1,5 +1,5 @@
 //
-//  CCPRunOperation.m
+//  DYCI_CCPRunOperation.m
 //
 //  Copyright (c) 2013 Delisa Mason. http://delisa.me
 //
@@ -21,15 +21,15 @@
 //  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 //  IN THE SOFTWARE.
 
-#import "CCPRunOperation.h"
-#import "CCPXCodeConsole.h"
+#import "DYCI_CCPRunOperation.h"
+#import "DYCI_CCPXCodeConsole.h"
 
-@interface CCPRunOperation () {
+@interface DYCI_CCPRunOperation () {
     BOOL isExecuting;
     BOOL isFinished;
 }
 
-@property (retain) CCPXCodeConsole* xcodeConsole;
+@property (retain) DYCI_CCPXCodeConsole * xcodeConsole;
 
 @property (retain) NSTask* task;
 @property (retain) id taskStandardOutDataAvailableObserver;
@@ -38,13 +38,13 @@
 
 @end
 
-@implementation CCPRunOperation
+@implementation DYCI_CCPRunOperation
 
 - (id)initWithTask:(NSTask*)task
 {
     self = [super init];
     if (self) {
-        self.xcodeConsole = [CCPXCodeConsole consoleForKeyWindow];
+        self.xcodeConsole = [DYCI_CCPXCodeConsole consoleForKeyWindow];
         self.task = task;
     }
     return self;

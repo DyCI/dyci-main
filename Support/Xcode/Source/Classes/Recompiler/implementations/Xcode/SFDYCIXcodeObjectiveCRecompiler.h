@@ -8,7 +8,7 @@
 #import <Foundation/Foundation.h>
 #import "SFDYCIClangProxyRecompiler.h"
 
-@class CCPXCodeConsole;
+@class DYCI_CCPXCodeConsole;
 
 /*
 Recompiler that works with .h and .m classes

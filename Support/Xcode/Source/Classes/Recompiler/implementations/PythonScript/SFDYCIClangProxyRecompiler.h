@@ -8,7 +8,7 @@
 #import <Foundation/Foundation.h>
 #import "SFDYCIRecompilerProtocol.h"
 
-@class CCPXCodeConsole;
+@class DYCI_CCPXCodeConsole;
 
 /*
 Dyci proxy recompiler that is using dyci-recpmpile.py python script

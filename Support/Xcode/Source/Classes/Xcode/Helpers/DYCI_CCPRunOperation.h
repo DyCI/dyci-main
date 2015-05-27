@@ -1,5 +1,5 @@
 //
-//  CCPShellHandler.h
+//  DYCI_CCPRunOperation.h
 //
 //  Copyright (c) 2013 Delisa Mason. http://delisa.me
 //
@@ -23,8 +23,8 @@
 
 #import <Foundation/Foundation.h>
 
-@interface CCPShellRunner : NSObject
+@interface DYCI_CCPRunOperation : NSOperation
 
-+ (void)runShellCommand:(NSString *)command withArgs:(NSArray *)args directory:(NSString *)directory environment:(NSMutableDictionary *)environment completion:(void (^)(NSTask *t))completion;
+- (id)initWithTask:(NSTask*)task;
 
 @end

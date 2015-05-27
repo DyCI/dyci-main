@@ -7,11 +7,11 @@
 //
 #import <AppKit/AppKit.h>
 #import "SFDYCIClangProxyRecompiler.h"
-#import "CCPXCodeConsole.h"
+#import "DYCI_CCPXCodeConsole.h"
 
 
 @interface SFDYCIClangProxyRecompiler ()
-@property(nonatomic, strong) CCPXCodeConsole *console;
+@property(nonatomic, strong) DYCI_CCPXCodeConsole *console;
 @end
 
 @implementation SFDYCIClangProxyRecompiler
@@ -19,7 +19,7 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.console = [CCPXCodeConsole consoleForKeyWindow];
+        self.console = [DYCI_CCPXCodeConsole consoleForKeyWindow];
     }
 
     return self;
@@ -103,9 +103,9 @@
 }
 
 
-- (CCPXCodeConsole *)console {
+- (DYCI_CCPXCodeConsole *)console {
     if (!_console) {
-        _console = [CCPXCodeConsole consoleForKeyWindow];
+        _console = [DYCI_CCPXCodeConsole consoleForKeyWindow];
     }
     return _console;
 }

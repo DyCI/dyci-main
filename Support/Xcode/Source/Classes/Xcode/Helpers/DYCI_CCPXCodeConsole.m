@@ -1,5 +1,5 @@
 //
-//  CCPXCodeConsole.m
+//  DYCI_CCPXCodeConsole.m
 //
 //  Copyright (c) 2013 Delisa Mason. http://delisa.me
 //
@@ -21,16 +21,16 @@
 //  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 //  IN THE SOFTWARE.
 
-#import "CCPXCodeConsole.h"
+#import "DYCI_CCPXCodeConsole.h"
 
-@interface CCPXCodeConsole ()
+@interface DYCI_CCPXCodeConsole ()
 
 @property (retain, nonatomic) NSTextView* console;
 @property (strong, nonatomic) NSString* windowIdentifier;
 
 @end
 
-@implementation CCPXCodeConsole
+@implementation DYCI_CCPXCodeConsole
 
 static NSMutableDictionary* sharedInstances;
 
@@ -145,7 +145,7 @@ static NSMutableDictionary* sharedInstances;
         sharedInstances = [[NSMutableDictionary alloc] init];
 
     if (!sharedInstances[key]) {
-        CCPXCodeConsole* console = [[CCPXCodeConsole alloc] initWithIdentifier:key];
+        DYCI_CCPXCodeConsole * console = [[DYCI_CCPXCodeConsole alloc] initWithIdentifier:key];
         [sharedInstances setObject:console forKey:key];
     }
 

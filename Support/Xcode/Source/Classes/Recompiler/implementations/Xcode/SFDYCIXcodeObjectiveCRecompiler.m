@@ -12,16 +12,16 @@
 #import "SFDYCIErrorFactory.h"
 #import "SFDYCIClangParamsExtractor.h"
 #import "SFDYCIClangParams.h"
-#import "CCPXCodeConsole.h"
-#import "CCPShellRunner.h"
-#import "CCPXCodeConsole.h"
+#import "DYCI_CCPXCodeConsole.h"
+#import "DYCI_CCPShellRunner.h"
+#import "DYCI_CCPXCodeConsole.h"
 
 
 @interface SFDYCIXcodeObjectiveCRecompiler ()
 
 @property(nonatomic, strong) SFDYCIClangParamsExtractor * clangParamsExtractor;
 
-@property(nonatomic, strong) CCPXCodeConsole *console;
+@property(nonatomic, strong) DYCI_CCPXCodeConsole *console;
 @end
 
 @implementation SFDYCIXcodeObjectiveCRecompiler
@@ -30,7 +30,7 @@
     self = [super init];
     if (self) {
         self.clangParamsExtractor = [SFDYCIClangParamsExtractor new];
-        self.console = [CCPXCodeConsole consoleForKeyWindow];
+        self.console = [DYCI_CCPXCodeConsole consoleForKeyWindow];
     }
     return self;
 }
@@ -104,31 +104,31 @@
     [self.console debug:[NSString stringWithFormat:@"Task started %@ + %@", command.commandPath, command.arguments]];
     [self.console log:[NSString stringWithFormat:@"Injection started"]];
 
-    [CCPShellRunner runShellCommand:command.commandPath withArgs:command.arguments directory:command.workingDirectoryPath environment:[command.environment mutableCopy]
-                         completion:^(NSTask *t) {
-                               if (t.terminationStatus != 0) {
-                                   [self.console error:[NSString stringWithFormat:@"Task failed %@ + %@", command.commandPath, command.arguments]];
-                                   [self.console error:[NSString stringWithFormat:@"Task failed %i", t.terminationStatus]];
-                                   [self.console error:[NSString stringWithFormat:@"Task failed %@", t.standardError]];
-                                   if (completion) {
-                                       completion([SFDYCIErrorFactory compilationErrorWithMessage:[t.standardError copy]]);
-                                   }
-                               } else {
-                                   [self.console log:[NSString stringWithFormat:@"Task completed %@", @(t.terminationStatus)]];
-                                   if (completion) {
-                                       completion(nil);
-                                   }
-                               }
-                         }];
+    [DYCI_CCPShellRunner runShellCommand:command.commandPath withArgs:command.arguments directory:command.workingDirectoryPath environment:[command.environment mutableCopy]
+                              completion:^(NSTask *t) {
+                                  if (t.terminationStatus != 0) {
+                                      [self.console error:[NSString stringWithFormat:@"Task failed %@ + %@", command.commandPath, command.arguments]];
+                                      [self.console error:[NSString stringWithFormat:@"Task failed %i", t.terminationStatus]];
+                                      [self.console error:[NSString stringWithFormat:@"Task failed %@", t.standardError]];
+                                      if (completion) {
+                                          completion([SFDYCIErrorFactory compilationErrorWithMessage:[t.standardError copy]]);
+                                      }
+                                  } else {
+                                      [self.console log:[NSString stringWithFormat:@"Task completed %@", @(t.terminationStatus)]];
+                                      if (completion) {
+                                          completion(nil);
+                                      }
+                                  }
+                              }];
 
 }
 
 
 #pragma mark - Creating Dylib
 
-- (CCPXCodeConsole *)console {
+- (DYCI_CCPXCodeConsole *)console {
     if (!_console) {
-        _console = [CCPXCodeConsole consoleForKeyWindow];
+        _console = [DYCI_CCPXCodeConsole consoleForKeyWindow];
     }
     return _console;
 }
@@ -210,25 +210,25 @@
     ];
 
 
-    CCPXCodeConsole *console = [CCPXCodeConsole consoleForKeyWindow];
-    [console debug:[NSString stringWithFormat:@"Task started %@ + %@", command.commandPath, command.arguments]];
+    DYCI_CCPXCodeConsole *console = [DYCI_CCPXCodeConsole consoleForKeyWindow];
+    [console debug:[NSString stringWithFormat:@"Task started %@ + %@", command.commandPath, dlybArguments]];
 
-    [CCPShellRunner runShellCommand:command.commandPath withArgs:command.arguments directory:command.workingDirectoryPath environment:[command.environment mutableCopy]
-                         completion:^(NSTask *t) {
-                             if (t.terminationStatus != 0) {
-                                 [console error:[NSString stringWithFormat:@"Task failed %@ + %@", command.commandPath, command.arguments]];
-                                 [console error:[NSString stringWithFormat:@"Task failed %i", t.terminationStatus]];
-                                 [console error:[NSString stringWithFormat:@"Task failed %@", t.standardError]];
-                                 if (completion) {
-                                     completion([SFDYCIErrorFactory compilationErrorWithMessage:[t.standardError copy]]);
-                                 }
-                             } else {
-                                 [console log:[NSString stringWithFormat:@"Task completed %@", @(t.terminationStatus)]];
-                                 if (completion) {
-                                     completion(nil);
-                                 }
-                             }
-                         }];
+    [DYCI_CCPShellRunner runShellCommand:command.commandPath withArgs:dlybArguments directory:command.workingDirectoryPath environment:[command.environment mutableCopy]
+                              completion:^(NSTask *t) {
+                                  if (t.terminationStatus != 0) {
+                                      [console error:[NSString stringWithFormat:@"Task failed %@ + %@", command.commandPath, command.arguments]];
+                                      [console error:[NSString stringWithFormat:@"Task failed %i", t.terminationStatus]];
+                                      [console error:[NSString stringWithFormat:@"Task failed %@", t.standardError]];
+                                      if (completion) {
+                                          completion([SFDYCIErrorFactory compilationErrorWithMessage:[t.standardError copy]]);
+                                      }
+                                  } else {
+                                      [console log:[NSString stringWithFormat:@"Task completed %@", @(t.terminationStatus)]];
+                                      if (completion) {
+                                          completion(nil);
+                                      }
+                                  }
+                              }];
 
 }
 

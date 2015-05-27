@@ -12,7 +12,7 @@
 #import "SFDYCIXcodeObjectiveCRecompiler.h"
 #import "SFDYCIViewsHelper.h"
 #import "SFDYCICompositeRecompiler.h"
-#import "CCPXCodeConsole.h"
+#import "DYCI_CCPXCodeConsole.h"
 
 
 @interface SFDYCIPlugin ()
@@ -92,7 +92,7 @@
 }
 
 - (void)useVerboseRecompilationAction:(NSMenuItem *)useVerboseRecompilationItem {
-    CCPXCodeConsole * console = [CCPXCodeConsole consoleForKeyWindow];
+    DYCI_CCPXCodeConsole * console = [DYCI_CCPXCodeConsole consoleForKeyWindow];
     if (useVerboseRecompilationItem.state == NSOffState) {
         useVerboseRecompilationItem.state = NSOnState;
         [console log:@"DYCI verbose recompilation turned ON"];
@@ -138,7 +138,7 @@
 
 
 - (void)recompileAndInjectAfterSave:(id)sender {
-    CCPXCodeConsole * console = [CCPXCodeConsole consoleForKeyWindow];
+    DYCI_CCPXCodeConsole * console = [DYCI_CCPXCodeConsole consoleForKeyWindow];
     [console log:@"Starting Injection"];
     __weak SFDYCIPlugin *weakSelf = self;
 
