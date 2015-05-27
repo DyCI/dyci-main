@@ -47,7 +47,7 @@
 		<string>9F75337B-21B4-4ADC-B558-F9CADF7073A7</string>
 	</array>
 	<key>NSPrincipalClass</key>
-	<string>SFDYCIHelper</string>
+	<string>SFDYCIPlugin</string>
 	<key>XC4Compatible</key>
 	<true/>
 	<key>XCGCReady</key>

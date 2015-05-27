@@ -96,8 +96,10 @@
     if (useVerboseRecompilationItem.state == NSOffState) {
         useVerboseRecompilationItem.state = NSOnState;
         [console log:@"DYCI verbose recompilation turned ON"];
+        console.shouldShowDebugInfo = YES;
     } else {
         useVerboseRecompilationItem.state = NSOffState;
+        console.shouldShowDebugInfo = NO;
         [console log:@"DYCI verbose recompilation turned OFF"];
     }
 }
