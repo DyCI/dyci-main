@@ -165,7 +165,7 @@
         [standardOutputFileHandle waitForDataInBackgroundAndNotify];
         [standardErrorFileHandle waitForDataInBackgroundAndNotify];
 
-        [self.xcodeConsole appendText:[NSString stringWithFormat:@"%@ %@\n\n", self.task.launchPath, [self.task.arguments componentsJoinedByString:@" "]]];
+        [self.xcodeConsole debug:[NSString stringWithFormat:@"%@ %@\n\n", self.task.launchPath, [self.task.arguments componentsJoinedByString:@" "]]];
         [self.task launch];
     }
     @catch (NSException* exception)

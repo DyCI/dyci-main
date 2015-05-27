@@ -77,14 +77,28 @@
         [subMenu addItem:[NSMenuItem separatorItem]];
 
         // Adding inject item
-        NSMenuItem *recompileAndInjectMenuItem =
-            [[NSMenuItem alloc] initWithTitle:@"Recompile and inject"
-                                       action:@selector(recompileAndInject:)
-                                keyEquivalent:@"x"];
+        NSMenuItem *recompileAndInjectMenuItem = [[NSMenuItem alloc] initWithTitle:@"Recompile and inject" action:@selector(recompileAndInject:) keyEquivalent:@"x"];
         [recompileAndInjectMenuItem setKeyEquivalentModifierMask:NSControlKeyMask];
         [recompileAndInjectMenuItem setTarget:self];
+
         [subMenu addItem:recompileAndInjectMenuItem];
 
+        NSMenuItem *verboseRecompilationItem = [[NSMenuItem alloc] initWithTitle:@"Use verbose recompilation" action:@selector(useVerboseRecompilationAction:) keyEquivalent:@""];
+        [verboseRecompilationItem setTarget:self];
+        [subMenu addItem:verboseRecompilationItem];
+
+
+    }
+}
+
+- (void)useVerboseRecompilationAction:(NSMenuItem *)useVerboseRecompilationItem {
+    CCPXCodeConsole * console = [CCPXCodeConsole consoleForKeyWindow];
+    if (useVerboseRecompilationItem.state == NSOffState) {
+        useVerboseRecompilationItem.state = NSOnState;
+        [console log:@"DYCI verbose recompilation turned ON"];
+    } else {
+        useVerboseRecompilationItem.state = NSOffState;
+        [console log:@"DYCI verbose recompilation turned OFF"];
     }
 }
 

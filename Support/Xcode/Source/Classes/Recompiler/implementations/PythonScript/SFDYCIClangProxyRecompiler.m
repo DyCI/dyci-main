@@ -103,4 +103,12 @@
 }
 
 
+- (CCPXCodeConsole *)console {
+    if (!_console) {
+        _console = [CCPXCodeConsole consoleForKeyWindow];
+    }
+    return _console;
+}
+
+
 @end

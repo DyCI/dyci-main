@@ -126,6 +126,14 @@
 
 #pragma mark - Creating Dylib
 
+- (CCPXCodeConsole *)console {
+    if (!_console) {
+        _console = [CCPXCodeConsole consoleForKeyWindow];
+    }
+    return _console;
+}
+
+
 - (void)createDynamiclibraryWithCommand:(id <CDRSXcode_XCDependencyCommand>)command completion:(void (^)(NSError *))completion {
 
     SFDYCIClangParams * clangParams = [self.clangParamsExtractor extractParamsFromArguments:command.arguments];
