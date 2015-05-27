@@ -4,6 +4,7 @@
 
 #import "SFDYCICompositeRecompiler.h"
 #import "SFDYCIErrorFactory.h"
+#import "DYCI_CCPXCodeConsole.h"
 
 
 @implementation SFDYCICompositeRecompiler
@@ -17,9 +18,27 @@
 }
 
 - (void)recompileFileAtURL:(NSURL *)fileURL completion:(void (^)(NSError *error))completionBlock {
-    for (id<SFDYCIRecompilerProtocol> recompiler in self.compilers) {
+    [self recompileFileAtURL:fileURL completion:completionBlock recompilers:self.compilers];
+}
+
+
+- (void)recompileFileAtURL:(NSURL *)fileURL completion:(void (^)(NSError *error))completionBlock recompilers:(NSArray *)recompilers {
+    DYCI_CCPXCodeConsole *console = [DYCI_CCPXCodeConsole consoleForKeyWindow];
+    NSMutableArray *availableRecompilers = [recompilers mutableCopy];
+    for (id<SFDYCIRecompilerProtocol> recompiler in recompilers) {
+        [availableRecompilers removeObject:recompiler];
         if ([recompiler canRecompileFileAtURL:fileURL]) {
-            [recompiler recompileFileAtURL:fileURL completion:completionBlock];
+            [recompiler recompileFileAtURL:fileURL completion:^(NSError *error) {
+                // Fallback
+                if (error) {
+                    [console log:[NSString stringWithFormat:@"%@ failed to recompile file. Trying other available recompilers %@", recompiler, availableRecompilers]];
+                    [self recompileFileAtURL:fileURL completion:completionBlock recompilers:availableRecompilers];
+                } else {
+                    if (completionBlock) {
+                        completionBlock(error);
+                    }
+                }
+            }];
             return;
         }
     }
@@ -28,6 +47,7 @@
         completionBlock([SFDYCIErrorFactory noRecompilerFoundErrorForFileURL:fileURL]);
     }
 }
+
 
 - (BOOL)canRecompileFileAtURL:(NSURL *)fileURL {
     for (id<SFDYCIRecompilerProtocol> recompiler in self.compilers) {

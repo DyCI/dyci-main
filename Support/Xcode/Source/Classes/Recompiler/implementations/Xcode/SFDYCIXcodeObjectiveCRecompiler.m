@@ -106,17 +106,24 @@
 
     [DYCI_CCPShellRunner runShellCommand:command.commandPath withArgs:command.arguments directory:command.workingDirectoryPath environment:[command.environment mutableCopy]
                               completion:^(NSTask *t) {
-                                  if (t.terminationStatus != 0) {
+                                  @try {
+                                      if (t.terminationStatus != 0) {
+                                          [self.console error:[NSString stringWithFormat:@"Task failed %@ + %@", command.commandPath, command.arguments]];
+                                          [self.console error:[NSString stringWithFormat:@"Task failed %i", t.terminationStatus]];
+                                          [self.console error:[NSString stringWithFormat:@"Task failed %@", t.standardError]];
+                                          if (completion) {
+                                              completion([SFDYCIErrorFactory compilationErrorWithMessage:[t.standardError copy]]);
+                                          }
+                                      } else {
+                                          [self.console log:[NSString stringWithFormat:@"Task completed %@", @(t.terminationStatus)]];
+                                          if (completion) {
+                                              completion(nil);
+                                          }
+                                      }
+                                  } @catch (NSException * e) {
                                       [self.console error:[NSString stringWithFormat:@"Task failed %@ + %@", command.commandPath, command.arguments]];
-                                      [self.console error:[NSString stringWithFormat:@"Task failed %i", t.terminationStatus]];
-                                      [self.console error:[NSString stringWithFormat:@"Task failed %@", t.standardError]];
                                       if (completion) {
                                           completion([SFDYCIErrorFactory compilationErrorWithMessage:[t.standardError copy]]);
-                                      }
-                                  } else {
-                                      [self.console log:[NSString stringWithFormat:@"Task completed %@", @(t.terminationStatus)]];
-                                      if (completion) {
-                                          completion(nil);
                                       }
                                   }
                               }];

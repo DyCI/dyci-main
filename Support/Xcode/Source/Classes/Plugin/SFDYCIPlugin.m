@@ -106,7 +106,7 @@
 
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem {
-    // TODO : We need correct checks, when we can use Ibject, and where we cannot
+    // TODO : We need correct checks, when we can use Inject, and where we cannot
     // Validate when we need to be called
     //   if ([menuItem action] == @selector(recompileAndInject:)) {
     //      NSResponder * firstResponder = [[NSApp keyWindow] firstResponder];
@@ -160,7 +160,7 @@
         }];
 
     } else {
-        [console error:[NSString stringWithFormat:@"Cannot inject from here... try to open file you want to inject"]];
+        [console error:[NSString stringWithFormat:@"Cannot inject this file right now. If you think that this file is injectable, try again bit later"]];
     }
 }
 
