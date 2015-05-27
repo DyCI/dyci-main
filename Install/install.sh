@@ -77,11 +77,11 @@ fi
 chmod +x Scripts/dyci-clang.py
 chmod +x Scripts/dyci-recompile.py
 
-log "cp Scripts/dyci-clang.py ${CLANG_LOCATION}"
-log "cp Scripts/clangParams.py ${CLANG_USR_BIN}"
+log "sudo cp Scripts/dyci-clang.py ${CLANG_LOCATION}"
+log "sudo cp Scripts/clangParams.py ${CLANG_USR_BIN}"
 
-cp Scripts/dyci-clang.py "${CLANG_LOCATION}"
-cp Scripts/clangParams.py "${CLANG_USR_BIN}"
+sudo cp Scripts/dyci-clang.py "${CLANG_LOCATION}"
+sudo cp Scripts/clangParams.py "${CLANG_USR_BIN}"
 
 echo "Done."
 
