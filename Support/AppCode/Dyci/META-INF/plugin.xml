@@ -1,7 +1,7 @@
 <idea-plugin version="2">
   <id>com.stanfy.dyci</id>
   <name>DYCI - Dynamic code injection Tool</name>
-  <version>1.1</version>
+  <version>1.2</version>
   <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>
 
   <description>
@@ -15,6 +15,9 @@
 
   <change-notes>
     <![CDATA[
+      Version 1.2
+      Detect selected Xcode version from AppCode settings
+
       Version 1.1
       Latest AppCode support.
     ]]>

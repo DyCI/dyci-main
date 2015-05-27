@@ -10,4 +10,7 @@
    <FileRef
       location = "group:dyci/dyci.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:dyci-carthage/DyCICarthage.xcodeproj">
+   </FileRef>
 </Workspace>
