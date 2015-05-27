@@ -71,19 +71,21 @@ if [[ $_SKIP_CLANG_PROXY -eq 0 ]]; then
 
   log " cp ${CLANG_BACKUP_LOCATION} ${CLANG_REAL_LOCATION_PP}"
   cp "${CLANG_BACKUP_LOCATION}" "${CLANG_REAL_LOCATION_PP}"
+
+  #DYCI-CLANG RIGHTS
+  chmod +x Scripts/dyci-clang.py
+  chmod +x Scripts/dyci-recompile.py
+
+  log "sudo cp Scripts/dyci-clang.py ${CLANG_LOCATION}"
+  log "sudo cp Scripts/clangParams.py ${CLANG_USR_BIN}"
+
+  sudo cp Scripts/dyci-clang.py "${CLANG_LOCATION}"
+  sudo cp Scripts/clangParams.py "${CLANG_USR_BIN}"
+
+  echo "Done."
 fi
 
-#DYCI-CLANG RIGHTS
-chmod +x Scripts/dyci-clang.py
-chmod +x Scripts/dyci-recompile.py
 
-log "sudo cp Scripts/dyci-clang.py ${CLANG_LOCATION}"
-log "sudo cp Scripts/clangParams.py ${CLANG_USR_BIN}"
-
-sudo cp Scripts/dyci-clang.py "${CLANG_LOCATION}"
-sudo cp Scripts/clangParams.py "${CLANG_USR_BIN}"
-
-echo "Done."
 
 USER_HOME=$(eval echo ~${SUDO_USER})
 log "USER_HOME = ${USER_HOME}"
