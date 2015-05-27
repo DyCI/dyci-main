@@ -8,6 +8,8 @@
 #import <Foundation/Foundation.h>
 #import "SFDYCIRecompilerProtocol.h"
 
+@class CCPXCodeConsole;
+
 /*
 Dyci proxy recompiler that is using dyci-recpmpile.py python script
 This recompiler uses index pythons script, which is used index files with parameters those were captured

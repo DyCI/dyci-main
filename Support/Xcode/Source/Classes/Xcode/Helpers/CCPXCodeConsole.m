@@ -57,11 +57,19 @@ static NSMutableDictionary* sharedInstances;
     }
 }
 
+- (void)debug:(id)obj color:(NSColor *)color {
+    if (self.shouldShowDebugInfo) {
+        [self appendText:[NSString stringWithFormat:@"%@\n", obj] color:color];
+    }
+}
+
 
 - (void)log:(id)obj
 {
     [self appendText:[NSString stringWithFormat:@"%@\n", obj]];
 }
+
+
 
 - (void)error:(id)obj
 {
@@ -84,16 +92,20 @@ static NSMutableDictionary* sharedInstances;
     return nil;
 }
 
-- (void)appendText:(NSString*)text color:(NSColor*)color
+- (void)appendText:(NSString*)text color:(NSColor*)originalColor
 {
     if (text.length == 0)
         return;
 
-    if (!color)
-        color = self.console.textColor;
+    if (!self.console) {
+        return;
+    }
 
     dispatch_async(dispatch_get_main_queue(), ^{
 
+        NSColor * color = originalColor;
+        if (!color)
+            color = self.console.textColor;
 
         NSMutableDictionary *attributes = [@{NSForegroundColorAttributeName : color} mutableCopy];
         NSFont *font = [NSFont fontWithName:@"Menlo Regular" size:11];

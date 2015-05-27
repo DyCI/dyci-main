@@ -9,7 +9,12 @@
 #import "SFDYCIXCodeHelper.h"
 #import "CDRSXcodeDevToolsInterfaces.h"
 #import "NSObject+Runtime.h"
+#import "CCPXCodeConsole.h"
 
+
+@interface SFDYCIXCodeHelper ()
+@property(nonatomic, strong) CCPXCodeConsole *console;
+@end
 
 @implementation SFDYCIXCodeHelper {
 
@@ -20,6 +25,7 @@
     @synchronized (self) {
         if (_instance == nil) {
             _instance = [[self alloc] init];
+            _instance.console = [CCPXCodeConsole consoleForKeyWindow];
         }
     }
 
@@ -31,7 +37,7 @@
     while (firstResponder) {
         firstResponder = [firstResponder nextResponder];
 
-        NSLog(@"Responder is :%@", firstResponder);
+        [self.console debug:[NSString stringWithFormat:@"Responder is :%@", firstResponder]];
 
         if ([firstResponder isKindOfClass:NSClassFromString(@"IDEEditorContext")]) {
             return (id <CDRSXcode_IDEEditorContext>) firstResponder;
@@ -62,9 +68,9 @@
     NSArray *suggested_targets = [PBXProject targetsInAllProjectsForFileReference:selectedFileReference
                                                                        justNative:NO];
 
-    NSLog(@"Targets : %@", suggested_targets);
+    [self.console debug:[NSString stringWithFormat:@"Targets : %@", suggested_targets]];
 
-    NSLog(@"Projects %@", [PBXProject openProjects]);
+    [self.console debug:[NSString stringWithFormat:@"Projects %@", [PBXProject openProjects]]];
 
     // TODO: Find a better way to do it :)
     NSArray *activeRunContextTargetsIds = [NSClassFromString(@"IDEWorkspaceWindow")
@@ -78,13 +84,13 @@
                 "buildableReference."
                 "blueprintIdentifier"];
 
-    NSLog(@"ACtive Run Context Target sIDs %@", activeRunContextTargetsIds);
+    [self.console debug:[NSString stringWithFormat:@"ACtive Run Context Target sIDs %@", activeRunContextTargetsIds]];
     // Go through all opened projects and find one with suggested target == it's active target
     for (XC(PBXTarget) suggestedTarget in suggested_targets) {
         NSObject *targetObjectID = [(id) suggestedTarget valueForKey:@"objectID"];
-        NSLog(@"Suggsested target obejct ID %@", targetObjectID);
+        [self.console debug:[NSString stringWithFormat:@"Suggsested target obejct ID %@", targetObjectID]];
         if ([activeRunContextTargetsIds containsObject:targetObjectID]) {
-            NSLog(@"Returning suggested target : %@ == %@", suggestedTarget, targetObjectID);
+            [self.console debug:[NSString stringWithFormat:@"Returning suggested target : %@ == %@", suggestedTarget, targetObjectID]];
             return suggestedTarget;
         }
     }

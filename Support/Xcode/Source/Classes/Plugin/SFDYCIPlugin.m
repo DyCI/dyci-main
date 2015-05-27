@@ -12,6 +12,7 @@
 #import "SFDYCIXcodeObjectiveCRecompiler.h"
 #import "SFDYCIViewsHelper.h"
 #import "SFDYCICompositeRecompiler.h"
+#import "CCPXCodeConsole.h"
 
 
 @interface SFDYCIPlugin ()
@@ -119,16 +120,18 @@
     [self recompileAndInjectAfterSave:nil];
 }
 
+
 - (void)recompileAndInjectAfterSave:(id)sender {
-    NSLog(@"Yupee :),  ");
+    CCPXCodeConsole * console = [CCPXCodeConsole consoleForKeyWindow];
+    [console log:@"Starting Injection"];
     __weak SFDYCIPlugin *weakSelf = self;
+
 
     NSURL *openedFileURL = self.xcodeStructureManager.activeDocumentFileURL;
 
     if (openedFileURL) {
 
-        NSLog(@"Opened file url is : %@", openedFileURL);
-        // Setting up task, that we are going to call
+        [console log:[NSString stringWithFormat:@"Injecting %@(%@)", openedFileURL, openedFileURL.lastPathComponent]];
 
         [self.recompiler recompileFileAtURL:openedFileURL completion:^(NSError *error) {
             if (error) {
@@ -139,7 +142,7 @@
         }];
 
     } else {
-        NSLog(@"Coudln't find IDEEditorContext... Seems you've pressed somewhere in incorrect place");
+        [console error:[NSString stringWithFormat:@"Cannot inject from here... try to open file you want to inject"]];
     }
 }
 

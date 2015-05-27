@@ -203,7 +203,7 @@
     else if ([line hasPrefix:@"INFO"])
         color = [NSColor colorWithDeviceRed:0.0 green:0.5 blue:0.0 alpha:1.0];
 
-    [self.xcodeConsole appendText:[line stringByAppendingString:@"\n"] color:color];
+    [self.xcodeConsole debug:[line stringByAppendingString:@"\n"] color:color];
 }
 
 - (void)checkAndSetFinished

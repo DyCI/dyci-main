@@ -9,6 +9,8 @@
 #import "CDRSXcodeInterfaces.h"
 #import "CDRSXcodeDevToolsInterfaces.h"
 
+@class CCPXCodeConsole;
+
 /*
 This is the helper that should know about xcode project.
 No other parts of this project should know about Xcode project structure, about active targers whatever

@@ -8,6 +8,8 @@
 #import <Foundation/Foundation.h>
 #import "SFDYCIClangProxyRecompiler.h"
 
+@class CCPXCodeConsole;
+
 /*
 Recompiler that works with .h and .m classes
  */

@@ -33,6 +33,7 @@
 - (void)appendText:(NSString*)text color:(NSColor*)color;
 
 - (void)debug:(id)obj;
+- (void)debug:(id)obj color:(NSColor *)color;
 - (void)log:(id)obj;
 - (void)error:(id)obj;
 

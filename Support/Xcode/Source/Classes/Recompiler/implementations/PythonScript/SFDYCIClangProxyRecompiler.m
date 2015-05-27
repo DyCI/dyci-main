@@ -7,9 +7,24 @@
 //
 #import <AppKit/AppKit.h>
 #import "SFDYCIClangProxyRecompiler.h"
+#import "CCPXCodeConsole.h"
 
+
+@interface SFDYCIClangProxyRecompiler ()
+@property(nonatomic, strong) CCPXCodeConsole *console;
+@end
 
 @implementation SFDYCIClangProxyRecompiler
+
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        self.console = [CCPXCodeConsole consoleForKeyWindow];
+    }
+
+    return self;
+}
+
 
 - (void)recompileFileAtURL:(NSURL *)fileURL completion:(void (^)(NSError * error))completionBlock {
     NSTask * task = [[NSTask alloc] init];
@@ -35,13 +50,13 @@
         NSData * outputData = [outputFile readDataToEndOfFile];
         NSString * outputString = [[NSString alloc] initWithData:outputData encoding:NSUTF8StringEncoding];
         if (outputString && [outputString length]) {
-            NSLog(@"script returned OK:\n%@", outputString);
+            [self.console debug:[NSString stringWithFormat:@"script returned OK:\n%@", outputString]];
         }
 
         NSData * errorData = [errorFile readDataToEndOfFile];
         NSString * errorString = [[NSString alloc] initWithData:errorData encoding:NSUTF8StringEncoding];
         if (errorString && [errorString length]) {
-            NSLog(@"script returned ERROR:\n%@", errorString);
+            [self.console debug:[NSString stringWithFormat:@"script returned ERROR:\n%@", errorString]];
         }
 
         // TODO : Need to add correct notification if something went wrong

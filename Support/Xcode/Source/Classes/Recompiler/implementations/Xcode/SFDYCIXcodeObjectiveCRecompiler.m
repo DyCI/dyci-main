@@ -12,6 +12,7 @@
 #import "SFDYCIErrorFactory.h"
 #import "SFDYCIClangParamsExtractor.h"
 #import "SFDYCIClangParams.h"
+#import "CCPXCodeConsole.h"
 #import "CCPShellRunner.h"
 #import "CCPXCodeConsole.h"
 
@@ -20,6 +21,7 @@
 
 @property(nonatomic, strong) SFDYCIClangParamsExtractor * clangParamsExtractor;
 
+@property(nonatomic, strong) CCPXCodeConsole *console;
 @end
 
 @implementation SFDYCIXcodeObjectiveCRecompiler
@@ -28,6 +30,7 @@
     self = [super init];
     if (self) {
         self.clangParamsExtractor = [SFDYCIClangParamsExtractor new];
+        self.console = [CCPXCodeConsole consoleForKeyWindow];
     }
     return self;
 }
@@ -40,17 +43,19 @@
     if (!target) {
         // TODO : Custom error
         [self failWithError:nil completionBlock:completionBlock];
+        [self.console error:@"Cannot find target for specified file"];
         return;
     }
 
     XC(PBXTargetBuildContext) buildContext = target.targetBuildContext;
     NSArray *commands = [buildContext commands];
-    NSLog(@"Commands : %@", commands);
+    [self.console debug:[NSString stringWithFormat:@"Commands : %@", commands]];
+
     [commands enumerateObjectsUsingBlock:^(XC(XCDependencyCommand) command, NSUInteger idx, BOOL *stop) {
-        NSLog(@"Command #%lu of classs %@ : %@", idx, [(id) command class], command);
+        [self.console debug:[NSString stringWithFormat:@"Command #%lu of classs %@ : %@", idx, [(id) command class], command ]];
 
         NSArray *ruleInfo = [command ruleInfo];
-        NSLog(@"Command : %@", ruleInfo);
+        [self.console debug:[NSString stringWithFormat:@"Command : %@", ruleInfo]];
         if ([[ruleInfo firstObject] isEqualToString:@"CompileC"]) {
             /**
             * Commands can contain build rules for multiple file so
@@ -61,9 +66,9 @@
                 return;
             }
 
-            NSLog(@"Found command that was originally created this file. Rerunning it");
-            NSLog(@"We should actually run %@ %@", command.commandPath, command.arguments);
-            NSLog(@"Command tool specification : %@", [command toolSpecification]);
+            [self.console debug:[NSString stringWithFormat:@"Found command that was originally created this file. Rerunning it"]];
+            [self.console debug:[NSString stringWithFormat:@"We should actually run %@ %@", command.commandPath, command.arguments]];
+            [self.console debug:[NSString stringWithFormat:@"Command tool specification : %@", [command toolSpecification]]];
 
             [self runCompilationCommand:command completion:^(NSError *error) {
                 if (error != nil) {
@@ -85,7 +90,7 @@
              * the linker arguments.        [self.console.textStorage beginEditing];
 
              */
-            NSLog(@"\nLinker: %@ %@", command.commandPath, command.arguments);
+            [self.console debug:[NSString stringWithFormat:@"\nLinker: %@ %@", command.commandPath, command.arguments]];
         }
     }];
 
@@ -96,20 +101,20 @@
 
 - (void)runCompilationCommand:(id<CDRSXcode_XCDependencyCommand>)command completion:(void (^)(NSError *))completion {
 
-    CCPXCodeConsole *console = [CCPXCodeConsole consoleForKeyWindow];
-    [console log:[NSString stringWithFormat:@"Task started %@ + %@", command.commandPath, command.arguments]];
+    [self.console debug:[NSString stringWithFormat:@"Task started %@ + %@", command.commandPath, command.arguments]];
+    [self.console log:[NSString stringWithFormat:@"Injection started"]];
 
     [CCPShellRunner runShellCommand:command.commandPath withArgs:command.arguments directory:command.workingDirectoryPath environment:[command.environment mutableCopy]
                          completion:^(NSTask *t) {
                                if (t.terminationStatus != 0) {
-                                   [console error:[NSString stringWithFormat:@"Task failed %@ + %@", command.commandPath, command.arguments]];
-                                   [console error:[NSString stringWithFormat:@"Task failed %i", t.terminationStatus]];
-                                   [console error:[NSString stringWithFormat:@"Task failed %@", t.standardError]];
+                                   [self.console error:[NSString stringWithFormat:@"Task failed %@ + %@", command.commandPath, command.arguments]];
+                                   [self.console error:[NSString stringWithFormat:@"Task failed %i", t.terminationStatus]];
+                                   [self.console error:[NSString stringWithFormat:@"Task failed %@", t.standardError]];
                                    if (completion) {
                                        completion([SFDYCIErrorFactory compilationErrorWithMessage:[t.standardError copy]]);
                                    }
                                } else {
-                                   [console log:[NSString stringWithFormat:@"Task completed %@", @(t.terminationStatus)]];
+                                   [self.console log:[NSString stringWithFormat:@"Task completed %@", @(t.terminationStatus)]];
                                    if (completion) {
                                        completion(nil);
                                    }
@@ -124,7 +129,7 @@
 - (void)createDynamiclibraryWithCommand:(id <CDRSXcode_XCDependencyCommand>)command completion:(void (^)(NSError *))completion {
 
     SFDYCIClangParams * clangParams = [self.clangParamsExtractor extractParamsFromArguments:command.arguments];
-    NSLog(@"Clang params extracted : %@", clangParams);
+    [self.console debug:[NSString stringWithFormat:@"Clang params extracted : %@", clangParams]];
 
     NSString * libraryName = [NSString stringWithFormat:@"dyci%d.dylib", arc4random_uniform(10000000)];
 
