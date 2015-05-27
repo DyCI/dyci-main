@@ -9,16 +9,15 @@
 #import "CDRSXcodeInterfaces.h"
 #import "CDRSXcodeDevToolsInterfaces.h"
 #import "SFDYCIXCodeHelper.h"
-#import "DSUnixTask.h"
-#import "DSUnixTaskSubProcessManager.h"
 #import "SFDYCIErrorFactory.h"
 #import "SFDYCIClangParamsExtractor.h"
 #import "SFDYCIClangParams.h"
+#import "CCPShellRunner.h"
+#import "CCPXCodeConsole.h"
 
 
 @interface SFDYCIXcodeObjectiveCRecompiler ()
 
-@property(nonatomic, strong) DSUnixTaskAbstractManager * taskManager;
 @property(nonatomic, strong) SFDYCIClangParamsExtractor * clangParamsExtractor;
 
 @end
@@ -28,7 +27,6 @@
 - (id)init {
     self = [super init];
     if (self) {
-        self.taskManager =  [DSUnixTaskSubProcessManager sharedManager];
         self.clangParamsExtractor = [SFDYCIClangParamsExtractor new];
     }
     return self;
@@ -74,6 +72,7 @@
                     [self createDynamiclibraryWithCommand:command completion:completionBlock];
                 }
             }];
+            *stop = YES;
             return;
 
         }
@@ -83,7 +82,8 @@
             /*
              * Xcode doesn't pass object files (.o) directly to the linker (it uses
              * a dependency info file instead) so the only thing we can do here is to grab
-             * the linker arguments.
+             * the linker arguments.        [self.console.textStorage beginEditing];
+
              */
             NSLog(@"\nLinker: %@ %@", command.commandPath, command.arguments);
         }
@@ -95,34 +95,26 @@
 #pragma mark - Running command
 
 - (void)runCompilationCommand:(id<CDRSXcode_XCDependencyCommand>)command completion:(void (^)(NSError *))completion {
-    DSUnixTask * task = [self.taskManager task];
-    [task setLaunchPath:command.commandPath];
-    [task setArguments:command.arguments];
-    [task setEnvironment:command.environment];
-    [task setWorkingDirectory:command.workingDirectoryPath];
 
-    [task setLaunchHandler:^(DSUnixTask * taskLauncher) {
-        NSLog(@"Task started %@ + %@", command.commandPath, command.arguments);
-    }];
+    CCPXCodeConsole *console = [CCPXCodeConsole consoleForKeyWindow];
+    [console log:[NSString stringWithFormat:@"Task started %@ + %@", command.commandPath, command.arguments]];
 
-    [task setFailureHandler:^(DSUnixTask * taskLauncher) {
-        NSLog(@"Task failed %@ + %@", command.commandPath, command.arguments);
-        NSLog(@"Task failed %i", taskLauncher.terminationStatus);
-        NSLog(@"Task failed %@", taskLauncher.standardError);
-        if (completion) {
-            completion([SFDYCIErrorFactory compilationErrorWithMessage:[taskLauncher.standardError copy]]);
-        }
-    }];
-
-    [task setTerminationHandler:^(DSUnixTask * taskLauncher) {
-        NSLog(@"Task terminated %i", taskLauncher.terminationStatus);
-        if (completion) {
-            completion(nil);
-        }
-    }];
-
-    // Showing up handlers
-    [task launch];
+    [CCPShellRunner runShellCommand:command.commandPath withArgs:command.arguments directory:command.workingDirectoryPath environment:[command.environment mutableCopy]
+                         completion:^(NSTask *t) {
+                               if (t.terminationStatus != 0) {
+                                   [console error:[NSString stringWithFormat:@"Task failed %@ + %@", command.commandPath, command.arguments]];
+                                   [console error:[NSString stringWithFormat:@"Task failed %i", t.terminationStatus]];
+                                   [console error:[NSString stringWithFormat:@"Task failed %@", t.standardError]];
+                                   if (completion) {
+                                       completion([SFDYCIErrorFactory compilationErrorWithMessage:[t.standardError copy]]);
+                                   }
+                               } else {
+                                   [console log:[NSString stringWithFormat:@"Task completed %@", @(t.terminationStatus)]];
+                                   if (completion) {
+                                       completion(nil);
+                                   }
+                               }
+                         }];
 
 }
 
@@ -203,34 +195,25 @@
     ];
 
 
-    DSUnixTask * task = [self.taskManager task];
-    [task setLaunchPath:command.commandPath];
-    [task setArguments:dlybArguments];
-    [task setEnvironment:command.environment];
-    [task setWorkingDirectory:command.workingDirectoryPath];
+    CCPXCodeConsole *console = [CCPXCodeConsole consoleForKeyWindow];
+    [console log:[NSString stringWithFormat:@"Task started %@ + %@", command.commandPath, command.arguments]];
 
-    [task setLaunchHandler:^(DSUnixTask * taskLauncher) {
-        NSLog(@"Task started %@ + %@", command.commandPath, dlybArguments);
-    }];
-
-    [task setFailureHandler:^(DSUnixTask * taskLauncher) {
-        NSLog(@"Task failed %@ + %@", command.commandPath, dlybArguments);
-        NSLog(@"Task failed %i", taskLauncher.terminationStatus);
-        NSLog(@"Task failed %@", taskLauncher.standardError);
-        if (completion) {
-            completion([SFDYCIErrorFactory compilationErrorWithMessage:[taskLauncher.standardError copy]]);
-        }
-    }];
-
-    [task setTerminationHandler:^(DSUnixTask * taskLauncher) {
-        NSLog(@"Task terminated %i", taskLauncher.terminationStatus);
-        if (completion) {
-            completion(nil);
-        }
-    }];
-
-    // Showing up handlers
-    [task launch];
+    [CCPShellRunner runShellCommand:command.commandPath withArgs:command.arguments directory:command.workingDirectoryPath environment:[command.environment mutableCopy]
+                         completion:^(NSTask *t) {
+                             if (t.terminationStatus != 0) {
+                                 [console error:[NSString stringWithFormat:@"Task failed %@ + %@", command.commandPath, command.arguments]];
+                                 [console error:[NSString stringWithFormat:@"Task failed %i", t.terminationStatus]];
+                                 [console error:[NSString stringWithFormat:@"Task failed %@", t.standardError]];
+                                 if (completion) {
+                                     completion([SFDYCIErrorFactory compilationErrorWithMessage:[t.standardError copy]]);
+                                 }
+                             } else {
+                                 [console log:[NSString stringWithFormat:@"Task completed %@", @(t.terminationStatus)]];
+                                 if (completion) {
+                                     completion(nil);
+                                 }
+                             }
+                         }];
 
 }
 
@@ -253,6 +236,11 @@
     }
 
     if ([[filePath pathExtension] isEqualToString:@"m"]) {
+        SFDYCIXCodeHelper *xcode = [SFDYCIXCodeHelper instance];
+        XC(PBXTarget) target = [xcode targetInOpenedProjectForFileURL:fileURL];
+        if (!target) {
+            return NO;
+        }
         return YES;
     }
 

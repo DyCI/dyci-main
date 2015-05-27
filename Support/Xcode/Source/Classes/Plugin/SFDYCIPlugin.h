@@ -14,9 +14,9 @@
 @class SFDYCIXCodeHelper;
 
 
-@interface SFDYCIPlugin : NSObject {
-	
-}
-
+/*
+Dyci Plugin is th main class, where the magic happens
+ */
+@interface SFDYCIPlugin : NSObject
 
 @end

@@ -7,9 +7,9 @@
 
 
 /*
-The recompiler that contrains of N other recompilers
+The recompiler that contains N other compilers
 And uses fall-back strategy.
-If this recompiler returns NO than no underlying recompilers were able to recomple specified file
+If this recompiler returns NO than no underlying recompilers were able to recompile specified file
  */
 @interface SFDYCICompositeRecompiler : NSObject <SFDYCIRecompilerProtocol>
 

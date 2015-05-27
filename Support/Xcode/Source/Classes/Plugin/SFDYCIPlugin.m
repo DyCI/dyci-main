@@ -25,7 +25,7 @@
 
 #pragma mark - Plugin Initialization
 
-+ (void)pluginDidLoad:(NSBundle *)plugin{
++ (void)pluginDidLoad:(NSBundle *)plugin {
     static id sharedPlugin = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -36,7 +36,7 @@
 
 - (id)init {
     if (self = [super init]) {
-        NSNotificationCenter * notificationCenter = [NSNotificationCenter defaultCenter];
+        NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
 
         // Waiting for application start
         [notificationCenter addObserver:self
@@ -51,16 +51,16 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {
     NSLog(@"App finished launching");
 
-    // Kind of dependecy injection here
+    // Selecting Xcode Recompiler first
+    // We'll use Xcode recompiler, and if that one fails, we'll fallback to dyci-recompile.py
     self.recompiler = [[SFDYCICompositeRecompiler alloc]
-        initWithCompilers:@[ [SFDYCIXcodeObjectiveCRecompiler new], [SFDYCIClangProxyRecompiler new] ]];
+        initWithCompilers:@[[SFDYCIXcodeObjectiveCRecompiler new], [SFDYCIClangProxyRecompiler new]]];
 
     self.viewHelper = [SFDYCIViewsHelper new];
 
     self.xcodeStructureManager = [SFDYCIXCodeHelper instance];
 
     [self setupMenu];
-    //We'll use Xcode recompiler, and if that one fails, we'll fallback to dyci-recompile.py
 
 }
 
@@ -106,6 +106,20 @@
 
 
 - (void)recompileAndInject:(id)sender {
+    NSDocument<CDRSXcode_IDEEditorDocument> *currentDocument = (NSDocument<CDRSXcode_IDEEditorDocument> *)[self.xcodeStructureManager currentDocument];
+    if ([currentDocument isDocumentEdited]) {
+        [currentDocument saveDocumentWithDelegate:self didSaveSelector:@selector(document:didSave:contextInfo:) contextInfo:nil];
+    } else {
+        [self recompileAndInjectAfterSave:nil];
+    }
+
+}
+
+- (void)document:(NSDocument *)document didSave:(BOOL)didSaveSuccessfully contextInfo:(void *)contextInfo {
+    [self recompileAndInjectAfterSave:nil];
+}
+
+- (void)recompileAndInjectAfterSave:(id)sender {
     NSLog(@"Yupee :),  ");
     __weak SFDYCIPlugin *weakSelf = self;
 
@@ -127,7 +141,6 @@
     } else {
         NSLog(@"Coudln't find IDEEditorContext... Seems you've pressed somewhere in incorrect place");
     }
-
 }
 
 #pragma mark - Dealloc

@@ -10,8 +10,7 @@
 
 /*
 Dyci proxy recompiler that is using dyci-recpmpile.py python script
-First version
-this recompiler uses index pythons scrip, which is used index files with parameters those were catured
+This recompiler uses index pythons script, which is used index files with parameters those were captured
 by proxied clang
 
 Can recompile all things those were originally intended to

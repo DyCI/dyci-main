@@ -4,6 +4,7 @@
  */
 
 #import <Foundation/Foundation.h>
+
 @class NSDocument;
 
 #pragma mark - Run contexts and destinations
@@ -48,8 +49,18 @@
 - (XC(IDEWorkspaceDocument))workspaceDocument;
 @end
 
+@protocol XCP(IDEEditorDocument)
+- (void)ide_saveDocument:(id)arg1;
+@end
+
+@protocol XCP(IDEEditorArea)
+- (XC(IDEEditorDocument))primaryEditorDocument;
+@end
+
 @protocol XCP(IDEWorkspaceWindowController)
 - (XC(IDEWorkspaceTabController))activeWorkspaceTabController;
+- (XC(IDEEditorArea))editorArea;
+
 @end
 
 

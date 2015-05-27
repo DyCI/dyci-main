@@ -8,9 +8,8 @@
 #import "SFDYCIClangParams.h"
 
 
-@implementation SFDYCIClangParams {
+@implementation SFDYCIClangParams
 
-}
 - (NSString *)description {
     NSMutableString *description = [NSMutableString stringWithFormat:@"<%@: ", NSStringFromClass([self class])];
     [description appendFormat:@" compilationObjectName=%@", self.compilationObjectName];

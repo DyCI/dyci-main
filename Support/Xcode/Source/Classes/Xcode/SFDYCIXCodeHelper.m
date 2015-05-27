@@ -92,5 +92,23 @@
     return nil;
 }
 
+- (XC(IDEWorkspaceWindowController))workspaceWindowController {
+    NSWindowController *currentWindowController = [[NSApp keyWindow] windowController];
+    if ([currentWindowController isKindOfClass:NSClassFromString(@"IDEWorkspaceWindowController")]) {
+        return (XC(IDEWorkspaceWindowController)) currentWindowController;
+    }
+    return nil;
+}
+
+
+- (XC(IDEEditorDocument))currentDocument {
+    XC(IDEWorkspaceWindowController) workspaceWindowController = [self workspaceWindowController];
+    if (workspaceWindowController) {
+        XC(IDEEditorArea) editorArea = [workspaceWindowController editorArea];
+        return editorArea.primaryEditorDocument;
+    }
+    return nil;
+}
+
 
 @end

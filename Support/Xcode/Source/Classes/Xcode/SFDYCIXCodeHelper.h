@@ -32,5 +32,15 @@ Returns target for specified fileURL
  */
 - (XC(PBXTarget))targetInOpenedProjectForFileURL:(NSURL *)fileURL;
 
+/*
+Returns active workspace window controller, if any
+ */
+- (XC(IDEWorkspaceWindowController))workspaceWindowController;
+
+/*
+Current editing document
+ */
+- (XC(IDEEditorDocument))currentDocument;
+
 
 @end
