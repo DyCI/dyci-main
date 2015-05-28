@@ -64,4 +64,8 @@ There's few other tools those works kind'a the same, so if you don't like dyci -
 
 - [injectionforxcode](https://github.com/johnno1962/injectionforxcode)
 
+## Author(s)
+
+Taykalo Paul, ptaykalo@stanfy.com.ua
+[Find me on twitter.](http://twitter.com/TT_Kilew)
 
