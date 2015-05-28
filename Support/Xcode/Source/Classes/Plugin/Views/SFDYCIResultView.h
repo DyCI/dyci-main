@@ -1,6 +1,6 @@
 //
 //  SFDYCIResultView.h
-//  SFDYCIHelper
+//  SFDYCIPlugin
 //
 //  Created by Paul Taykalo on 10/14/12.
 //

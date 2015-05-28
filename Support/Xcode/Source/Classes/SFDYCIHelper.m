@@ -79,8 +79,7 @@
 }
 
 
-- (IDEEditorDocument *)currentDocument
-{
+- (IDEEditorDocument *)currentDocument  {
     NSWindowController *currentWindowController = [[NSApp keyWindow] windowController];
     if ([currentWindowController isKindOfClass:NSClassFromString(@"IDEWorkspaceWindowController")]) {
         IDEWorkspaceWindowController *workspaceController = (IDEWorkspaceWindowController *)currentWindowController;
