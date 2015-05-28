@@ -9,6 +9,8 @@ This tool allows you to inject code into running iOS application, without restar
 3. Each time, you are using DyCI, it saves you time.
 
 ## WARNING
+
+[![Join the chat at https://gitter.im/DyCI/dyci-main](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/DyCI/dyci-main?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 Uninstall DyCI before updating Xcode.
 If you don't you may need to reinstall xcode.
 We're currenlty working on [this issue](https://github.com/DyCI/dyci-main/issues/8)...
