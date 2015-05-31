@@ -118,36 +118,50 @@ cp Scripts/clangParams.py "${DYCI_ROOT_DIR}/scripts/"
 echo "Done."
 
 
+APPCODE_PLUGIN_TEMP_DIR=""
 for i in $(seq 2 9)
   do 
 	for j in $(seq 0 9)
 		do
 		    if [[ -d "${USER_HOME}/Library/Preferences/appCode${i}${j}" ]]; then
 		      echo -n "== AppCode ${i}.${j} found. Installing DYCI as AppCode plugin : "
-
 		      PLUGINS_DIRECTORY="${USER_HOME}/Library/Application Support/appCode${i}${j}"
-		      PLUGIN_NAME="Dyci.jar"
 		      if [[ ! -d "${PLUGINS_DIRECTORY}" ]]; then
 		         mkdir -p "${PLUGINS_DIRECTORY}"
 		      fi
 
-		      log "cp Support/AppCode/Dyci/${PLUGIN_NAME} ${PLUGINS_DIRECTORY}"
-		      cp "Support/AppCode/Dyci/${PLUGIN_NAME}" "${PLUGINS_DIRECTORY}"/
+          PLUGIN_NAME="Dyci.jar"
+          if [[ -z ${APPCODE_PLUGIN_TEMP_DIR} ]]; then
+             APPCODE_PLUGIN_TEMP_DIR=`mktemp -d -t dyci`
+             echo
+             pushd ${APPCODE_PLUGIN_TEMP_DIR} > /dev/null
+             git clone https://github.com/DyCI/dyci-appcode-plugin.git
+             popd > /dev/null
+          fi  
 
-		      echo "Done."
-
-		      echo "   Restart Appcode. Plugin should be loaded automaticaly. If not, you may need to install it manually"
-
+		      log "cp ${APPCODE_PLUGIN_TEMP_DIR}/dyci-appcode-plugin/${PLUGIN_NAME} ${PLUGINS_DIRECTORY}"
+		      cp "${APPCODE_PLUGIN_TEMP_DIR}/dyci-appcode-plugin/${PLUGIN_NAME}" "${PLUGINS_DIRECTORY}"/
 		    fi
 		done
 done
+
+if [[ -n ${APPCODE_PLUGIN_TEMP_DIR} ]]; then
+  echo "Done."
+  echo "   Restart Appcode. Plugin should be loaded automaticaly. If not, you may need to install it manually"
+fi  
+
+
 
 echo -n "== Installing Xcode DYCI plugin : "
 if [[ ! -d "${USER_HOME}/Library/Application Support/Developer/Shared/Xcode/Plug-ins" ]]; then
     mkdir -p "${USER_HOME}/Library/Application Support/Developer/Shared/Xcode/Plug-ins"
 fi
-
-cp -R Support/Xcode/Binary/*.* "${USER_HOME}/Library/Application Support/Developer/Shared/Xcode/Plug-ins/"
+XCODE_PLUGIN_TEMP_DIR=`mktemp -d -t dyci`
+echo
+pushd ${XCODE_PLUGIN_TEMP_DIR} > /dev/null
+git clone https://github.com/DyCI/dyci-xcode-plugin.git
+cp -R dyci-xcode-plugin/Binary/*.* "${USER_HOME}/Library/Application Support/Developer/Shared/Xcode/Plug-ins/"
+popd > /dev/null
 echo Done. 
 echo "  Now you can use DYCI from the Xcode :P"
 
