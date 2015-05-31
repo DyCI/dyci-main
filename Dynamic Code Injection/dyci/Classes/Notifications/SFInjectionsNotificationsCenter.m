@@ -30,10 +30,13 @@ NSString * const SFInjectionsResourceInjectedNotification = @"SFInjectionsResour
 
 + (instancetype)sharedInstance {
     static SFInjectionsNotificationsCenter * _instance = nil;
-    if (!_instance) {
-        _instance = [[self alloc] init];
-        _instance->_observers = [NSMutableDictionary dictionary];
-    }
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
+        if (!_instance) {
+            _instance = [[self alloc] init];
+            _instance->_observers = [NSMutableDictionary dictionary];
+        }
+    });
     return _instance;
 }
 
