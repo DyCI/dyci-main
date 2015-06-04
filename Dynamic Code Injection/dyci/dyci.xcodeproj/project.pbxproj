@@ -30,7 +30,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		A0739DFF1B206A25003A96C2 /* SFDYCIDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFDYCIDefines.h; sourceTree = "<group>"; };
 		E40867C7164695180002D2ED /* libdyci.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libdyci.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E40867CA164695180002D2ED /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		E40867DE164695B90002D2ED /* dyci-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "dyci-Prefix.pch"; sourceTree = "<group>"; };
@@ -98,7 +97,6 @@
 				E40867E6164695F70002D2ED /* Injections */,
 				E40867E9164695F70002D2ED /* SFDynamicCodeInjection.h */,
 				E40867EA164695F70002D2ED /* SFDynamicCodeInjection.m */,
-				A0739DFF1B206A25003A96C2 /* SFDYCIDefines.h */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
