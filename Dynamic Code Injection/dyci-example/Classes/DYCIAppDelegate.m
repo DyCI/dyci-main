@@ -12,6 +12,7 @@
 #import "DYCIViewController.h"
 
 
+#import "DYCIMacro.h"
 
 @implementation DYCIAppDelegate
 
@@ -28,6 +29,46 @@
 
     return YES;
 }
+
+
+/*
+This example of below shows a pattern that using a handy macro(via 'DYCIMacro.h') when working revert to original frequently.
+You can use this macro instead of overriding 'updateOnClassInjection'.
+
+1. Define some code 'BEGIN_INJECTION ~ END_INJECTION', 'BEGIN_REJECTION ~  END_REJECTION'.
+if line of 'code' is being exist, DYCI will call BEGIN_INJECTION block.
+
+        BEGIN_INJECTION
+            ... code ...
+        END_INJECTION
+
+        BEGIN_REJECTION
+            ... revert to original state ...
+        END_REJECTION
+
+2. Simulator is still running. Change 'INJECTION' block to empty line if you want it to revert.
+Then DYCI will call 'BEGIN_REJECTION ~ END_REJECTION' block. And repeat.
+
+    BEGIN_INJECTION
+    END_INJECTION
+ */
+BEGIN_INJECTION
+    self.viewController.textLabel.text = @"Change value and then remove this line to revert.";
+//    @throw [[NSException alloc] initWithName:@"some exception while running test" reason:@"Unknown but I don't wan't crash." userInfo:nil];
+END_INJECTION
+
+//pre-defined original
+BEGIN_REJECTION
+    self.viewController.textLabel.text = @"Hi there!\n"
+        "Seems you've been able to run DYCI project!\n"
+        "Congratulations\n"
+        "The most hard work is already done.\n"
+        "First, make sure you're installed DYCI\n"
+        "There will be no magic, if you don't\n"
+        "But if you do... Uncomment level #1 lines...\n"
+        "And press ^X (Product|Recompile and inject) in Xcode";
+END_REJECTION
+
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {

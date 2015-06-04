@@ -23,6 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A0739E001B206CB6003A96C2 /* DYCIMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DYCIMacro.h; sourceTree = "<group>"; };
 		E40867FD164699E30002D2ED /* dyci-example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "dyci-example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4086801164699E30002D2ED /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		E4086803164699E30002D2ED /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -128,6 +129,7 @@
 				E408683616469AC10002D2ED /* UIView+SFAdditions.h */,
 				E408683716469AC10002D2ED /* UIView+SFAdditions.m */,
 				E408683516469AC10002D2ED /* SFUIViewMacroses.h */,
+				A0739E001B206CB6003A96C2 /* DYCIMacro.h */,
 			);
 			path = "Utils and Helpers";
 			sourceTree = "<group>";

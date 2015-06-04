@@ -10,4 +10,5 @@
 
 @interface DYCIViewController : UIViewController
 
+@property (nonatomic, strong) UILabel * textLabel;
 @end
