@@ -123,7 +123,7 @@ if filename[-4:] == ".xib":
     xibFilename = os.path.splitext(filename)[0] + ".nib"
     runAndFailOnError(["ibtool", "--compile", xibFilename, filename])
     resultCode = copyResource(xibFilename, DYCI_ROOT_DIR)
-    os.unlink(xibFilename)
+    os.system("rm -Rf %s" % xibFilename)
     exit(resultCode)
 
 #Storyboards also welcome

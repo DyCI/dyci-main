@@ -10,6 +10,19 @@
 
 #if TARGET_IPHONE_SIMULATOR
 
+/*
+ notification.object will be the class that was injected
+ This notification is private due to discussion here https://github.com/DyCI/dyci-main/pull/51
+ */
+NSString * const SFInjectionsClassInjectedNotification = @"SFInjectionsClassInjectedNotification";
+
+/*
+ notification.object will be the resource that was injected
+ This notification is private due to discussion here https://github.com/DyCI/dyci-main/pull/51
+ */
+NSString * const SFInjectionsResourceInjectedNotification = @"SFInjectionsResourceInjectedNotification";
+
+
 @implementation SFInjectionsNotificationsCenter {
     NSMutableDictionary * _observers;
 }
@@ -17,10 +30,13 @@
 
 + (instancetype)sharedInstance {
     static SFInjectionsNotificationsCenter * _instance = nil;
-    if (!_instance) {
-        _instance = [[self alloc] init];
-        _instance->_observers = [NSMutableDictionary dictionary];
-    }
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
+        if (!_instance) {
+            _instance = [[self alloc] init];
+            _instance->_observers = [NSMutableDictionary dictionary];
+        }
+    });
     return _instance;
 }
 
@@ -35,9 +51,9 @@
 }
 
 
-- (void)removeObserver:(id<SFInjectionObserver>)observer ofClass:(Class)class {
+- (void)removeObserver:(id<SFInjectionObserver>)observer ofClass:(Class)aClass {
     @synchronized (_observers) {
-        NSMutableSet * observersPerClass = [_observers objectForKey:class];
+        NSMutableSet * observersPerClass = [_observers objectForKey:aClass];
         if (observersPerClass) {
             @synchronized (observersPerClass) {
                 [observersPerClass removeObject:observer];
@@ -47,12 +63,15 @@
 }
 
 
-- (void)addObserver:(id<SFInjectionObserver>)observer forClass:(Class)class {
+- (void)addObserver:(id<SFInjectionObserver>)observer forClass:(Class)aClass {
+    if (!aClass) {
+        return;
+    }
     @synchronized (_observers) {
-        NSMutableSet * observersPerClass = [_observers objectForKey:class];
+        NSMutableSet * observersPerClass = [_observers objectForKey:aClass];
         if (!observersPerClass) {
             observersPerClass = (__bridge_transfer NSMutableSet *) CFSetCreateMutable(nil, 0, nil);
-            [_observers setObject:observersPerClass forKey:class];
+            [_observers setObject:observersPerClass forKey:aClass];
         }
         @synchronized (observersPerClass) {
             [observersPerClass addObject:observer];
@@ -65,6 +84,9 @@
 This will notify about class injection
  */
 - (void)notifyOnClassInjection:(Class)injectedClass {
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:SFInjectionsClassInjectedNotification object:injectedClass];
+
     int idx = 0;
     @synchronized (_observers) {
         for (NSMutableSet * observersPerClass in [_observers allValues]) {
@@ -91,6 +113,9 @@ This will notify about class injection
 This will notiy all registered classes about that some resource was injected
  */
 - (void)notifyOnResourceInjection:(NSString *)resourceInjection {
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:SFInjectionsResourceInjectedNotification object:resourceInjection];
+
     int idx = 0;
     @synchronized (_observers) {
         for (NSMutableSet * observersPerClass in [_observers allValues]) {

@@ -6,13 +6,14 @@
 //  Copyright (c) 2012 Stanfy LLC. All rights reserved.
 //
 
-#if TARGET_IPHONE_SIMULATOR
 
 #import <objc/runtime.h>
 #import "NSObject+DyCInjection.h"
-#import "SFDynamicCodeInjection.h"
+//#import "SFDynamicCodeInjection.h"
 #import "SFInjectionsNotificationsCenter.h"
+#import "SFDYCIDefines.h"
 
+#if TARGET_IPHONE_SIMULATOR
 
 void swizzle(Class c, SEL orig, SEL new) {
    Method origMethod = class_getInstanceMethod(c, orig);
@@ -24,6 +25,8 @@ void swizzle(Class c, SEL orig, SEL new) {
    }
 }
 
+
+DYCI_FIX_CATEGORY_BUG(NSObject_DyCInjection);
 
 @interface NSObject (DyCInjectionObserver) <SFInjectionObserver>
 

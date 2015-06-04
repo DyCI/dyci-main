@@ -99,14 +99,39 @@
 #pragma mark - Checking for Library
 
 + (NSString *)dciDirectoryPath {
-   NSString * dciDirectoryPath = [NSString stringWithFormat:@"/Users/%s/.dyci/", getenv("USER")];
-   NSLog(@"DYCI directory path is : %@", dciDirectoryPath);
-//   NSString * dciDirectoryPath = [@"~" stringByExpandingTildeInPath];
-//   NSRange r = [dciDirectoryPath rangeOfString:@"/Library/Application Support"];
-//   dciDirectoryPath = [dciDirectoryPath substringToIndex:r.location];
-//   dciDirectoryPath = [dciDirectoryPath stringByAppendingPathComponent:@".dyci"];
-//   dciDirectoryPath = [dciDirectoryPath stringByAppendingString:@"/"];
-   return dciDirectoryPath;
+    
+    char * userENV = getenv("USER");
+    NSString * dciDirectoryPath = nil;
+    if (userENV != NULL) {
+        dciDirectoryPath = [NSString stringWithFormat:@"/Users/%s/.dyci/", userENV];
+    } else {
+        // Fallback to the path, since, we cannot get USER variable
+        NSString *simUserDirectoryPath = [@"~" stringByExpandingTildeInPath];
+
+        // Assume default installation, which will have /Users/{username}/ structure
+        NSArray * simUserDirectoryPathComponents = [simUserDirectoryPath pathComponents];
+        if (simUserDirectoryPathComponents.count > 3) {
+            // Get first 3 components
+            NSMutableArray * macUserDirectoryPathComponents = [[simUserDirectoryPathComponents subarrayWithRange:NSMakeRange(0, 3)] mutableCopy];
+            [macUserDirectoryPathComponents addObject:@".dyci"];
+            dciDirectoryPath = [NSString pathWithComponents:macUserDirectoryPathComponents];
+        }
+
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        if (![fileManager fileExistsAtPath:dciDirectoryPath]) {
+            // Fallback for users who have changed default HOME directiory path
+            // So Idea is that whe have USERHOME/Library/Developer.... etc
+            // So we should put everything we can before Library developer
+            // 
+            NSRange userHomeEndPosition = [simUserDirectoryPath rangeOfString:@"/Library/Developer"];
+            NSString * macUserHomePath = [simUserDirectoryPath substringToIndex:userHomeEndPosition.location];
+            dciDirectoryPath = [macUserHomePath stringByAppendingPathComponent:@".dyci"];
+        }
+
+    }
+
+    NSLog(@"DYCI directory path is : %@", dciDirectoryPath);
+    return dciDirectoryPath;
 }
 
 
