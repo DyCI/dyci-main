@@ -125,6 +125,7 @@
          [task setStandardError:errorPipe];
          
          // Setting up termination handler
+          __weak __typeof(task) weakTask = task;
          [task setTerminationHandler:^(NSTask * tsk) {
             
             NSData * outputData = [outputFile readDataToEndOfFile];
@@ -139,9 +140,8 @@
             if (errorString && [errorString length]) {
                NSLog(@"script returned ERROR:\n%@", errorString);
             }
-
             // TODO : Need to add correct notification if something went wrong
-            if (task.terminationStatus != 0) {
+            if (weakTask.terminationStatus != 0) {
                dispatch_async(dispatch_get_main_queue(), ^{
 
                NSAlert * alert = [[[NSAlert alloc] init] autorelease];
