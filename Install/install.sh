@@ -55,7 +55,7 @@ if [[ $_SKIP_CLANG_PROXY -eq 0 ]]; then
     fi
   # We should backup clang ONLY if it is an binary file only
     log " cp ${CLANG_LOCATION} ${CLANG_BACKUP_LOCATION}"
-    cp "${CLANG_LOCATION}" "${CLANG_BACKUP_LOCATION}"
+    sudo cp "${CLANG_LOCATION}" "${CLANG_BACKUP_LOCATION}"
     log "echo Backup is at : ${CLANG_BACKUP_LOCATION}"
     echo "Done."
   else
