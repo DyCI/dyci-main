@@ -102,6 +102,12 @@ DYCI_FIX_CATEGORY_BUG(NSObject_DyCInjection);
             return NO;
          }
          break;
+       // Do not subscribe realm objects, because they change their class after init
+       case 'R':
+         if (className[1] == 'L' && className[2] == 'M') {
+             return NO;
+         }
+         break;
 
       default:
          break;
