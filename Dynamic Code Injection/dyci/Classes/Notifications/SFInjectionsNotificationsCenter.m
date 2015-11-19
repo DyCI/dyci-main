@@ -68,13 +68,13 @@ NSString * const SFInjectionsResourceInjectedNotification = @"SFInjectionsResour
         return;
     }
     @synchronized (_observers) {
-        CFMutableSetRef observersPerClass = (__bridge CFMutableSetRef)([_observers objectForKey:aClass]);
+        NSMutableSet * observersPerClass = [_observers objectForKey:aClass];
         if (!observersPerClass) {
-            observersPerClass = CFSetCreateMutable(nil, 0, nil);
-            [_observers setObject:(__bridge_transfer NSMutableSet *) observersPerClass forKey:aClass];
+            observersPerClass = (__bridge_transfer NSMutableSet *) CFSetCreateMutable(nil, 0, nil);
+            [_observers setObject:observersPerClass forKey:aClass];
         }
-        @synchronized ((__bridge id)observersPerClass) {
-            CFSetSetValue(observersPerClass, (__bridge_retained void*) observer);
+        @synchronized (observersPerClass) {
+            [observersPerClass addObject:observer];
         }
     }
 }
