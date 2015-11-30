@@ -59,7 +59,9 @@
      "The most hard work is already done.\n"
      "First, make sure you're installed DYCI\n"
      "There will be no magic, if you don't\n"
-     "But if you do... Uncomment level #1 lines...\n"
+     "But if you do...\n"
+     "Open DYCIViewController.m\n"
+     "Uncomment level #1 lines...\n"
      "And press ^X (Product|Recompile and inject) in Xcode";
 
    [_textLabel sizeToFit];

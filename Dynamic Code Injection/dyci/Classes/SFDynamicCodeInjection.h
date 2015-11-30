@@ -20,4 +20,21 @@
 + (void)disable;
 
 
+#pragma mark - Settings
+
+/*
+ When this option enabled,
+ all classes will be notified when injection happens
+ */
++ (void)notifyAllClassesOnInjection;
+
+/*
+ When this option enabled,
+ On injection of class X, only instances of class X, and it's sublcasses will be notified
+ This is default behaviour.
+ */
++ (void)notifyInjectedClassAndSubclassesOnInjection;
+
+
+
 @end
