@@ -341,6 +341,16 @@ extern void _CFBundleFlushBundleCaches(CFBundleRef bundle) __attribute__((weak_i
    }
 }
 
+#pragma mark - Settings
+
++ (void)notifyAllClassesOnInjection {
+    [SFInjectionsNotificationsCenter sharedInstance].notificationStategy = SFInjectionNotificationStrategyAllClasses;
+}
+
++ (void)notifyInjectedClassAndSubclassesOnInjection {
+    [SFInjectionsNotificationsCenter sharedInstance].notificationStategy = SFInjectionNotificationStrategyInjectedClassOnly;
+}
+
 @end
 
 #else
@@ -348,13 +358,22 @@ extern void _CFBundleFlushBundleCaches(CFBundleRef bundle) __attribute__((weak_i
 @implementation SFDynamicCodeInjection {
     
 }
-    + (void)enable {
-        NSLog(@"DYCI: Sorry, Dynamic Code Ibjection is not available on devices");
-    }
-    
-    + (void)disable {
-        NSLog(@"DYCI: Sorry, Dynamic Code Ibjection is not available on devices");
-    }
++ (void)enable {
+    NSLog(@"DYCI: Sorry, Dynamic Code Ibjection is not available on devices");
+}
+
++ (void)disable {
+    NSLog(@"DYCI: Sorry, Dynamic Code Ibjection is not available on devices");
+}
+
++ (void)notifyAllClassesOnInjection {
+    NSLog(@"DYCI: Sorry, Dynamic Code Ibjection is not available on devices");
+}
+
++ (void)notifyInjectedClassAndSubclassesOnInjection {
+    NSLog(@"DYCI: Sorry, Dynamic Code Ibjection is not available on devices");
+}
+
     
 @end
 
