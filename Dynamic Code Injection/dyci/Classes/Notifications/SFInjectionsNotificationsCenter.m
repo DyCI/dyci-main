@@ -92,19 +92,18 @@ This will notify about class injection
         for (NSMutableSet * observersPerClass in [_observers allValues]) {
             @synchronized (observersPerClass) {
                 id anyObject = [observersPerClass anyObject];
-                int localIdx = 0;
-                if ([anyObject isKindOfClass:injectedClass]) {
-                    for (id<SFInjectionObserver> observer in observersPerClass) {
-                        [observer updateOnClassInjection];
-                        idx++;
-                        localIdx++;
-                    }
-                    NSLog(@"%d (%@) class instanses were notified on Class Injection : ", localIdx, NSStringFromClass([anyObject class]));
+                if (self.notificationStategy == SFInjectionNotificationStrategyInjectedClassOnly
+                     && ![anyObject isKindOfClass:injectedClass]) {
+                    continue;
+                }
+                for (id<SFInjectionObserver> observer in observersPerClass) {
+                    [observer updateOnClassInjection];
+                    idx++;
                 }
             }
         }
     }
-
+    
     NSLog(@"%d instanses were notified on Class Injection by injecting class: (%@)", idx, NSStringFromClass(injectedClass));
 }
 

@@ -46,6 +46,20 @@
 
 
 /*
+ Notification strategy on injection.
+ */
+typedef NS_ENUM(NSUInteger, SFInjectionNotificationStrategy) {
+    /**
+     Notifies only instances class X and all subclasses of X
+     */
+    SFInjectionNotificationStrategyInjectedClassOnly,
+    /**
+     Notifies all classes about injection
+     */
+    SFInjectionNotificationStrategyAllClasses,
+};
+
+/*
 This notification center will notify classes about new infection code available
 Live classes about new code
 This one was made because it seems sometimes classes doesn't remove themself as observers from
@@ -54,6 +68,12 @@ Notification Center. And we'll try to understand why it's so
 Also it'll try to understand which classes should be filtered from observing
  */
 @interface SFInjectionsNotificationsCenter : NSObject
+
+/*
+ Decides which classes should be notified on injection.
+ Default value is SFInjectionNotificationStrategyInjectedClassOnly
+ */
+@property(nonatomic, assign) SFInjectionNotificationStrategy notificationStategy;
 
 /*
 Returns notification center instance
