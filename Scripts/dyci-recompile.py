@@ -114,7 +114,7 @@ except:
     exit(1)
 
 # In case of resources..
-if filename.endswith((".png", ".jpg", ".jpeg", ".strings")): 
+if filename.endswith((".png", ".jpg", ".jpeg", ".strings", ".plist", ".json", ".html", ".css", ".js")): 
     resultCode = copyResource(filename, DYCI_ROOT_DIR)
     exit(resultCode)
 
