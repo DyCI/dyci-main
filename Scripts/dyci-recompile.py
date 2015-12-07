@@ -34,7 +34,7 @@ def removeDynamicLibsFromDirectory(dir):
         print 'Directory %s does not exists' % dir
         return
     for file in files:
-        if file.endswith(".dylib") or file.endswith("resource"): 
+        if file.endswith(".dylib") or file.endswith("resource"):
             path = dir + os.sep + file
             if os.path.isdir(path):
                 continue
@@ -75,7 +75,7 @@ def copyResource(source, dyci):
         else:
             copytree(source, bundlePath + "/" + resource_directory + "/" + os.path.split(source)[1])
             stdout.write("LD : File " + source + " was successfully copied to application -> " +  bundlePath + "/" + resource_directory + "/" + os.path.split(source)[1])
-    else:    
+    else:
 
         # Non-Localizable Resouerces..
         if not os.path.isdir(source):
@@ -94,7 +94,7 @@ def copyResource(source, dyci):
 
     fileHandle.close()
 
-    return 0    
+    return 0
 
 #----------------------------------------------------------------------------------
 
@@ -114,12 +114,12 @@ except:
     exit(1)
 
 # In case of resources..
-if filename[-4:] == ".png" or filename[-4:] == ".jpg" or filename[-5:] == ".jpeg" or filename[-5:] == ".json" or filename[-8:] == ".strings": 
+if filename.endswith((".png", ".jpg", ".jpeg", ".strings", ".plist", ".json", ".html", ".css", ".js")): 
     resultCode = copyResource(filename, DYCI_ROOT_DIR)
     exit(resultCode)
 
 #In case of xibs
-if filename[-4:] == ".xib": 
+if filename[-4:] == ".xib":
     xibFilename = os.path.splitext(filename)[0] + ".nib"
     runAndFailOnError(["ibtool", "--compile", xibFilename, filename])
     resultCode = copyResource(xibFilename, DYCI_ROOT_DIR)
@@ -127,7 +127,7 @@ if filename[-4:] == ".xib":
     exit(resultCode)
 
 #Storyboards also welcome
-if filename[-11:] == ".storyboard": 
+if filename[-11:] == ".storyboard":
     storyboardFileName = os.path.splitext(filename)[0] + ".storyboardc"
     runAndFailOnError(["ibtool", "--compile", storyboardFileName, filename])
     resultCode = copyResource(storyboardFileName, DYCI_ROOT_DIR)
