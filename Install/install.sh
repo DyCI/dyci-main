@@ -67,10 +67,10 @@ if [[ $_SKIP_CLANG_PROXY -eq 0 ]]; then
   echo -n "== Faking up clang : "
 
   log "cp ${CLANG_BACKUP_LOCATION} ${CLANG_REAL_LOCATION}"
-  cp "${CLANG_BACKUP_LOCATION}" "${CLANG_REAL_LOCATION}"
+  sudo cp "${CLANG_BACKUP_LOCATION}" "${CLANG_REAL_LOCATION}"
 
   log " cp ${CLANG_BACKUP_LOCATION} ${CLANG_REAL_LOCATION_PP}"
-  cp "${CLANG_BACKUP_LOCATION}" "${CLANG_REAL_LOCATION_PP}"
+  sudo cp "${CLANG_BACKUP_LOCATION}" "${CLANG_REAL_LOCATION_PP}"
 
   #DYCI-CLANG RIGHTS
   chmod +x Scripts/dyci-clang.py
