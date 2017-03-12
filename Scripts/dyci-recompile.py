@@ -219,8 +219,17 @@ linkArgs = \
 + ["-current_version"]\
 + ["5"]\
 + ["-o"]\
-+ [DYCI_ROOT_DIR + "/" + libraryName]
++ [DYCI_ROOT_DIR + "/tmp/" + libraryName]\
 #       + ['-v']
 
-#print "Linker arks \n%s" % ' '.join(linkArgs)
+# print "Linker args \n%s" % ' '.join(linkArgs)
 runAndFailOnError(linkArgs)
+print "Linked\n"
+
+#sign
+signArgs = ["/usr/bin/codesign"] + ["-s"] + ["-"] + ["-vvvv"] + ["-f"] + [DYCI_ROOT_DIR + "/tmp/" + libraryName]
+runAndFailOnError(signArgs)
+print "Signed " + libraryName + "\n"
+
+moveArgs = ["mv", DYCI_ROOT_DIR + "/tmp/" + libraryName, DYCI_ROOT_DIR + "/" + libraryName]
+runAndFailOnError(moveArgs)
