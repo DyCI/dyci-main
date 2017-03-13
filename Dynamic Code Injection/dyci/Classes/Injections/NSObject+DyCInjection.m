@@ -113,6 +113,19 @@ DYCI_FIX_CATEGORY_BUG(NSObject_DyCInjection);
       return NO;
    }
 
+   // Contexts too
+   Class managedObjectContextClass = NSClassFromString(@"NSManagedObjectContext");
+   if (managedObjectContextClass && [instance isKindOfClass:managedObjectContextClass]) {
+      return NO;
+   }
+
+   // Do not subscribe realm objects, because they change their class after init
+   Class realmObjectBaseClass = NSClassFromString(@"RLMObjectBase");
+   if (realmObjectBaseClass && [instance isKindOfClass:realmObjectBaseClass]) {
+      return NO;
+   }
+
+
    return YES;
 }
 
